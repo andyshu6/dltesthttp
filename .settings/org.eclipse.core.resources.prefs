@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//www/common/database.py=utf-8
+encoding//www/common/globalconfig.py=utf-8
+encoding//www/common/httpbase.py=utf-8
+encoding//www/common/main.py=utf-8
+encoding//www/common/model.py=utf-8
+encoding//www/common/orm.py=utf-8
+encoding//www/testcase/test.py=utf-8
+encoding//www/testcase/ts_ws_invoice_addInvoice.py=utf-8
+encoding//www/testcase/ts_ws_invoice_addInvoiceVAT.py=utf-8
+encoding//www/testcase/ts_ws_invoice_delInvoice.py=utf-8
+encoding//www/testcase/ts_ws_login_login.py=utf-8
+encoding//www/testcase/ts_ws_version_compareAppVersion.py=utf-8
+encoding/<project>=UTF-8

@@ -331,9 +331,11 @@ class webservice:
         url = '/shoppingcart/createOrderByShoppingcart.json'
         data = {}
         data['payWay'] = payWay
-        data['couponList'] = couponList
+        if couponList is not None:
+            data['couponList'] = couponList
         data['deliverAddress'] = deliverAddress
-        data['invoice'] = invoice
+        if invoice is not None:
+            data['invoice'] = invoice
         data['sellerList'] = sellerList
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body

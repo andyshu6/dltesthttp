@@ -16,6 +16,9 @@ import logging
 from www.common.other import Dict
 
 
+import sys
+
+
 class httpbase:
     def __init__(self, ini_file='..\..\config\http_config.ini'):
 

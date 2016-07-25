@@ -39,7 +39,6 @@
          transaction 函数封装了如下功能:
              1. 事务也可以嵌套，内层事务会自动合并到外层事务中，这种事务模型足够满足99%的需求
 """
-
 import time
 import functools
 import threading
@@ -52,6 +51,7 @@ from other import Dict
 engine = None
 
 # 获取数据库信息
+
 ini_file='..\..\config\db_config.ini'
 config = configparser.ConfigParser()
 config.read(ini_file)

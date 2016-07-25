@@ -151,5 +151,18 @@ class createOrderByShoppingcart(unittest.TestCase):
         ws.login(self.UserShop2.username, self.UserShop2.password)
         ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
         shopcart = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop2.userId, self.Merch1.goodsId)
-        invoice = {"invoiceId": self.UserShop.invoiceId, "invoiceType": "N011","needInvoice": "","invoiceHeader": self.UserShop.invoiceHeader}
-        order = ws.createOrderByShoppingcart(payWay='1',invoice=invoice, )
+        invoice = {"invoiceId":self.UserShop.invoiceId, "invoiceType":"N011","needInvoice":"0","invoiceHeader":self.UserShop.invoiceHeader}
+        deliverAddress = {"deliverAddress":self.UserShop.deliverAddress, "deliverMobile":self.UserShop.deliverMobile, "deliverPerson":self.UserShop.deliverPerson}
+        sellerList = []
+        sellerList.append({"sellerId":self.Merch1.shopcartSellerId,"sellerName":self.Merch1.sellerName,"isYijipayAccount":self.Merch1.isYijipayAccount,"codFlag":self.Merch1.codFlag,
+                           "supportVatInvoice":self.Merch1.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
+                               [{"id":shopcart.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode,
+                                 }]})
+        order = ws.createOrderByShoppingcart(payWay='2',invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
+        self.assertEqual(order.model['success'], '0')
+
+
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_one"))
+    return suite

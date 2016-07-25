@@ -2,78 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="abe84633-e12a-4c5f-b332-9dc23d2817b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/getAllAreaList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/getAreaListByCondition.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/getAreaListStandAlone.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/getBannerList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/getCouponParam.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/getTopicList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_common/userAgreementUrl.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_invoice/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_invoice/addInvoice.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_invoice/delInvoice.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_invoice/getInvoiceList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_invoice/modifyInvoice.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_invoice/setDefaultInvoice.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_login/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_login/login.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_merch/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_merch/getCategoryList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_merch/getMerchDetail.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_merch/getMerchList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_password/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_password/modifyPassword.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_regist/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_regist/getArea.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_regist/getTerminalShopTypeList.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/addShoppingcart.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/createOrderByShoppingcart.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/delShoppingcartByProductIds.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/getPreViewOrderByShoppingcart.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/getShoppingcartSize.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/modifyShoppingcartCount.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart/toShoppingcart.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_version/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/testcase/ts_ws_version/compareAppVersion.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/common/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_getAllAreaList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_getAreaListByCondition.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_getAreaListStandAlone.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_getBannerList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_getCouponParam.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_getTopicList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_common_userAgreementUrl.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_invoice_addInvoice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_invoice_delInvoice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_invoice_getInvoiceList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_invoice_modifyInvoice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_invoice_setDefaultInvoice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_login_login.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_merch_getCategoryList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_merch_getMerchDetail.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_merch_getMerchList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_password_modifyPassword.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_regist_getArea.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_regist_getTerminalShopTypeList.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_addShoppingcart.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_createOrderByShoppingcart.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_delShoppingcartByProductIds.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_getPreViewOrderByShoppingcart.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_getShoppingcartSize.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_modifyShoppingcartCount.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_toShoppingcart.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/testcase/ts_ws_version_compareAppVersion.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/common/database.py" afterPath="$PROJECT_DIR$/www/common/database.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/common/httpbase.py" afterPath="$PROJECT_DIR$/www/common/httpbase.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/common/webservice.py" afterPath="$PROJECT_DIR$/www/common/webservice.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/testcase/.cache/v/cache/lastfailed" afterPath="$PROJECT_DIR$/www/testcase/.cache/v/cache/lastfailed" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/testcase/main.py" afterPath="$PROJECT_DIR$/www/testcase/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/testcase/pyResult.html" afterPath="$PROJECT_DIR$/www/testcase/pyResult.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/testcase/test.py" afterPath="$PROJECT_DIR$/www/testcase/test.py" />
     </list>
     <ignored path="dltest.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="webservice.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="webservice.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/common/webservice.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62116563">
-              <caret line="264" column="43" selection-start-line="264" selection-start-column="43" selection-end-line="264" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="266" column="39" selection-start-line="266" selection-start-column="39" selection-end-line="266" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -154,6 +83,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/testcase/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7868098">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="pyResult.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/testcase/pyResult.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -169,16 +108,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/common/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="82" column="31" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -260,9 +189,9 @@
         <option value="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_getPreViewOrderByShoppingcart.py" />
         <option value="$PROJECT_DIR$/www/common/webservice.py" />
         <option value="$PROJECT_DIR$/www/testcase/ts_ws_shoppingcart_createOrderByShoppingcart.py" />
-        <option value="$PROJECT_DIR$/www/testcase/test.py" />
         <option value="$PROJECT_DIR$/www/common/other.py" />
         <option value="$PROJECT_DIR$/www/testcase/ts_ws_invoice_addInvoice.py" />
+        <option value="$PROJECT_DIR$/www/testcase/test.py" />
       </list>
     </option>
   </component>
@@ -312,38 +241,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="dltesthttp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dltest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dltesthttp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dltest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dltesthttp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testcase" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -626,6 +523,13 @@
       <option name="number" value="Default" />
       <updated>1459912551558</updated>
     </task>
+    <task id="LOCAL-00001" summary="bug#5473">
+      <created>1469433153133</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1469433153133</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -671,10 +575,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1938883" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1938883" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26298702" sideWeight="0.50842994" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -721,6 +626,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="bug#5473" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug#5473" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -813,13 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/testcase/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/common/globalconfig.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -893,14 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/testcase/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/testcase/pyResult.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
@@ -911,8 +805,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/common/webservice.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62116563">
-          <caret line="264" column="43" selection-start-line="264" selection-start-column="43" selection-end-line="264" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="266" column="39" selection-start-line="266" selection-start-column="39" selection-end-line="266" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/testcase/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/testcase/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7868098">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
         </state>
       </provider>

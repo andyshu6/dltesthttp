@@ -83,7 +83,7 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_all(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        allMerchList = ws.getMerchList(rows=None)
+        allMerchList = ws.getMerchList(rows='99999')
         self.assertEqual(allMerchList.model['success'], '0')
         #numMerchList = select_int('select count(*) from dl_goods.dl_goods_area_buyer_type where area_code = \'CHNP035C345D2998\' and buyer_type = \'S011\'')
         #self.assertEqual(len(allMerchList.model['merchList']), numMerchList)
@@ -97,7 +97,7 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_searchName(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        MerchList = ws.getMerchList(merchName=self.Merch1.fullName.encode('utf-8'),rows=None)
+        MerchList = ws.getMerchList(merchName=self.Merch1.fullName.encode('utf-8'),rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
@@ -110,7 +110,7 @@ class getMerchList(unittest.TestCase):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
         # 筛选白酒
-        MerchList1 = ws.getMerchList(merchCategoryCode='C01L0101',rows=None)
+        MerchList1 = ws.getMerchList(merchCategoryCode='C01L0101',rows='999')
         self.assertEqual(MerchList1.model['success'], '0')
         flag = False
         for i in range(0,len(MerchList1.model['merchList'])):
@@ -119,7 +119,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not found')
 
         # 筛选葡萄酒
-        MerchList2 = ws.getMerchList(merchCategoryCode='C01L0102',rows=None)
+        MerchList2 = ws.getMerchList(merchCategoryCode='C01L0102',rows='999')
         self.assertEqual(MerchList2.model['success'], '0')
         for i in range(0,len(MerchList2.model['merchList'])):
             if MerchList2.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
@@ -127,7 +127,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not wine, but can find it.')
 
         # 筛选洋酒
-        MerchList3 = ws.getMerchList(merchCategoryCode='C01L0103',rows=None)
+        MerchList3 = ws.getMerchList(merchCategoryCode='C01L0103',rows='999')
         self.assertEqual(MerchList3.model['success'], '0')
         for i in range(0,len(MerchList3.model['merchList'])):
             if MerchList3.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
@@ -135,7 +135,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not foreign wine, but can find it.')
 
         # 筛选啤酒
-        MerchList4 = ws.getMerchList(merchCategoryCode='C01L0104',rows=None)
+        MerchList4 = ws.getMerchList(merchCategoryCode='C01L0104',rows='999')
         self.assertEqual(MerchList4.model['success'], '0')
         for i in range(0,len(MerchList4.model['merchList'])):
             if MerchList4.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
@@ -143,7 +143,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not beer, but can find it.')
 
         # 筛选其他饮品
-        MerchList = ws.getMerchList(merchCategoryCode='C01X0101',rows=None)
+        MerchList = ws.getMerchList(merchCategoryCode='C01X0101',rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
@@ -155,7 +155,7 @@ class getMerchList(unittest.TestCase):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
         # 筛选茶——筛选茶结果只有绿茶,暂时设置为搜索不出红茶
-        MerchList = ws.getMerchList(merchCategoryCode='C01T01',rows=None)
+        MerchList = ws.getMerchList(merchCategoryCode='C01T01',rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         flag = True
         for i in range(0,len(MerchList.model['merchList'])):
@@ -164,7 +164,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch2.fullName + ' is not found')
 
         # 筛选绿茶——merch为红茶，故判断找不到
-        MerchList = ws.getMerchList(merchCategoryCode='C01T0101',rows=None)
+        MerchList = ws.getMerchList(merchCategoryCode='C01T0101',rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch2.fullName:
@@ -172,7 +172,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch2.fullName + ' is red tea, but can find it in green tea.')
 
         # 筛选红茶
-        MerchList = ws.getMerchList(merchCategoryCode='C01T0102',rows=None)
+        MerchList = ws.getMerchList(merchCategoryCode='C01T0102',rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
@@ -187,7 +187,7 @@ class getMerchList(unittest.TestCase):
         ws.login(self.UserShop.username, self.UserShop.password)
 
         # 筛选白酒香型
-        MerchList = ws.getMerchList(merchPropertyValueCodeList=["PL20103_split_PL20103V01_split_酱香型"],rows=None)
+        MerchList = ws.getMerchList(merchPropertyValueCodeList=["PL20103_split_PL20103V01_split_酱香型"],rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
@@ -196,7 +196,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not found')
 
         # 筛选茶种——祁门红茶
-        MerchList = ws.getMerchList(merchCategoryCode="C01T0102",merchPropertyValueCodeList=["PT20201_split_PT20201V01_split_祁门红茶"],rows=None)
+        MerchList = ws.getMerchList(merchCategoryCode="C01T0102",merchPropertyValueCodeList=["PT20201_split_PT20201V01_split_祁门红茶"],rows='999')
         self.assertEqual(MerchList.model['success'], '0')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
@@ -210,7 +210,7 @@ class getMerchList(unittest.TestCase):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
         # 筛选白酒品牌
-        MerchList = ws.getMerchList(merchBrandId="B00003",rows=None)
+        MerchList = ws.getMerchList(merchBrandId="B00003",rows='999')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
@@ -221,7 +221,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not found')
 
         # 筛选茶品牌
-        MerchList = ws.getMerchList(merchBrandId="0654aa950b4345f59d1d33435dc0196a",rows=None)
+        MerchList = ws.getMerchList(merchBrandId="0654aa950b4345f59d1d33435dc0196a",rows='999')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch2.fullName:
@@ -235,7 +235,7 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_sellerId(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        MerchList = ws.getMerchList(sellerId=self.DealMgr.companyId,rows=None)
+        MerchList = ws.getMerchList(sellerId=self.DealMgr.companyId,rows='999')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch2.fullName:
@@ -247,7 +247,7 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_priceRange(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        MerchList = ws.getMerchList(lowPrice="11900",highPrice="12100",rows=None)
+        MerchList = ws.getMerchList(lowPrice="11900",highPrice="12100",rows='999')
         flag = False
         # 商品1在价格区间
         for i in range(0,len(MerchList.model['merchList'])):
@@ -265,13 +265,13 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_priceLimitUpper(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        MerchList = ws.getMerchList(highPrice="12100",rows=None)
+        MerchList = ws.getMerchList(highPrice="12100",rows='999')
         flag = False
         # 商品1在价格区间
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
                 flag = True
-        self.assertEqual(flag, True, self.Merch1.fullName + ' is not found')
+        self.assertEqual(flag, True, self.Merch1.fullName.encode('utf-8') + ' is not found')
 
         # 商品2不在价格区间
         for i in range(0,len(MerchList.model['merchList'])):
@@ -283,7 +283,7 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_priceLimitLower(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        MerchList = ws.getMerchList(lowPrice="99900",rows=None)
+        MerchList = ws.getMerchList(lowPrice="99900",rows='999')
         flag = False
         # 商品2在价格区间
         for i in range(0,len(MerchList.model['merchList'])):
@@ -304,22 +304,22 @@ class getMerchList(unittest.TestCase):
         ws.login(self.UserShop.username, self.UserShop.password)
 
         # 名称升序排列
-        MerchListNameAsc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="0",sortType="0",rows=None)
+        MerchListNameAsc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="0",sortType="0",rows='999')
         self.assertEqual(MerchListNameAsc.model['merchList'][0]['merchName'].encode('utf-8'),self.Merch1.fullName)
         self.assertEqual(MerchListNameAsc.model['merchList'][1]['merchName'].encode('utf-8'),self.Merch2.fullName)
 
         # 名称降序排列
-        MerchListNameDesc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="0",sortType="1",rows=None)
+        MerchListNameDesc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="0",sortType="1",rows='999')
         self.assertEqual(MerchListNameDesc.model['merchList'][0]['merchName'].encode('utf-8'),self.Merch2.fullName)
         self.assertEqual(MerchListNameDesc.model['merchList'][1]['merchName'].encode('utf-8'),self.Merch1.fullName)
 
         # 价格升序排列
-        MerchListPriceAsc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="1",sortType="0",rows=None)
+        MerchListPriceAsc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="1",sortType="0",rows='999')
         self.assertEqual(MerchListPriceAsc.model['merchList'][0]['merchName'].encode('utf-8'),self.Merch1.fullName)
         self.assertEqual(MerchListPriceAsc.model['merchList'][1]['merchName'].encode('utf-8'),self.Merch2.fullName)
 
         # 价格降序排列
-        MerchListPriceDesc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="1",sortType="1",rows=None)
+        MerchListPriceDesc = ws.getMerchList(sellerId=self.DealMgr.companyId,sortField="1",sortType="1",rows='999')
         self.assertEqual(MerchListPriceDesc.model['merchList'][0]['merchName'].encode('utf-8'),self.Merch2.fullName)
         self.assertEqual(MerchListPriceDesc.model['merchList'][1]['merchName'].encode('utf-8'),self.Merch1.fullName)
 
@@ -328,7 +328,7 @@ class getMerchList(unittest.TestCase):
     def test_getMerchList_page(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        allMerchList = ws.getMerchList(rows=None)
+        allMerchList = ws.getMerchList(rows='999')
         numMerch = len(allMerchList.model['merchList'])
         rows = numMerch/15
 

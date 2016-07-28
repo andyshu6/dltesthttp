@@ -368,3 +368,70 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+
+    # ----------------------------------  收货地址接口  ----------------------------------------------
+    #添加收货地址
+    def addDeliverAddress(self,areaProvinceCode=None,areaCityCode=None,areaDistrictCode=None,addressDetail=None,zipCode=None,deliverPerson=None,deliverMobile=None,deliverTel=None,isDefault=None,token=None):
+        url = '/mydl/deliverAddress/addDeliverAddress.json'
+        data = {}
+        data['deliverAddress'] = {}
+        data['deliverAddress']['areaProvinceCode'] = areaProvinceCode
+        data['deliverAddress']['areaCityCode'] = areaCityCode
+        data['deliverAddress']['areaDistrictCode'] = areaDistrictCode
+        data['deliverAddress']['addressDetail'] = addressDetail
+        data['deliverAddress']['zipCode'] = zipCode
+        data['deliverAddress']['deliverPerson'] = deliverPerson
+        data['deliverAddress']['deliverMobile'] = deliverMobile
+        data['deliverAddress']['deliverTel'] = deliverTel
+        data['deliverAddress']['isDefault'] = isDefault
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取收货地址列表
+    def getDeliverAddressList(self,token=None):
+        url='/mydl/deliverAddress/getDeliverAddressList.json'
+        data={}
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #删除收货地址
+    def delDeliverAddress(self,token=None,deliverAddressId=None):
+        url='/mydl/deliverAddress/delDeliverAddress.json'
+        data={}
+        data['deliverAddressId']=deliverAddressId
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #修改收货地址
+    def modifyDeliverAddress(self,addressId=None,addressDetail=None,areaProvinceCode=None,areaCityCode=None,areaDistrictCode=None,zipCode=None,deliverPerson=None,deliverMobile=None,deliverTel=None,token=None):
+        url='/mydl/deliverAddress/modifyDeliverAddress.json'
+        data={}
+        data['deliverAddress']={}
+        data['deliverAddress']['addressId']=addressId
+        data['deliverAddress']['addressDetail']=addressDetail
+        data['deliverAddress']['areaProvinceCode']=areaProvinceCode
+        data['deliverAddress']['areaCityCode']=areaCityCode
+        data['deliverAddress']['areaDistrictCode']=areaDistrictCode
+        data['deliverAddress']['zipCode']=zipCode
+        data['deliverAddress']['deliverPerson']=deliverPerson
+        data['deliverAddress']['deliverMobile']=deliverMobile
+        data['deliverAddress']['deliverTel']=deliverTel
+        self.wrapHttpBase.post(url,data,token=None)
+        return self.wrapHttpBase.body
+
+    #设置默认收货地址
+    def setDefaultDeliverAddress(self,deliverAddressId=None,token=None):
+        url='/mydl/deliverAddress/setDefaultDeliverAddress.json'
+        data={}
+        data['deliverAddressId']=deliverAddressId
+        self.wrapHttpBase.post(url,data,token=None)
+        return self.wrapHttpBase.body
+
+    #获取终端店地址
+    def getTerminalAddress(self,terminalCustomerId=None,token=None):
+        url='/mydl/deliverAddress/getTerminalAddress.json'
+        data={}
+        data['terminalCustomerId']=terminalCustomerId
+        self.wrapHttpBase.post(url,data,token=None)
+        return self.wrapHttpBase.body
+

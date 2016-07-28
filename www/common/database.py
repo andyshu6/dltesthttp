@@ -52,7 +52,7 @@ engine = None
 
 # 获取数据库信息
 
-ini_file='..\..\config\db_config.ini'
+ini_file='../../config/db_config.ini'
 config = configparser.ConfigParser()
 config.read(ini_file)
 hostini = config['DATABASE']['host']

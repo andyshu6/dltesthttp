@@ -229,7 +229,7 @@ class getMerchList(unittest.TestCase):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
                 flag = False
                 break
-        self.assertEqual(flag, True, self.Merch2.fullName + ' is not found')
+        self.assertEqual(flag, True, self.Merch2.fullName.encode('utf-8') + ' is not found')
 
     # S7.根据卖家ID筛选
     def test_getMerchList_sellerId(self):

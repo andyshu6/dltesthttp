@@ -4,13 +4,14 @@
 import HTMLTestRunner
 
 import sys
-path = sys.path[0] + '\\..\\..'
+path = sys.path[0] + '/../..'
 sys.path.append(path)
 import unittest
 
 from www.testcase.ts_ws_login import login
 from www.common.database import *
 from www.testcase.ts_ws_shoppingcart import createOrderByShoppingcart
+from www.testcase.ts_ws_password import modifyPassword
 
 if __name__ == '__main__':
 
@@ -22,7 +23,8 @@ if __name__ == '__main__':
     #filePath = "pyResult.html"
     #fp = file(filePath,'wb')
     #runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='Python Test Report',description='This  is Python  Report')
-    runner.run(createOrderByShoppingcart.suite())
+    runner.run(login.suite())
+    runner.run(modifyPassword.suite())
     #fp.close()
     #runner.run(ts_ws_invoice_getInvoiceList.suite())
     #runner.run(ts_ws_invoice_modifyInvoice.suite())

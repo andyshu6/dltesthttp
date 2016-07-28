@@ -214,11 +214,11 @@ class getCategoryList(unittest.TestCase):
         baijiuList = ws.getCategoryList()
         self.assertEqual(baijiuList.model['success'], '0')
         self.assertEqual(baijiuList.model['categoryCode'], 'C01L0101')
-        # 校验品牌数量
-        numBaijiuBrand = select_int('select count(*) from dlcategory.dl_brand where brand_id in (select brand_id from dlcategory.dl_brand_ref_category where category_id = \'C01L0101\' and brand_status = \'01\') and brand_status != \'99\'')
+        # 校验品牌数量dlcategroy
+        numBaijiuBrand = select_int('select count(*) from dlcategroy.dl_brand where brand_id in (select brand_id from dlcategroy.dl_brand_ref_category where category_id = \'C01L0101\' and brand_status = \'01\') and brand_status != \'99\'')
         self.assertEqual(len(baijiuList.model['categoryItem']['brandTupleList']), numBaijiuBrand)
         # 校验香型数量
-        numBaijiuProperty = select_int('select count(*) from dlcategory.dl_property_value where property_id = \'PL20103\'')
+        numBaijiuProperty = select_int('select count(*) from dlcategroy.dl_property_value where property_id = \'PL20103\'')
         self.assertEqual(len(baijiuList.model['categoryItem']['odorTupleList']), numBaijiuProperty)
 
     # S2.获取葡萄酒品牌列表
@@ -229,10 +229,10 @@ class getCategoryList(unittest.TestCase):
         self.assertEqual(putaojiuList.model['success'], '0')
         self.assertEqual(putaojiuList.model['categoryCode'], 'C01L0102')
         # 校验品牌数量
-        numPutaojiuBrand = select_int('select count(*) from dlcategory.dl_brand where brand_id in (select brand_id from dlcategory.dl_brand_ref_category where category_id = \'C01L0102\' and brand_status = \'01\') and brand_status != \'99\'')
+        numPutaojiuBrand = select_int('select count(*) from dlcategroy.dl_brand where brand_id in (select brand_id from dlcategroy.dl_brand_ref_category where category_id = \'C01L0102\' and brand_status = \'01\') and brand_status != \'99\'')
         self.assertEqual(len(putaojiuList.model['categoryItem']['brandTupleList']), numPutaojiuBrand)
         # 校验产地
-        numPutaojiuProperty = select_int('select count(*) from dlcategory.dl_property_value where property_id = \'PL20202\'')
+        numPutaojiuProperty = select_int('select count(*) from dlcategroy.dl_property_value where property_id = \'PL20202\'')
         self.assertEqual(len(putaojiuList.model['categoryItem']['productionTupleList']), numPutaojiuProperty)
 
     # S3.获取洋酒的品牌列表
@@ -243,13 +243,13 @@ class getCategoryList(unittest.TestCase):
         self.assertEqual(yangjiuList.model['success'], '0')
         self.assertEqual(yangjiuList.model['categoryCode'], 'C01L0103')
         # 校验品牌数量
-        numYangjiuBrand = select_int('select count(*) from dlcategory.dl_brand where brand_id in (select brand_id from dlcategory.dl_brand_ref_category where category_id = \'C01L0103\' and brand_status = \'01\') and brand_status != \'99\'')
+        numYangjiuBrand = select_int('select count(*) from dlcategroy.dl_brand where brand_id in (select brand_id from dlcategroy.dl_brand_ref_category where category_id = \'C01L0103\' and brand_status = \'01\') and brand_status != \'99\'')
         self.assertEqual(len(yangjiuList.model['categoryItem']['brandTupleList']), numYangjiuBrand)
         # 校验分类数量
-        numYangjiuClassify = select_int('select count(*) from dlcategory.dl_property_value where property_id = \'PL20301\'')
+        numYangjiuClassify = select_int('select count(*) from dlcategroy.dl_property_value where property_id = \'PL20301\'')
         self.assertEqual(len(yangjiuList.model['categoryItem']['classifyTupleList']), numYangjiuClassify)
         # 校验国家数量
-        numYangjiuCountry = select_int('select count(*) from dlcategory.dl_property_value where property_id = \'PL20302\'')
+        numYangjiuCountry = select_int('select count(*) from dlcategroy.dl_property_value where property_id = \'PL20302\'')
         self.assertEqual(len(yangjiuList.model['categoryItem']['countryTupleList']), numYangjiuCountry)
 
     # S4.获取啤酒的品牌列表
@@ -260,13 +260,13 @@ class getCategoryList(unittest.TestCase):
         self.assertEqual(pijiuList.model['success'], '0')
         self.assertEqual(pijiuList.model['categoryCode'], 'C01L0104')
         # 校验品牌数量
-        numPijiuBrand = select_int('select count(*) from dlcategory.dl_brand where brand_id in (select brand_id from dlcategory.dl_brand_ref_category where category_id = \'C01L0104\' and brand_status = \'01\') and brand_status != \'99\'')
+        numPijiuBrand = select_int('select count(*) from dlcategroy.dl_brand where brand_id in (select brand_id from dlcategroy.dl_brand_ref_category where category_id = \'C01L0104\' and brand_status = \'01\') and brand_status != \'99\'')
         self.assertEqual(len(pijiuList.model['categoryItem']['brandTupleList']), numPijiuBrand)
         # 校验分类数量
-        numPijiuClassify = select_int('select count(*) from dlcategory.dl_property_value where property_id = \'PL20401\'')
+        numPijiuClassify = select_int('select count(*) from dlcategroy.dl_property_value where property_id = \'PL20401\'')
         self.assertEqual(len(pijiuList.model['categoryItem']['classifyTupleList']), numPijiuClassify)
         # 校验国家数量
-        numPijiuCountry = select_int('select count(*) from dlcategory.dl_property_value where property_id = \'PL20402\'')
+        numPijiuCountry = select_int('select count(*) from dlcategroy.dl_property_value where property_id = \'PL20402\'')
         self.assertEqual(len(pijiuList.model['categoryItem']['countryTupleList']), numPijiuCountry)
 
     # S5.获取茶的品牌列表
@@ -277,7 +277,7 @@ class getCategoryList(unittest.TestCase):
         self.assertEqual(teaList.model['success'], '0')
         self.assertEqual(teaList.model['categoryCode'], 'C01T01')
         # 校验茶类数量
-        numTeaClassify = select_int('select count(*) from dlcategory.dlcategory where parent_category_id = \'C01T01\'')
+        numTeaClassify = select_int('select count(*) from dlcategroy.dl_category where parent_category_id = \'C01T01\'')
         self.assertEqual(len(teaList.model['categoryItem']), numTeaClassify)
         # 校验茶种数量——后续补
 

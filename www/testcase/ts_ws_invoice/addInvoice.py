@@ -87,17 +87,17 @@ class addInvoice(unittest.TestCase):
         addInvNormalMin = ws.addInvoice(invoiceHeader = self.UserShopMin.invoiceHeader)
         self.assertEqual(addInvNormalMin.model['success'], '0')
         addInvNormalMinList = ws.getInvoiceList()
-        self.assertGetNormalSuccess(addInvNormalMinList, '1')
+        self.assertGetNormalSuccess(addInvNormalMinList, self.UserShopMin.invoiceHeader)
 
 
     #S3. 增加最大字符的普通发票
     def test_addInvoice_normalMax(self):
         ws = webservice()
         ws.login(self.UserShop2.username, self.UserShop2.password)
-        addInvNormalMax = ws.addInvoice(invoiceHeader = 'abcdefghijklmnopqrstuvwxyz123456790一二三四五六七')
+        addInvNormalMax = ws.addInvoice(invoiceHeader = self.UserShopMax.invoiceHeader)
         self.assertEqual(addInvNormalMax.model['success'], '0')
         addInvNormalMaxList = ws.getInvoiceList()
-        self.assertGetNormalSuccess(addInvNormalMaxList, 'abcdefghijklmnopqrstuvwxyz123456790一二三四五六七')
+        self.assertGetNormalSuccess(addInvNormalMaxList, self.UserShopMax.invoiceHeader)
 
     #S4. 增加抬头为空的普通发票
     def test_addInvoice_normalNull(self):

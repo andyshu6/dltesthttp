@@ -134,8 +134,8 @@ class getMerchDetail(unittest.TestCase):
 
 
     def tearDown(self):
-        update('update dl_goods.dl_goods set on_hand_inventory = ? where goods_id = ?', self.Merch1.onHandInventory, self.Merch1.goodsId)
-        update('update dl_goods.dl_goods set goods_status = \'01\' where goods_id = ?', self.Merch1.goodsId)
+        update('update dlmerchandise.dl_goods set on_hand_inventory = ? where goods_id = ?', self.Merch1.onHandInventory, self.Merch1.goodsId)
+        update('update dlmerchandise.dl_goods set goods_status = \'01\' where goods_id = ?', self.Merch1.goodsId)
 
     def assertGetMerchDetail(self, rsp, Merch, code = 200, success='0'):
         self.assertEqual(rsp.code, code)

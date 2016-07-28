@@ -20,7 +20,7 @@ import sys
 
 
 class httpbase:
-    def __init__(self, ini_file='..\..\config\http_config.ini'):
+    def __init__(self, ini_file='../../config/http_config.ini'):
 
         # 从配置文件中读取接口服务器IP、域名，端口
         config = configparser.ConfigParser()

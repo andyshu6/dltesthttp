@@ -98,7 +98,7 @@ class getMerchDetail(unittest.TestCase):
     def test_getMerchDetail_stockout(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        update('update dl_goods.dl_goods set on_hand_inventory = 0 where goods_id = ?', self.Merch1.goodsId)
+        update('update dlmerchandise.dl_goods set on_hand_inventory = 0 where goods_id = ?', self.Merch1.goodsId)
         merchDetail = ws.getMerchDetail(merchId=self.Merch1.goodsId)
         self.assertEqual(merchDetail.model['merchDetail']['merchStatus'],'1')
 
@@ -106,7 +106,7 @@ class getMerchDetail(unittest.TestCase):
     def test_getMerchDetail_soldout(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        update('update dl_goods.dl_goods set goods_status = \'02\' where goods_id = ?', self.Merch1.goodsId)
+        update('update dlmerchandise.dl_goods set goods_status = \'02\' where goods_id = ?', self.Merch1.goodsId)
         merchDetail = ws.getMerchDetail(merchId=self.Merch1.goodsId)
         self.assertEqual(merchDetail.model['merchDetail']['merchStatus'],'2')
 
@@ -114,7 +114,7 @@ class getMerchDetail(unittest.TestCase):
     def test_getMerchDetail_lock(self):
         ws = webservice()
         ws.login(self.UserShop.username, self.UserShop.password)
-        update('update dl_goods.dl_goods set goods_status = \'03\' where goods_id = ?', self.Merch1.goodsId)
+        update('update dlmerchandise.dl_goods set goods_status = \'03\' where goods_id = ?', self.Merch1.goodsId)
         merchDetail = ws.getMerchDetail(merchId=self.Merch1.goodsId)
         self.assertEqual(merchDetail.model['merchDetail']['merchStatus'],'2')
 

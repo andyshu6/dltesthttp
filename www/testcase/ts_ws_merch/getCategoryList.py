@@ -292,7 +292,7 @@ class getCategoryList(unittest.TestCase):
         self.assertEqual(drinkList.model['success'], '0')
         self.assertEqual(drinkList.model['categoryCode'], 'C01X0101')
         # 校验茶类数量
-        numDrinkBrand = select_int('select count(*) from dlcategory.dl_brand where brand_id in (select brand_id from dlcategory.dl_brand_ref_category where category_id = \'C01X0101\' and brand_status = \'01\') and brand_status != \'99\'')
+        numDrinkBrand = select_int('select count(*) from dlcategroy.dl_brand where brand_id in (select brand_id from dlcategroy.dl_brand_ref_category where category_id = \'C01X0101\' and brand_status = \'01\') and brand_status != \'99\'')
         self.assertEqual(len(drinkList.model['categoryItem']['brandTupleList']), numDrinkBrand)
 
 

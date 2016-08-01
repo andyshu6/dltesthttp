@@ -12,6 +12,8 @@ from www.testcase.ts_ws_login import login
 from www.common.database import *
 from www.testcase.ts_ws_shoppingcart import createOrderByShoppingcart
 from www.testcase.ts_ws_password import modifyPassword
+from www.testcase.ts_ws_merch import getMerchList
+from www.testcase.ts_ws_shoppingcart import addShoppingcart
 
 if __name__ == '__main__':
 
@@ -23,8 +25,8 @@ if __name__ == '__main__':
     #filePath = "pyResult.html"
     #fp = file(filePath,'wb')
     #runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='Python Test Report',description='This  is Python  Report')
-    runner.run(login.suite())
-    runner.run(modifyPassword.suite())
+    runner.run(createOrderByShoppingcart.suite())
+    #runner.run(modifyPassword.suite())
     #fp.close()
     #runner.run(ts_ws_invoice_getInvoiceList.suite())
     #runner.run(ts_ws_invoice_modifyInvoice.suite())

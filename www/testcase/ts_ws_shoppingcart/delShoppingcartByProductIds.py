@@ -101,15 +101,15 @@ class delShoppingcartByProductIds(unittest.TestCase):
         delMerch = ws.delShoppingcartByProductIds(delList=[{"shoppingCartId":'NotExist',"merchId":'NotExist'}])
         self.assertEqual(delMerch.model['success'], '1')
 
-    # S5.删除购物车时购物车ID和商品ID不匹配——错误 #5427
-    def test_delShoppingcartByProductIds_notMatch(self):
-        ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
-        shopcart = ws.toShoppingcart()
-        shopcartId = shopcart.model['sellerList'][0]['merchList'][0]['id']
-        delMerch = ws.delShoppingcartByProductIds(delList=[{"shoppingCartId":shopcartId,"merchId":self.Merch2.goodsId}])
-        self.assertEqual(delMerch.model['success'], '1')
+    # S5.删除购物车时购物车ID和商品ID不匹配——错误 #5427 不做修改
+    # def test_delShoppingcartByProductIds_notMatch(self):
+    #     ws = webservice()
+    #     ws.login(self.UserShop.username, self.UserShop.password)
+    #     ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
+    #     shopcart = ws.toShoppingcart()
+    #     shopcartId = shopcart.model['sellerList'][0]['merchList'][0]['id']
+    #     delMerch = ws.delShoppingcartByProductIds(delList=[{"shoppingCartId":shopcartId,"merchId":self.Merch2.goodsId}])
+    #     self.assertEqual(delMerch.model['success'], '1')
 
 
     def tearDown(self):
@@ -123,5 +123,5 @@ def suite():
     suite.addTest(delShoppingcartByProductIds("test_delShoppingcartByProductIds_many"))
     suite.addTest(delShoppingcartByProductIds("test_delShoppingcartByProductIds_other"))
     suite.addTest(delShoppingcartByProductIds("test_delShoppingcartByProductIds_notExist"))
-    suite.addTest(delShoppingcartByProductIds("test_delShoppingcartByProductIds_notMatch"))
+    #suite.addTest(delShoppingcartByProductIds("test_delShoppingcartByProductIds_notMatch"))
     return suite

@@ -97,8 +97,6 @@ class setDefaultDeliverAddress(unittest.TestCase):
         deliverAddressId2=addressIdSql2.address_id
         setDefaultDeliverAddress_result=ws.setDefaultDeliverAddress(deliverAddressId=deliverAddressId1)
         self.assertEqual(setDefaultDeliverAddress_result.model['success'],'0')
-        deliverAddressList123=ws.getDeliverAddressList()
-
         deliverAddressDefault1=select_one('select is_default from dlcompany.dl_biz_delivery_address where address_id=?',deliverAddressId1)
         self.assertEqual(deliverAddressDefault1.is_default,'1')
         deliverAddressDefault2=select_one('select is_default from dlcompany.dl_biz_delivery_address where address_id=?',deliverAddressId2)

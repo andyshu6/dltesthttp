@@ -124,12 +124,12 @@ class addShoppingcart(unittest.TestCase):
         addMerch = ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount=int(self.Merch1.onHandInventory)+1, sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
         self.assertEqual(addMerch.model['success'], '2')
 
-    # S10.配送商名称、id和商品id不匹配——错误 #5399
-    def test_addShoppingcart_addMerchUnMatch(self):
-        ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        addMerch = ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch4.seller_store_id, sellerName=self.Merch4.sellerName)
-        self.assertEqual(addMerch.model['success'], '1')
+    # S10.配送商名称、id和商品id不匹配——错误 #5399 不做修改
+    # def test_addShoppingcart_addMerchUnMatch(self):
+    #     ws = webservice()
+    #     ws.login(self.UserShop.username, self.UserShop.password)
+    #     addMerch = ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch4.seller_store_id, sellerName=self.Merch4.sellerName)
+    #     self.assertEqual(addMerch.model['success'], '1')
 
     def tearDown(self):
         update('delete from danlu_cd_database.dl_shoppingcart where user_id = ?', self.UserShop.userId)
@@ -146,5 +146,5 @@ def suite():
     suite.addTest(addShoppingcart("test_addShoppingcart_addMerchNoSaleRight"))
     suite.addTest(addShoppingcart("test_addShoppingcart_addMerchNoSold"))
     suite.addTest(addShoppingcart("test_addShoppingcart_addMerchUpSold"))
-    suite.addTest(addShoppingcart("test_addShoppingcart_addMerchUnMatch"))
+    #suite.addTest(addShoppingcart("test_addShoppingcart_addMerchUnMatch"))
     return suite

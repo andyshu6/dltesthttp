@@ -136,6 +136,8 @@ from www.common.webservice import *
 from www.common.excel import eData
 from www.common.database import update
 from www.common.model import Shoppingcart
+from www.common.database import select_one
+import time
 
 class createOrderByShoppingcart(unittest.TestCase):
 
@@ -145,24 +147,186 @@ class createOrderByShoppingcart(unittest.TestCase):
     Merch2 = eData('Merch2')
     Merch4 = eData('Merch4')
 
-    # S1.提交活动付款订单
+
+
+    # S1.从购物车提交一个商品的货到付款订单
     def test_createOrderByShoppingcart_one(self):
         ws = webservice()
-        ws.login(self.UserShop2.username, self.UserShop2.password)
+        ws.login(self.UserShop.username, self.UserShop.password)
         ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
-        shopcart = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop2.userId, self.Merch1.goodsId)
+        shopcart = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch1.goodsId)
         invoice = {"invoiceId":self.UserShop.invoiceId, "invoiceType":"N011","needInvoice":"0","invoiceHeader":self.UserShop.invoiceHeader}
         deliverAddress = {"deliverAddress":self.UserShop.deliverAddress, "deliverMobile":self.UserShop.deliverMobile, "deliverPerson":self.UserShop.deliverPerson}
         sellerList = []
         sellerList.append({"sellerId":self.Merch1.shopcartSellerId,"sellerName":self.Merch1.sellerName,"isYijipayAccount":self.Merch1.isYijipayAccount,"codFlag":self.Merch1.codFlag,
                            "supportVatInvoice":self.Merch1.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
-                               [{"id":shopcart.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode,
-                                 }]})
+                               [{"id":shopcart.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode}]})
         order = ws.createOrderByShoppingcart(payWay='2',invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
         self.assertEqual(order.model['success'], '0')
 
+        # 校验订单号和交易号是否匹配
+        orderInfoDb = select_one('select * from dlorder.dl_order_orderinfo where pay_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo'])
+        # 支付方式为货到付款
+        self.assertEqual(orderInfoDb.pay_type, '2')
+        self.assertEqual(orderInfoDb.order_no, order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo'])
+        self.assertEqual(orderInfoDb.order_amount, int(order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']))
+
+        # 校验发票是否是提交的发票
+        orderInvoiceDb = select_one('select * from dlorder.dl_order_orderinvoice where pay_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo'])
+        self.assertEqual(orderInvoiceDb.invoice_header, invoice['invoiceHeader'])
+
+        # 校验收货地址是否是提交的收货地址
+        orderDetailDb = select_one('select * from dlorder.dl_order_orderdetail where order_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo'])
+        self.assertEqual(orderDetailDb.buyer_id, self.UserShop.companyId)
+        self.assertEqual(orderDetailDb.receive_person, deliverAddress['deliverPerson'])
+        self.assertEqual(orderDetailDb.receive_tel, deliverAddress['deliverMobile'])
+        self.assertEqual(orderDetailDb.receive_address, deliverAddress['deliverAddress'])
+
+        # 校验商品是否是提交的商品
+        orderItemDb = select_one('select * from dlorder.dl_order_orderitem where order_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo'])
+        self.assertEqual(orderItemDb.merchandise_id, self.Merch1.goodsId)
+        self.assertEqual(orderItemDb.num, 1)
+
+
+
+    # S2.从购物车提交两个商品一个配送商的货到付款订单
+    def test_createOrderByShoppingcart_two(self):
+        ws = webservice()
+        ws.login(self.UserShop.username, self.UserShop.password)
+        ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
+        shopcart1 = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch1.goodsId)
+        ws.addShoppingcar(merchId=self.Merch2.goodsId, merchCount='1', sellerId=self.Merch2.seller_store_id, sellerName=self.Merch2.sellerName)
+        shopcart2 = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch2.goodsId)
+        invoice = {"invoiceId":self.UserShop.invoiceId, "invoiceType":"N011","needInvoice":"0","invoiceHeader":self.UserShop.invoiceHeader}
+        deliverAddress = {"deliverAddress":self.UserShop.deliverAddress, "deliverMobile":self.UserShop.deliverMobile, "deliverPerson":self.UserShop.deliverPerson}
+        sellerList = []
+        sellerList.append({"sellerId":self.Merch1.shopcartSellerId,"sellerName":self.Merch1.sellerName,"isYijipayAccount":self.Merch1.isYijipayAccount,"codFlag":self.Merch1.codFlag,
+                           "supportVatInvoice":self.Merch1.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
+                               [{"id":shopcart1.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode},
+                                {"id":shopcart2.id,"merchId":self.Merch2.goodsId,"merchBarCode":self.Merch2.productBarCode}]})
+        order = ws.createOrderByShoppingcart(payWay='2',invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
+        self.assertEqual(order.model['success'], '0')
+
+        # 校验订单号和交易号是否匹配
+        orderInfoDb = select_one('select * from dlorder.dl_order_orderinfo where pay_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo'])
+        # 支付方式为货到付款
+        self.assertEqual(orderInfoDb.pay_type, '2')
+        self.assertEqual(orderInfoDb.order_no, order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo'])
+        self.assertEqual(orderInfoDb.order_amount, int(order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']))
+
+
+    # S3.从购物车提交两个配送商的货到付款订单
+    def test_createOrderByShoppingcart_twoDealer(self):
+        update('update dlcompany.dl_store_base_info set isCOD = ? where store_id = ?', 1,self.Merch4.storeId)
+        ws = webservice()
+        ws.login(self.UserShop.username, self.UserShop.password)
+        ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
+        shopcart1 = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch1.goodsId)
+        ws.addShoppingcar(merchId=self.Merch4.goodsId, merchCount='1', sellerId=self.Merch4.seller_store_id, sellerName=self.Merch4.sellerName)
+        shopcart2 = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch4.goodsId)
+        invoice = {"invoiceId":self.UserShop.invoiceId, "invoiceType":"N011","needInvoice":"0","invoiceHeader":self.UserShop.invoiceHeader}
+        deliverAddress = {"deliverAddress":self.UserShop.deliverAddress, "deliverMobile":self.UserShop.deliverMobile, "deliverPerson":self.UserShop.deliverPerson}
+        sellerList = []
+        sellerList.append({"sellerId":self.Merch1.shopcartSellerId,"sellerName":self.Merch1.sellerName,"isYijipayAccount":self.Merch1.isYijipayAccount,"codFlag":self.Merch1.codFlag,
+                           "supportVatInvoice":self.Merch1.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
+                               [{"id":shopcart1.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode}]})
+        sellerList.append({"sellerId":self.Merch4.shopcartSellerId,"sellerName":self.Merch4.sellerName,"isYijipayAccount":self.Merch4.isYijipayAccount,"codFlag":"0_split_0",
+                           "supportVatInvoice":self.Merch4.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
+                               [{"id":shopcart2.id,"merchId":self.Merch4.goodsId,"merchBarCode":self.Merch4.productBarCode}]})
+        order = ws.createOrderByShoppingcart(payWay='2',invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
+        self.assertEqual(order.model['success'], '0')
+
+        # 校验订单号和交易号是否匹配
+        orderInfoDb = select_one('select * from dlorder.dl_order_orderinfo where pay_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo'])
+        # 支付方式为货到付款
+        self.assertEqual(orderInfoDb.pay_type, '2')
+        self.assertEqual(orderInfoDb.order_no, order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo'])
+        self.assertEqual(orderInfoDb.order_amount, int(order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']))
+
+        # 校验订单号和交易号是否匹配
+        orderInfoDb = select_one('select * from dlorder.dl_order_orderinfo where pay_no = ?', order.model['createOrderInfoModel']['cashOnDeliveryModelList'][1]['paymentNo'])
+        # 支付方式为货到付款
+        self.assertEqual(orderInfoDb.pay_type, '2')
+        self.assertEqual(orderInfoDb.order_no, order.model['createOrderInfoModel']['cashOnDeliveryModelList'][1]['orderNo'])
+        self.assertEqual(orderInfoDb.order_amount, int(order.model['createOrderInfoModel']['cashOnDeliveryModelList'][1]['price']))
+
+    # S4.无库存商品提交订单
+    def test_createOrderByShoppingcart_outStock(self):
+        ws = webservice()
+        ws.login(self.UserShop.username, self.UserShop.password)
+        ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
+        shopcart = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch1.goodsId)
+        # 设置库存为空
+        update('update dlmerchandise.dl_goods set on_hand_inventory = ? where goods_id = ?', 0, self.Merch1.goodsId)
+
+        invoice = {"invoiceId":self.UserShop.invoiceId, "invoiceType":"N011","needInvoice":"0","invoiceHeader":self.UserShop.invoiceHeader}
+        deliverAddress = {"deliverAddress":self.UserShop.deliverAddress, "deliverMobile":self.UserShop.deliverMobile, "deliverPerson":self.UserShop.deliverPerson}
+        sellerList = []
+        sellerList.append({"sellerId":self.Merch1.shopcartSellerId,"sellerName":self.Merch1.sellerName,"isYijipayAccount":self.Merch1.isYijipayAccount,"codFlag":self.Merch1.codFlag,
+                           "supportVatInvoice":self.Merch1.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
+                               [{"id":shopcart.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode}]})
+        order = ws.createOrderByShoppingcart(payWay='2',invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
+        self.assertEqual(order.model['success'], '2')
+        self.assertEqual(order.model['failedReasons']['noInventoryList'][0],self.Merch1.fullName)
+
+
+    # S5.无售卖权商品提交订单
+    def test_createOrderByShoppingcart_noSalerright(self):
+        ws = webservice()
+        ws.login(self.UserShop.username, self.UserShop.password)
+        ws.addShoppingcar(merchId=self.Merch1.goodsId, merchCount='1', sellerId=self.Merch1.seller_store_id, sellerName=self.Merch1.sellerName)
+        shopcart = Shoppingcart.find_first('where user_id = ? and goods_id = ?', self.UserShop.userId, self.Merch1.goodsId)
+        # 设置为无售卖权
+        update('update dlsaleright.dl_one2many_salesright set buyer_type = ? where firstTier_salesRight_code = ? and buyer_type = ?', 'S016',self.Merch1.SalesrightCode, 'S011')
+        #update('update dlsaleright.dl_firsttier_salesright set firstTier_salesRight_status = ? where seller_id = ? and product_barCode = ?', 99, self.Merch1.sellerId, self.Merch1.productBarCode)
+
+        invoice = {"invoiceId":self.UserShop.invoiceId, "invoiceType":"N011","needInvoice":"0","invoiceHeader":self.UserShop.invoiceHeader}
+        deliverAddress = {"deliverAddress":self.UserShop.deliverAddress, "deliverMobile":self.UserShop.deliverMobile, "deliverPerson":self.UserShop.deliverPerson}
+        sellerList = []
+        sellerList.append({"sellerId":self.Merch1.shopcartSellerId,"sellerName":self.Merch1.sellerName,"isYijipayAccount":self.Merch1.isYijipayAccount,"codFlag":self.Merch1.codFlag,
+                           "supportVatInvoice":self.Merch1.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
+                               [{"id":shopcart.id,"merchId":self.Merch1.goodsId,"merchBarCode":self.Merch1.productBarCode}]})
+        time.sleep(2)
+
+        order = ws.createOrderByShoppingcart(payWay='2',invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
+        self.assertEqual(order.model['success'], '2')
+        # 无售卖权invalidList，但实际是shelvesOffList
+        self.assertEqual(order.model['failedReasons']['但实际是shelvesOffList'][0],self.Merch1.fullName)
+
+
+    # S6.无价格商品
+
+    # S7、产品被删除，提示“以上商品不存在，无法购买”
+
+    # S8、平台或卖家操作下架（或锁定），提示“以上商品已下架，无法购买”
+
+    # S9、有库存但不足，提示“以上商品库存不足，请修改购买数量”
+
+    # S10、价格变动，提示“以上商品价格变动，请先查看最新价格”
+
+    # S11、支付方式变化（增加或取消货到付款），提示“以上配送商支付方式发生变动，请先查看最新信息”
+
+    # S12、选择购买的商品对应的配送商如果由支持“开增值税发票”变为不支持，提示：“以上配送商不再支持开增值税票，请查看最新信息
+
+
+    def tearDown(self):
+        # 清空购物车、恢复库存
+        update('delete from danlu_cd_database.dl_shoppingcart where user_id = ?', self.UserShop.userId)
+        update('update dlmerchandise.dl_goods set on_hand_inventory = ? where goods_id = ?', self.Merch1.onHandInventory, self.Merch1.goodsId)
+        update('update dlmerchandise.dl_goods set on_hand_inventory = ? where goods_id = ?', self.Merch2.onHandInventory, self.Merch2.goodsId)
+        update('update dlmerchandise.dl_goods set on_hand_inventory = ? where goods_id = ?', self.Merch4.onHandInventory, self.Merch4.goodsId)
+        # 恢复经销商2为不支持货到付款
+        update('update dlcompany.dl_store_base_info set isCOD = ? where store_id = ?', 0,self.Merch4.storeId)
+        # 恢复商品1的售卖权
+        #update('update dlsaleright.dl_firsttier_salesright set firstTier_salesRight_status = ? where seller_id = ? and product_barCode = ?', 0, self.Merch1.sellerId, self.Merch1.productBarCode)
+        update('update dlsaleright.dl_one2many_salesright set buyer_type = ? where firstTier_salesRight_code = ? and buyer_type = ?', 'S011',self.Merch1.SalesrightCode, 'S016')
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_one"))
+    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_one"))
+    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_two"))
+    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_twoDealer"))
+    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_outStock"))
+    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_noSalerright"))
+
     return suite

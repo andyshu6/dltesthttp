@@ -87,6 +87,8 @@ class delDeliverAddress(unittest.TestCase):
     def test_delDeliverAddress_other(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
+        delDeliverAddress=ws.delDeliverAddress(deliverAddressId=self.UserShop1.addressId)
+        self.assertEqual(delDeliverAddress.model['success'], '3')
 
     # S5.删除收货地址address_id位空(接口返回500)
     def test_delDeliverAddress_null(self):
@@ -131,6 +133,7 @@ def suite():
         suite.addTest(delDeliverAddress("test_delDeliverAddress"))
         suite.addTest(delDeliverAddress("test_delDelilverAddress_approve"))
         suite.addTest(delDeliverAddress("test_delDeliverAddress_notExist"))
+        suite.addTest(delDeliverAddress("test_delDeliverAddress_other"))
         suite.addTest(delDeliverAddress("test_delDeliverAddress_null"))
         suite.addTest(delDeliverAddress("test_DeliverAddress_tokenNull"))
         suite.addTest(delDeliverAddress("test_DeliverAddress_tokenError"))

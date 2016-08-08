@@ -108,11 +108,11 @@ class modifyDeliverAddress(unittest.TestCase):
     def test_modifyDeliverAddress_other(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
-        modifyDeliAddress=ws.modifyDeliverAddress(addressId='6d23ae6420d84ad68fd4c1267e65db34',addressDetail=self.UserShop2.deliverAddress,areaProvinceCode = self.UserShop2.areaProvinceCode,
+        modifyDeliAddress=ws.modifyDeliverAddress(addressId=self.UserShop1.addressId,addressDetail=self.UserShop2.deliverAddress,areaProvinceCode = self.UserShop2.areaProvinceCode,
                                                   areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode =self.UserShop2.areaDistrictCode,zipCode=self.UserShop2.zipCode,deliverPerson=self.UserShop2.deliverPerson,
                                                   deliverMobile=self.UserShop2.deliverMobile,deliverTel=self.UserShop2.deliverTel)
-        self.assertEqual(modifyDeliAddress.code,500)
-        self.assertEqual(modifyDeliAddress.model,None)
+        self.assertEqual(modifyDeliAddress.model['success'], '3')
+
 
     # S5.修改收货地址详细地址为空(未校验)
     def test_modifyDeliverAddress_addressNull(self):
@@ -221,7 +221,7 @@ def suite():
     suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress"))
     suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_approve"))
     suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_notExist"))
-    #suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_other"))
+    suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_other"))
     #suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_addressNull"))
     #suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_personNull"))
     suite.addTest(modifyDeliverAddress("test_modifyDeliverAddress_min"))

@@ -41,7 +41,7 @@ class getCouponParam(unittest.TestCase):
         self.assertEqual(couponParam.model['payRatio'],self.Param.payRatio)
         self.assertEqual(couponParam.model['maxTicketUseNum'],self.Param.maxTicketUseNum)
 
-    # S2.不带token获取平台参数——错误 #5429
+    # S2.不带token获取平台参数——错误 #5429 已解决
     def test_getCouponParam_noToken(self):
         ws = webservice()
         ws.login(self.UserShop.username,self.UserShop.password)

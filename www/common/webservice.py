@@ -470,4 +470,23 @@ class webservice:
         return self.wrapHttpBase.body
 
 
+    #----------------------------------账号接口----------------------------------------------------------
+    #获取企业信息
+    def getCompanyInfo(self,companyId=None,token=None):
+        url='/mydl/account/getCompanyInfo.json'
+        data={}
+        data['companyId']=companyId
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取账户信息
+    def getAcctInfo(self,userId=None,userAcct=None,token=None):
+        url='/mydl/account/getAcctInfo.json'
+        data={}
+        data['userId']=userId
+        data['userAcct']=userAcct
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+
 

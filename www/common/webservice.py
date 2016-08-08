@@ -416,7 +416,7 @@ class webservice:
         data['deliverAddress']['deliverPerson']=deliverPerson
         data['deliverAddress']['deliverMobile']=deliverMobile
         data['deliverAddress']['deliverTel']=deliverTel
-        self.wrapHttpBase.post(url,data,token=None)
+        self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
 
     #设置默认收货地址
@@ -424,7 +424,7 @@ class webservice:
         url='/mydl/deliverAddress/setDefaultDeliverAddress.json'
         data={}
         data['deliverAddressId']=deliverAddressId
-        self.wrapHttpBase.post(url,data,token=None)
+        self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
 
     #获取终端店地址
@@ -432,6 +432,61 @@ class webservice:
         url='/mydl/deliverAddress/getTerminalAddress.json'
         data={}
         data['terminalCustomerId']=terminalCustomerId
-        self.wrapHttpBase.post(url,data,token=None)
+        self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
+
+
+    # -----------------------------------收藏接口-----------------------------------------------------
+    #添加收藏
+    def addFavorite(self,merchId=None,token=None):
+        url='/mydl/favorites/addFavorite.json'
+        data={}
+        data['merchId']=merchId
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #删除收藏（支持批量删除）
+    def delFavorite(self,merchId=None,token=None):
+        url='/mydl/favorites/delFavorite.json'
+        data={}
+        data['merchId']=merchId
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取收藏列表
+    def getFavoriteList(self,page=None,rows=None,token=None):
+        url='/mydl/favorites/getFavoriteList.json'
+        data={}
+        data['page']=page
+        data['rows']=rows
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取收藏列表数量
+    def getFavoriteListSize(self,token=None):
+        url='/mydl/favorites/getFavoriteListSize.json'
+        data={}
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+
+    #----------------------------------账号接口----------------------------------------------------------
+    #获取企业信息
+    def getCompanyInfo(self,companyId=None,token=None):
+        url='/mydl/account/getCompanyInfo.json'
+        data={}
+        data['companyId']=companyId
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取账户信息
+    def getAcctInfo(self,userId=None,userAcct=None,token=None):
+        url='/mydl/account/getAcctInfo.json'
+        data={}
+        data['userId']=userId
+        data['userAcct']=userAcct
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+
 

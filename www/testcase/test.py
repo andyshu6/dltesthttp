@@ -14,6 +14,10 @@ from www.testcase.ts_ws_shoppingcart import createOrderByShoppingcart
 from www.testcase.ts_ws_password import modifyPassword
 from www.testcase.ts_ws_merch import getMerchList
 from www.testcase.ts_ws_shoppingcart import addShoppingcart
+from www.testcase.ts_ws_deliverAddress import getDeliverAddressList
+from www.testcase.ts_ws_deliverAddress import addDeliverAddress
+from www.testcase.ts_ws_invoice import addInvoice
+from www.testcase.ts_ws_merch import getMerchDetail
 
 if __name__ == '__main__':
 
@@ -25,7 +29,8 @@ if __name__ == '__main__':
     #filePath = "pyResult.html"
     #fp = file(filePath,'wb')
     #runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='Python Test Report',description='This  is Python  Report')
-    runner.run(createOrderByShoppingcart.suite())
+    runner.run(getMerchDetail.suite())
+    #runner.run(addDeliverAddress.suite())
     #runner.run(modifyPassword.suite())
     #fp.close()
     #runner.run(ts_ws_invoice_getInvoiceList.suite())

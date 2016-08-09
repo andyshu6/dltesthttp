@@ -112,7 +112,7 @@ class getFavoriteList(unittest.TestCase):
         self.assertEqual(getFavoriteGoodsList.model['favoriteList'][0]['sellerId'],self.Merch1.sellerId)
         self.assertEqual(getFavoriteGoodsList.model['favoriteList'][0]['sellerName'],self.Merch1.sellerName)
         self.assertEqual(getFavoriteGoodsList.model['favoriteList'][0]['propagandaInfo'],self.Merch1.propagandaInfo)
-        self.assertEqual(getFavoriteGoodsList.model['favoriteList'][0]['unitPrice'],self.Merch1.unitPrice/100)
+        self.assertEqual(getFavoriteGoodsList.model['favoriteList'][0]['unitPrice'],str(int(self.Merch1.unitPrice)/100))
         self.assertEqual(getFavoriteGoodsList.model['favoriteList'][0]['picUrl'],self.Merch1.picUrl)
 
 

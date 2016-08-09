@@ -160,14 +160,14 @@ class getMerchDetail(unittest.TestCase):
         self.assertEqual(rsp.model['merchDetail']['onHandInventory'], Merch['onHandInventory'])
         for i in range(0, len(rsp.model['merchDetail']['fullReductionList'])):
             if i == 0:
-                self.assertEqual(rsp.model['merchDetail']['fullReductionList'][0], Merch['fullReductionList'])
+                self.assertEqual(rsp.model['merchDetail']['fullReductionList'][0], Merch['fullReductionList'].decode('utf-8'))
             else :
-                self.assertEqual(rsp.model['merchDetail']['fullReductionList'][i], Merch['fullReductionList'+str(i+1)])
+                self.assertEqual(rsp.model['merchDetail']['fullReductionList'][i], Merch['fullReductionList'+str(i+1)].decode('utf-8'))
         for i in range(0, len(rsp.model['merchDetail']['fullPresentationList'])):
             if i == 0:
-                self.assertEqual(rsp.model['merchDetail']['fullPresentationList'][0], Merch['fullPresentationList'])
+                self.assertEqual(rsp.model['merchDetail']['fullPresentationList'][0], Merch['fullPresentationList'].decode('utf-8'))
             else :
-                self.assertEqual(rsp.model['merchDetail']['fullPresentationList'][i], Merch['fullPresentationList'+str(i+1)])
+                self.assertEqual(rsp.model['merchDetail']['fullPresentationList'][i], Merch['fullPresentationList'+str(i+1)].decode('utf-8'))
         for i in range(0, len(rsp.model['merchDetail']['propertyList'])):
             if rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '生产商':
                 self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'生产商'].encode('utf-8'))

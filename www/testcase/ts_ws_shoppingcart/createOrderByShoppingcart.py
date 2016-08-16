@@ -323,10 +323,10 @@ class createOrderByShoppingcart(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_one"))
-    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_two"))
-    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_twoDealer"))
-    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_outStock"))
-    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_noSalerright"))
+    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_one"))
+    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_two"))
+    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_twoDealer"))
+    suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_outStock"))
+    #suite.addTest(createOrderByShoppingcart("test_createOrderByShoppingcart_noSalerright"))
 
     return suite

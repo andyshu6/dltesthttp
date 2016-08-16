@@ -93,7 +93,7 @@ class delInvoice(unittest.TestCase):
                                   receiveManAddress = self.UserShop2.receiveManAddress)
         invoiceVat = select_one('select * from dlcompany.dl_biz_invoices where user_id = ? and invoice_type = ?', self.UserShop2.userId, 'N012')
         delInvVat = ws.delInvoice(invoiceVat.invoice_id)
-        self.assertEqual(delInvVat.model['success'], '0')
+        self.assertEqual(delInvVat.model['success'], '1')
 
     def tearDown(self):
         update('delete from dlcompany.dl_biz_invoices where user_id = ?', self.UserShop2.userId)

@@ -95,7 +95,7 @@ class getAcctInfo(unittest.TestCase):
 def suite():
     suite=unittest.TestSuite()
     suite.addTest(getAcctInfo("getAcctInfo"))
-    #suite.addTest(getAcctInfo("getAcctInfo_inconsistent"))
+    suite.addTest(getAcctInfo("getAcctInfo_inconsistent"))
     suite.addTest(getAcctInfo("getAcctInfo_other"))
     suite.addTest(getAcctInfo("getAcctInfo_notExistUserId"))
     suite.addTest(getAcctInfo("getAcctInfo_notExistUserAcct"))

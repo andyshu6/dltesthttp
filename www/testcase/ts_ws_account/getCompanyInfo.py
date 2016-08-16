@@ -91,8 +91,8 @@ class getCompanyInfo(unittest.TestCase):
 def suite():
     suite=unittest.TestSuite()
     suite.addTest(getCompanyInfo("test_getCompanyInfo"))
-    #suite.addTest(getCompanyInfo("test_getCompanyInfo_other"))
-    #suite.addTest(getCompanyInfo("test_getCompanyInfo_notExist"))
+    suite.addTest(getCompanyInfo("test_getCompanyInfo_other"))
+    suite.addTest(getCompanyInfo("test_getCompanyInfo_notExist"))
     suite.addTest(getCompanyInfo("test_getCompanyInfo_ErrorToken"))
     suite.addTest(getCompanyInfo("test_getCompanyInfo_nullToken"))
     return suite

@@ -116,6 +116,6 @@ def suite():
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress"))
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_notExist"))
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_null"))
-    #suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_other"))
+    suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_other"))
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_repeat"))
     return suite

@@ -113,16 +113,30 @@ class addDeliverAddress(unittest.TestCase):
         self.assertEqual(addDeliverAddressList.model['deliverAddressModelList'],[])
 
     # S6.添加收货地址必填项收货人、收货详细地址、联系电话为空(server端没有校验)
+    def test_addDeliverAddress_nullMust(self):
+        ws=webservice()
+        ws.login(self.UserShop2.username,self.UserShop2.password)
+        addDelAddressNullPerson = ws.addDeliverAddress(areaProvinceCode = self.UserShop2.areaProvinceCode,areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode = self.UserShop2.areaDistrictCode,
+                                             addressDetail = self.UserShop2.deliverAddress,zipCode = self.UserShop2.zipCode,deliverPerson = '',deliverMobile = self.UserShop2.deliverMobile,
+                                             deliverTel = self.UserShop2.deliverTel,isDefault = self.UserShop2.isDefault)
+        self.assertEqual(addDelAddressNullPerson.model['success'],'3')
+        addDelAddressNullDetail = ws.addDeliverAddress(areaProvinceCode = self.UserShop2.areaProvinceCode,areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode = self.UserShop2.areaDistrictCode,
+                                             addressDetail = '',zipCode = self.UserShop2.zipCode,deliverPerson = self.UserShop2.deliverPerson,deliverMobile = self.UserShop2.deliverMobile,
+                                             deliverTel = self.UserShop2.deliverTel,isDefault = self.UserShop2.isDefault)
+        self.assertEqual(addDelAddressNullDetail.model['success'],'3')
+        addDelAddressNullTel = ws.addDeliverAddress(areaProvinceCode = self.UserShop2.areaProvinceCode,areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode = self.UserShop2.areaDistrictCode,
+                                             addressDetail = self.UserShop2.deliverAddress,zipCode = self.UserShop2.zipCode,deliverPerson = self.UserShop2.deliverPerson,deliverMobile = '',
+                                             deliverTel = self.UserShop2.deliverTel,isDefault = self.UserShop2.isDefault)
+        self.assertEqual(addDelAddressNullTel.model['success'],'3')
 
     # S7.添加收货人超过最大长度
     def test_addDeliverAddress_longPerson(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
         addDeliverAddress_longPerson=ws.addDeliverAddress(areaProvinceCode=self.UserShop2.areaProvinceCode,areaCityCode=self.UserShop2.areaCityCode,areaDistrictCode=self.UserShop2.areaDistrictCode,
-                                                   addressDetail=self.UserShop2.deliverAddress,zipCode=self.UserShop2.zipCode,deliverPerson='收货人收货人收货人收货人收货人收货人收货人收货人收货人收货人收货人收货人',
+                                                   addressDetail=self.UserShop2.deliverAddress,zipCode=self.UserShop2.zipCode,deliverPerson='收货人收货人收货人收货',
                                                    deliverMobile=self.UserShop2.deliverMobile,deliverTel=self.UserShop2.deliverTel,isDefault=self.UserShop2.isDefault)
-        self.assertEqual(addDeliverAddress_longPerson.model,None)
-        self.assertEqual(addDeliverAddress_longPerson.code,500)
+        self.assertEqual(addDeliverAddress_longPerson.model['success'],'3')
         addDeliverAddressList=ws.getDeliverAddressList()
         self.assertEqual(addDeliverAddressList.model['deliverAddressModelList'],[])
 
@@ -138,8 +152,7 @@ class addDeliverAddress(unittest.TestCase):
                                                                  '联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空'
                                                                  '联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空联系电话为空空',
                                                    zipCode=self.UserShop2.zipCode,deliverPerson=self.UserShop2.deliverPerson, deliverMobile=self.UserShop2.deliverMobile,deliverTel=self.UserShop2.deliverTel,isDefault=self.UserShop2.isDefault)
-        self.assertEqual(addDeliverAddress_longAddress.model,None)
-        self.assertEqual(addDeliverAddress_longAddress.code,500)
+        self.assertEqual(addDeliverAddress_longAddress.model['success'],'3')
         addDeliverAddressList=ws.getDeliverAddressList()
         self.assertEqual(addDeliverAddressList.model['deliverAddressModelList'],[])
 
@@ -180,6 +193,7 @@ def suite():
     suite.addTest(addDeliverAddress("test_addDeliverAddress_max"))
     suite.addTest(addDeliverAddress("test_addDeliverAddress_approve"))
     suite.addTest(addDeliverAddress("test_addDeliverAddress_null"))
+    suite.addTest(addDeliverAddress("test_addDeliverAddress_nullMust"))
     suite.addTest(addDeliverAddress("test_addDeliverAddress_longPerson"))
     suite.addTest(addDeliverAddress("test_addDeliverAddress_longAddress"))
     suite.addTest(addDeliverAddress("test_addDeliverAddress_default"))

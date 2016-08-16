@@ -76,8 +76,7 @@ class setDefaultDeliverAddress(unittest.TestCase):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
         setDefDeliverAddress=ws.setDefaultDeliverAddress(deliverAddressId=self.UserShop1.addressId)
-        self.assertEqual(setDefDeliverAddress.code,500)
-        self.assertEqual(setDefDeliverAddress.model,None)
+        self.assertEqual(setDefDeliverAddress.model['success'],'2')
 
     # S5.已设置默认的收货地址再设置其他收货地址为默认地址
     def test_setDefaultDeliverAddress_repeat(self):
@@ -116,6 +115,6 @@ def suite():
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress"))
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_notExist"))
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_null"))
-    #suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_other"))
+    suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_other"))
     suite.addTest(setDefaultDeliverAddress("test_setDefaultDeliverAddress_repeat"))
     return suite

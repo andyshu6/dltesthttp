@@ -488,5 +488,112 @@ class webservice:
         self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
 
+    #获取激活验证码
+    def getValCodeForActivate(self,tel=None,token=None):
+        url='/mydl/account/getValCodeForActivate.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #激活手机
+    def activatePhone(self,userAcct=None,userId=None,conditionInd=None,tel=None,token=None):
+        url='/mydl/account/activatePhone.json'
+        data={}
+        data['userAcct']=userAcct
+        data['userId']=userId
+        data['conditionInd']=conditionInd
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #--------------------------------找回密码及更改手机号------------------------------------------------------
+    # 0262.密码找回验证码短信发送
+    def getValCodeForPsw(self,tel=None):
+        url='/login/getValCodeForPsw.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 0263.重置密码（前台已校验过验证码)
+    def resetPsw(self,tel=None,password=None,passwordConfirm=None):
+        url='/login/resetPsw.json'
+        data={}
+        data['tel']=tel
+        data['password']=password
+        data['passwordConfirm']=passwordConfirm
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 0268.获取原手机号解绑短信验证码(4位验证码)
+    def getValCodeForUnbindPhone(self,tel=None,token=None):
+        url='/mydl/account/getValCodeForUnbindPhone.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0269.获取新手机号激活验证码(4位验证码)
+    def getValCodeForBindPhone(self,tel=None,token=None):
+        url='/mydl/account/getValCodeForBindPhone.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0270.激活新的手机号码
+    def activateNewPhone(self,valCode=None,tel=None,token=None):
+        url='/mydl/account/activateNewPhone.json.json'
+        data={}
+        data['valCode']=valCode
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0271.获取图形验证码(4位纯数字)
+    def getPicValCode(self,pictureWidth=None,pictureHeight=None,token=None):
+        url='/common/pic/getPicValCode.json'
+        data={}
+        data['pictureWidth']=pictureWidth
+        data['pictureHeight']=pictureHeight
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0272.校验图形验证码(需要token)
+    def validatePicValCode(self,picValCode=None,token=None):
+        url='/common/pic/validatePicValCode.json'
+        data={}
+        data['picValCode']=picValCode
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0273.校验图形验证码(不需要token)
+    def validatePicValCode2(self,picValCode=None):
+        url='/common/pic/validatePicValCode2.json'
+        data={}
+        data['picValCode']=picValCode
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 0274.校验短信验证码
+    def validateMsgValCode(self,valCode=None,token=None):
+        url='/common/pic/validatePicValCode2.json'
+        data={}
+        data['valCode']=valCode
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0275.校验短信验证码
+    def validateMsgValCode2(self,valCode=None):
+        url='/common/pic/validatePicValCode2.json'
+        data={}
+        data['valCode']=valCode
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+
+
+
 
 

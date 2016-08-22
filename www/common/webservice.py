@@ -253,6 +253,43 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0037.获取商品列表(New)
+    def getNewMerchList(self, merchName=None, merchCategoryCode=None, merchPropertyValueCodeList=None, merchBrandId=None, sellerId=None, lowPrice=None, highPrice=None, sortField=0, sortType=0, page=1, rows=15, token=None):
+        url = '/merch/getNewMerchList.json'
+        data = {}
+        if merchName is not None:
+            data['merchName'] = merchName
+        if merchCategoryCode is not None:
+            data['merchCategoryCode'] = merchCategoryCode
+        if merchPropertyValueCodeList is not None:
+            data['merchPropertyValueCodeList'] = merchPropertyValueCodeList
+        if merchBrandId is not None:
+            data['merchBrandId'] = merchBrandId
+        if sellerId is not None:
+            data['sellerId'] = sellerId
+        if lowPrice is not None:
+            data['lowPrice'] = lowPrice
+        if highPrice is not None:
+            data['highPrice'] = highPrice
+        if sortField is not None:
+            data['sortField'] = sortField
+        if sortType is not None:
+            data['sortType'] = sortType
+        if page is not None:
+            data['page'] = page
+        if rows is not None:
+            data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
+    # 0038.获取商品详情
+    def getNewMerchDetail(self, merchId, token=None):
+        url = '/merch/getNewMerchDetail.json'
+        data = {}
+        data['merchId'] = merchId
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
 
     # ——————————————————    购物车接口  ————————————————————
     # 0039.添加商品到购物车

@@ -166,7 +166,7 @@ class toShoppingcart(unittest.TestCase):
                                 self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['reductionType'], merch.reductionType)
                                 self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['promotionInfo'], merch.promotionInfo)
                                 self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['isDefaultPromotion'], merch.isDefaultPromotion)
-                                self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['isPromotion'], merch.isPromotion)
+                                self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['isPromotion'], merch.isPromotionCart)
                                 self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['diffPrice'], merch.diffPrice)
                                 self.assertEqual(rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['promotionFlag'], merch.promotionFlag)
                                 if rsp.model['sellerList'][i]['merchList'][j]['promotionModelList'][k]['presentationDetail'] == merch.presentationDetail:

@@ -33,6 +33,8 @@ class getValCodeForPsw(unittest.TestCase):
     UserShop1=eData('TmlShop')
     UserShop2=eData('TmlShop2')
 
+
+
     #正确获取密码找回验证码短信
     def test_getValCodeForPsw(self):
         ws=webservice()
@@ -50,7 +52,7 @@ class getValCodeForPsw(unittest.TestCase):
     #手机号号段不存在
     def test_getValCodeForPsw_style(self):
         ws=webservice()
-        getValCodeForPsw=ws.getValCodeForPsw(tel='12345678901')
+        getValCodeForPsw=ws.getValCodeForPsw(tel='22345678901')
         self.assertEqual(getValCodeForPsw.model['success'],'1')
         self.assertEqual(getValCodeForPsw.model['valCode'],None)
 
@@ -83,7 +85,6 @@ class getValCodeForPsw(unittest.TestCase):
         getValCodeForPsw=ws.getValCodeForPsw(tel='18349200236')
         self.assertEqual(getValCodeForPsw.model['success'],'2')
         self.assertEqual(getValCodeForPsw.model['valCode'],None)
-        update('update dlworkflow.dl_apply_terminal set flow_status=? where terminal_user_name=?','02','testsun456789')
 
     #一分钟内重复发送短信验证码
     def test_getValCodeForPsw_oneMinute(self):
@@ -106,15 +107,19 @@ class getValCodeForPsw(unittest.TestCase):
         self.assertEqual(getValCodeForPswRepeat.model['success'],'0')
         self.assertNotEqual(getValCodeForPsw.model['valCode'],None)
 
+    def tearDown(self):
+        update('update dlworkflow.dl_apply_terminal set flow_status=? where terminal_user_name=?','02','testsun456789')
+
 def suite():
     suite=unittest.TestSuite()
-    suite.addTest(getValCodeForPsw("test_getValCodeForPsw"))
+    # 暂不获取短信
+    # suite.addTest(getValCodeForPsw("test_getValCodeForPsw"))
     suite.addTest(getValCodeForPsw("test_getValCodeForPsw_long"))
     suite.addTest(getValCodeForPsw("test_getValCodeForPsw_style"))
     suite.addTest(getValCodeForPsw("test_getValCodeForPsw_noRegister"))
     suite.addTest(getValCodeForPsw("test_getValCodeForPsw_noActivate"))
     suite.addTest(getValCodeForPsw("test_getValCodeForPsw_approve"))
     suite.addTest(getValCodeForPsw("test_getValCodeForPsw_approveRefused"))
-    suite.addTest(getValCodeForPsw("test_getValCodeForPsw_oneMinute"))
-    suite.addTest(getValCodeForPsw("test_getValCodeForPsw_notOneMinute"))
+    #suite.addTest(getValCodeForPsw("test_getValCodeForPsw_oneMinute"))
+    #suite.addTest(getValCodeForPsw("test_getValCodeForPsw_notOneMinute"))
     return suite

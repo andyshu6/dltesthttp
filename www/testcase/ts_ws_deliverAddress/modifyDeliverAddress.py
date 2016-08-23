@@ -114,7 +114,7 @@ class modifyDeliverAddress(unittest.TestCase):
         self.assertEqual(modifyDeliAddress.code,500)
         self.assertEqual(modifyDeliAddress.model,None)
 
-    # S5.修改收货地址详细地址为空(未校验)
+    # S5.修改收货地址详细地址为空
     def test_modifyDeliverAddress_addressNull(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
@@ -124,13 +124,15 @@ class modifyDeliverAddress(unittest.TestCase):
         self.assertEqual(addDeliverAddress.model['success'],'0')
         deliverAddressList=ws.getDeliverAddressList()
         deliverAddressId=deliverAddressList.model['deliverAddressModelList'][0]['addressId']
-        modifyDeliAddress=ws.modifyDeliverAddress(addressId=deliverAddressId,addressDetail=None,areaProvinceCode = self.UserShop2.areaProvinceCode,
+        modifyDeliAddress=ws.modifyDeliverAddress(addressId=deliverAddressId,addressDetail='',areaProvinceCode = self.UserShop2.areaProvinceCode,
                                                   areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode =self.UserShop2.areaDistrictCode,zipCode=self.UserShop2.zipCode,deliverPerson=self.UserShop2.deliverPerson,
                                                   deliverMobile=self.UserShop2.deliverMobile,deliverTel=self.UserShop2.deliverTel)
-        self.assertEqual(modifyDeliAddress.code,500)
-        self.assertEqual(modifyDeliAddress.model,None)
+        self.assertEqual(modifyDeliAddress.model['success'], '0')
+        deliverAddressList=ws.getDeliverAddressList()
+        # 验证addressDetail并未被置空
+        self.assertEqual(deliverAddressList.model['deliverAddressModelList'][0]['addressDetail'], self.UserShop2.deliverAddress)
 
-    # S6.修改收货地址收货人为空(未校验)
+    # S6.修改收货地址收货人为空
     def test_modifyDeliverAddress_personNull(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
@@ -141,10 +143,12 @@ class modifyDeliverAddress(unittest.TestCase):
         deliverAddressList=ws.getDeliverAddressList()
         deliverAddressId=deliverAddressList.model['deliverAddressModelList'][0]['addressId']
         modifyDeliAddress=ws.modifyDeliverAddress(addressId=deliverAddressId,addressDetail=self.UserShop2.deliverAddress,areaProvinceCode = self.UserShop2.areaProvinceCode,
-                                                  areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode =self.UserShop2.areaDistrictCode,zipCode=self.UserShop2.zipCode,deliverPerson=None,
+                                                  areaCityCode = self.UserShop2.areaCityCode,areaDistrictCode =self.UserShop2.areaDistrictCode,zipCode=self.UserShop2.zipCode,deliverPerson='',
                                                   deliverMobile=self.UserShop2.deliverMobile,deliverTel=self.UserShop2.deliverTel)
-        self.assertEqual(modifyDeliAddress.code,500)
-        self.assertEqual(modifyDeliAddress.model,None)
+        self.assertEqual(modifyDeliAddress.model['success'], '0')
+        deliverAddressList=ws.getDeliverAddressList()
+        # 验证addressDetail并未被置空
+        self.assertEqual(deliverAddressList.model['deliverAddressModelList'][0]['deliverPerson'], self.UserShop2.deliverPerson)
 
     # S7.修改收货地址各个属性值最小
     def test_modifyDeliverAddress_min(self):

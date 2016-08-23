@@ -98,13 +98,13 @@ class getValCodeForActivate(unittest.TestCase):
 
 def suite():
     suite=unittest.TestSuite()
-    suite.addTest(getValCodeForActivate("test_getValCodeForActivate"))
+    #suite.addTest(getValCodeForActivate("test_getValCodeForActivate"))
     suite.addTest(getValCodeForActivate("test_getValCodeForActivate_styleErrorLong"))
     suite.addTest(getValCodeForActivate("test_getValCodeForActivate_styleError"))
     suite.addTest(getValCodeForActivate("test_getValCodeForActivate_null"))
-    suite.addTest(getValCodeForActivate("test_getValCodeForActivate_other"))
-    suite.addTest(getValCodeForActivate("test_getValCodeForActivate_repeatOneMinute"))
-    suite.addTest(getValCodeForActivate("test_getValCodeForActivate_repeatNotOneMinute"))
+    #suite.addTest(getValCodeForActivate("test_getValCodeForActivate_other"))
+    #suite.addTest(getValCodeForActivate("test_getValCodeForActivate_repeatOneMinute"))
+    #suite.addTest(getValCodeForActivate("test_getValCodeForActivate_repeatNotOneMinute"))
     return suite
 
 

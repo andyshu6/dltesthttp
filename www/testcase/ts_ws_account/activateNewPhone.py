@@ -62,5 +62,5 @@ class activateNewPhone(unittest.TestCase):
 
 def suite():
     suite=unittest.TestSuite()
-    suite.addTest(activateNewPhone("test_activateNewPhone"))
+    #suite.addTest(activateNewPhone("test_activateNewPhone"))
     return suite

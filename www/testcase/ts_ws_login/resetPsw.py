@@ -44,7 +44,7 @@ class resetPsw(unittest.TestCase):
         ws=webservice()
         resetPsw=ws.resetPsw(tel=self.UserShop2.mobileNumber,password='~!@#$%^&*()',passwordConfirm='~!@#$%^&*()')
         self.assertEqual(resetPsw.model['success'],'0')
-        update('update dluser.dl_user set user_passwd= ? where user_id = ?', hashlib.md5(self.UserShop2.password).hexdigest(), self.UserShop2.userId)
+
 
     #手机号长度不正确
     def test_resetPsw_long(self):
@@ -82,6 +82,8 @@ class resetPsw(unittest.TestCase):
         resetPsw=ws.resetPsw(tel=self.UserShop2.mobileNumber,password=self.UserShop2.password,passwordConfirm=None)
         self.assertEqual(resetPsw.model['success'],'1')
 
+    def tearDown(self):
+         update('update dluser.dl_user set user_passwd= ? where user_id = ?', hashlib.md5(self.UserShop2.password).hexdigest(), self.UserShop2.userId)
 
 def suite():
     suite=unittest.TestSuite()

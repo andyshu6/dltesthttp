@@ -75,9 +75,9 @@ class getValCodeForUnbindPhone(unittest.TestCase):
 
 def suite():
     suite=unittest.TestSuite()
-    suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone"))
+    #suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone"))
     suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone_long"))
     suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone_style"))
-    suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone_oneMinute"))
-    suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone_notOneMinute"))
+    #suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone_oneMinute"))
+    #suite.addTest(getValCodeForUnbindPhone("test_getValCodeForUnbindPhone_notOneMinute"))
     return suite

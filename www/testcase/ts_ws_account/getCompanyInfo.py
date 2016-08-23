@@ -86,7 +86,7 @@ class getCompanyInfo(unittest.TestCase):
         self.assertEqual(companyInfo.model['userAcct'],self.UserShop1.username)
         self.assertEqual(companyInfo.model['terminalType'],self.UserShop1.shopType)
         self.assertEqual(companyInfo.model['regDistrict'],self.UserShop1.areaCode)
-        self.assertEqual(companyInfo.model['purchaseAreaCode'],self.UserShop1.purchaseAreaCode)
+        self.assertEqual(companyInfo.model['purchaseAreaCode'],self.UserShop1.areaCode)
 
 def suite():
     suite=unittest.TestSuite()

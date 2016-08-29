@@ -145,7 +145,7 @@ class getNewMerchDetail(unittest.TestCase):
         self.assertEqual(rsp.model['newMerchDetailModel']['retailPrice'], Merch['priceRetail'])
         self.assertEqual(rsp.model['newMerchDetailModel']['danluPrice'], Merch['priceS1'])
         self.assertEqual(rsp.model['newMerchDetailModel']['minSaleNumber'], Merch['saleQuantityS1'])
-        #self.assertEqual(rsp.model['newMerchDetailModel']['picUrl'], Merch['picUrl'])  待bug #5823修改好后放开注释
+        self.assertEqual(rsp.model['newMerchDetailModel']['picUrl'], Merch['picUrl'])
         for i in range(0, len(rsp.model['newMerchDetailModel']['promotionList'])):
             flag = False
             for j in range(1, len(rsp.model['newMerchDetailModel']['promotionList'])+1):
@@ -159,8 +159,6 @@ class getNewMerchDetail(unittest.TestCase):
                 self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'生产商'].encode('utf-8'))
             elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '净含量':
                 self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'净含量'].encode('utf-8'))
-            elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '净含量单位':
-                self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'净含量单位'].encode('utf-8'))
             elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '保质期':
                 self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'保质期'].encode('utf-8'))
             elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '包装规格':
@@ -185,6 +183,10 @@ class getNewMerchDetail(unittest.TestCase):
                 self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'色泽'].encode('utf-8'))
             elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '商品类型':
                 self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'商品类型'].encode('utf-8'))
+            elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '产品条码':
+                self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch[u'产品条码'].encode('utf-8'))
+            elif rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] == '品牌':
+                self.assertEqual(rsp.model['newMerchDetailModel']['propertyList'][i]['secondValue'], Merch['brandName'].encode('utf-8'))
             else :
                 self.assertEqual(True,False,rsp.model['newMerchDetailModel']['propertyList'][i]['firstValue'] + " is not find in the excel!")
         for i in range(0, len(rsp.model['newMerchDetailModel']['albumPicUrl'])):
@@ -197,6 +199,8 @@ class getNewMerchDetail(unittest.TestCase):
                 self.assertEqual(rsp.model['newMerchDetailModel']['detailPicUrl'][0], Merch['detailPicUrl'])
             else :
                 self.assertEqual(rsp.model['newMerchDetailModel']['detailPicUrl'][i], Merch['detailPicUrl'+str(i+1)])
+        self.assertEqual(rsp.model['newMerchDetailModel']['unitsConvertion'], int(Merch['unitsConvertion']))
+
 
 def suite():
     suite = unittest.TestSuite()

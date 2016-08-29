@@ -291,6 +291,35 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0039.获取丹露促销商品列表
+    def getPromotionList(self, page=1, rows=4, token=None):
+        url = '/merch/getPromotionList.json'
+        data = {}
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0040.获取丹露推荐商品列表
+    def getRecommendList(self, page=1, rows=4, token=None):
+        url = '/merch/getRecommendList.json'
+        data = {}
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0041.获取我的常购商品列表
+    def getOftenBuyList(self, saleFlag=0, page=1, rows=4, token=None):
+        url = '/merch/getOftenBuyList.json'
+        data = {}
+        data['saleFlag'] = saleFlag
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
     # ——————————————————    购物车接口  ————————————————————
     # 0039.添加商品到购物车
     def addShoppingcar(self, merchId, merchCount, sellerId, sellerName, token=None):
@@ -377,6 +406,26 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+
+    # -----------------------------------经销商订单改价-----------------------------------------------------
+    # 0185.获取订单改价页面展示信息
+    def getChangeOrderPricePage(self,orderNo=None,token=None):
+         url='/orders/toChangeOrderPricePage.json'
+         data={}
+         data['orderNo']=orderNo
+         self.wrapHttpBase.post(url, data, token)
+         return self.wrapHttpBase.body
+
+    # 0186.订单改价操作
+    def changeOrderPrice(self,orderNo=None,orderDiscountAmount=None,orderChangeAmount=None,orderStatus=None,token=None):
+        url='/orders/oper/changeOrderPrice.json'
+        data = {}
+        data['orderNo']=orderNo
+        data['orderDiscountAmount']=orderDiscountAmount
+        data['orderChangeAmount']=orderChangeAmount
+        data['orderStatus']=orderStatus
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
 
 
     # ——————————————————    注册接口  ————————————————————

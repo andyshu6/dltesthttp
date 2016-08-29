@@ -80,6 +80,7 @@ class getMerchDetail(unittest.TestCase):
     Merch2 = eData('Merch2')
     Merch3 = eData('Merch3')
 
+
     # S1.获取商品详情
     def test_getMerchDetail_all(self):
         ws = webservice()
@@ -172,7 +173,7 @@ class getMerchDetail(unittest.TestCase):
             if rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '生产商':
                 self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'生产商'].encode('utf-8'))
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '净含量':
-                self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'净含量'].encode('utf-8'))
+                self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'净含量老'].encode('utf-8'))
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '净含量单位':
                 self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'净含量单位'].encode('utf-8'))
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '保质期':
@@ -180,7 +181,7 @@ class getMerchDetail(unittest.TestCase):
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '包装规格':
                 self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'包装规格'].encode('utf-8'))
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '酒精度':
-                self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'酒精度'].encode('utf-8'))
+                self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'酒精度老'].encode('utf-8'))
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '储藏方法':
                 self.assertEqual(rsp.model['merchDetail']['propertyList'][i]['secondValue'], Merch[u'储藏方法'].encode('utf-8'))
             elif rsp.model['merchDetail']['propertyList'][i]['firstValue'] == '执行标准号':

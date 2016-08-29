@@ -221,7 +221,7 @@ class getMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not found')
 
         # 筛选茶品牌
-        MerchList = ws.getMerchList(merchBrandId="0654aa950b4345f59d1d33435dc0196a",rows='999')
+        MerchList = ws.getMerchList(merchBrandId=self.Merch2.brandId,rows='999')
         flag = False
         for i in range(0,len(MerchList.model['merchList'])):
             if MerchList.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch2.fullName:

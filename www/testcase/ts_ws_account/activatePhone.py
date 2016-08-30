@@ -49,7 +49,6 @@ class activatePhone(unittest.TestCase):
         telStatusSql=select_one('select user_phone_status from dluser.dl_user where user_id=?',self.UserShop2.userId)
         telStatus=ws.getAcctInfo(userId=self.UserShop2.userId,userAcct=self.UserShop2.username)
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
-        update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
 
     #正常激活手机号(有送红包活动)
     def test_activatePhone_coupon(self):
@@ -62,7 +61,6 @@ class activatePhone(unittest.TestCase):
         telStatusSql=select_one('select user_phone_status from dluser.dl_user where user_id=?',self.UserShop2.userId)
         telStatus=ws.getAcctInfo(userId=self.UserShop2.userId,userAcct=self.UserShop2.username)
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
-        update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
 
     #手机号格式不正确（长度）
     def test_activatePhone_telLong(self):
@@ -136,7 +134,7 @@ class activatePhone(unittest.TestCase):
         telStatusSql=select_one('select user_phone_status from dluser.dl_user where user_id=?',self.UserShop2.userId)
         telStatus=ws.getAcctInfo(userId=self.UserShop2.userId,userAcct=self.UserShop2.username)
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
-        update('update dlworkflow.dl_apply_terminal set flow_status=? where terminal_user_name=?','02','testsun456789')
+
 
     #手机号重复激活
     def test_activatePhone_repeat(self):
@@ -184,6 +182,10 @@ class activatePhone(unittest.TestCase):
         self.assertEqual(activatePhoneNum.code,600)
 
 
+
+    def tearDown(self):
+        update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
+        update('update dlworkflow.dl_apply_terminal set flow_status=? where terminal_user_name=?','02','testsun456789')
 
 def suite():
     suite=unittest.TestSuite()

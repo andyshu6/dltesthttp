@@ -55,6 +55,7 @@ class getAcctInfo(unittest.TestCase):
         ws=webservice()
         ws.login(self.UserShop1.username,self.UserShop1.password)
         getAccountInfo=ws.getAcctInfo(userId=self.UserShop1.userId,userAcct=self.UserShop2.username)
+        self.assertEqual(getAccountInfo.model['success'], '1')
 
     #获取其他用户的账号信息
     def test_getAcctInfo_other(self):

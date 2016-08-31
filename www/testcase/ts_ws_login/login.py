@@ -43,23 +43,29 @@ class login(unittest.TestCase):
     UserDealSal = eData('DealSaler')
     UserDealSed = eData('DealSeder')
     UserDealFin = eData('DealFiner')
+    Param = eData('Param')
 
-    # S1.登陆终端店，验证登录接口是否正确
+    # S1.登陆终端店用户名，验证登录接口是否正确
     def test_Login_TmlShop(self):
         dl = webservice().login(self.UserShop.username, self.UserShop.password)
-        self.assertLoginSuccess(dl, self.UserShop)
+        self.assertLoginSuccess(dl, self.UserShop, actForceInd = self.Param.zddActForceInd)
+
+    # 使用手机号码登录
+    def test_Login_TmlShopTel(self):
+        dl = webservice().login(self.UserShop.mobileNumber, self.UserShop.password)
+        self.assertLoginSuccess(dl, self.UserShop, actForceInd = self.Param.zddActForceInd)
 
     # S2.用户名（3位）和密码（6位）最小值登录
     def test_Login_Min(self):
         UserMin = eData('TmlShopMin')
         dlMin = webservice().login(UserMin.username, UserMin.password)
-        self.assertLoginSuccess(dlMin, UserMin)
+        self.assertLoginSuccess(dlMin, UserMin, actForceInd = self.Param.zddActForceInd)
 
     # S3.用户名（30位）和密码（16位）最大值登录
     def test_Login_Max(self):
         UserMax = eData('TmlShopMax')
         dlMax = webservice().login(UserMax.username, UserMax.password)
-        self.assertLoginSuccess(dlMax, UserMax)
+        self.assertLoginSuccess(dlMax, UserMax, actForceInd = self.Param.zddActForceInd)
 
 
 
@@ -99,31 +105,31 @@ class login(unittest.TestCase):
     # S10.登陆经销商管理员，验证登录接口是否正确
     def test_Login_DealMager(self):
         dlDealMgr = webservice().login(self.UserDealMgr.username, self.UserDealMgr.password)
-        self.assertLoginSuccess(dlDealMgr, self.UserDealMgr)
+        self.assertLoginSuccess(dlDealMgr, self.UserDealMgr, actForceInd = self.Param.jxsActForceInd)
 
     # S11.登陆经销商采购员，验证登录接口是否正确
     def test_Login_DealSaler(self):
         dlDealSaler = webservice().login(self.UserDealSal.username, self.UserDealSal.password)
-        self.assertLoginSuccess(dlDealSaler, self.UserDealSal)
+        self.assertLoginSuccess(dlDealSaler, self.UserDealSal, actForceInd = self.Param.jxsActForceInd)
 
     # S12.登陆经销商采购员，验证登录接口是否正确
     def test_Login_DealBuyer(self):
         dlDealBuyer = webservice().login(self.UserDealBuy.username, self.UserDealBuy.password)
-        self.assertLoginSuccess(dlDealBuyer, self.UserDealBuy)
+        self.assertLoginSuccess(dlDealBuyer, self.UserDealBuy, actForceInd = self.Param.jxsActForceInd)
 
     # S13.登陆经销商配送员，验证登录接口是否正确
     def test_Login_DealSeder(self):
         dlDealSeder = webservice().login(self.UserDealSed.username, self.UserDealSed.password)
-        self.assertLoginSuccess(dlDealSeder, self.UserDealSed)
+        self.assertLoginSuccess(dlDealSeder, self.UserDealSed, actForceInd = self.Param.jxsActForceInd)
 
     # S14.登陆经销商财务员，验证登录接口是否正确
     def test_Login_DealFiner(self):
         dlDealFiner = webservice().login(self.UserDealFin.username, self.UserDealFin.password)
-        self.assertLoginSuccess(dlDealFiner, self.UserDealFin)
+        self.assertLoginSuccess(dlDealFiner, self.UserDealFin, actForceInd = self.Param.jxsActForceInd)
 
 
     # 登录成功验证方法
-    def assertLoginSuccess(self, rsp, User, code = 200, success = '0'):
+    def assertLoginSuccess(self, rsp, User, code = 200, success = '0', actForceInd = '0'):
         self.assertEqual(rsp.code, code)
         self.assertEqual(rsp.model['success'], success)
         self.assertIsNotNone(rsp.model['sessionId'])
@@ -133,10 +139,17 @@ class login(unittest.TestCase):
         self.assertEqual(rsp.model['userRole'], str(User.userRole))
         self.assertEqual(rsp.model['fullName'].encode('utf-8'), str(User.fullName))
         self.assertEqual(rsp.model['areaCode'], str(User.areaCode))
+        self.assertEqual(rsp.model['userAcct'], str(User.username))
+        self.assertEqual(rsp.model['tel'], str(User.mobileNumber))
+        self.assertEqual(rsp.model['telStatus'], str(User.telStatus))
+        self.assertEqual(rsp.model['firstActiveTime'], str(User.firstActiveTime))
+        self.assertEqual(rsp.model['sysParm']['actForceInd'], actForceInd)
+        self.assertEqual(rsp.model['sysParm']['actCouponAmt'], str(self.Param.actCouponAmt))
 
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(login("test_Login_TmlShop"))
+    suite.addTest(login("test_Login_TmlShopTel"))
     suite.addTest(login("test_Login_Min"))
     suite.addTest(login("test_Login_Max"))
     suite.addTest(login("test_Login_ErrName"))

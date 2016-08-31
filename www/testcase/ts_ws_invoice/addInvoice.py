@@ -262,18 +262,18 @@ class addInvoice(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    # suite.addTest(addInvoice("test_addInvoice_normal"))
-    # suite.addTest(addInvoice("test_addInvoice_normalMin"))
-    # suite.addTest(addInvoice("test_addInvoice_normalMax"))
-    # suite.addTest(addInvoice("test_addInvoice_normalNull"))
-    # suite.addTest(addInvoice("test_addInvoice_normalUp"))
-    # suite.addTest(addInvoice("test_addInvoice_normalRep"))
-    # suite.addTest(addInvoice("test_addInvoice_normalMore"))
-    # suite.addTest(addInvoice("test_addInvoice_normalDefault"))
-    # suite.addTest(addInvoice("test_addInvoice_vat"))
-    # suite.addTest(addInvoice("test_addInvoice_vatMin"))
+    suite.addTest(addInvoice("test_addInvoice_normal"))
+    suite.addTest(addInvoice("test_addInvoice_normalMin"))
+    suite.addTest(addInvoice("test_addInvoice_normalMax"))
+    suite.addTest(addInvoice("test_addInvoice_normalNull"))
+    suite.addTest(addInvoice("test_addInvoice_normalUp"))
+    suite.addTest(addInvoice("test_addInvoice_normalRep"))
+    suite.addTest(addInvoice("test_addInvoice_normalMore"))
+    suite.addTest(addInvoice("test_addInvoice_normalDefault"))
+    suite.addTest(addInvoice("test_addInvoice_vat"))
+    suite.addTest(addInvoice("test_addInvoice_vatMin"))
     suite.addTest(addInvoice("test_addInvoice_vatMax"))
-    # suite.addTest(addInvoice("test_addInvoice_vatAgain"))
+    suite.addTest(addInvoice("test_addInvoice_vatAgain"))
     return suite
 
 

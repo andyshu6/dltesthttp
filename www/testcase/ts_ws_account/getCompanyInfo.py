@@ -53,12 +53,14 @@ class getCompanyInfo(unittest.TestCase):
         ws=webservice()
         ws.login(self.UserShop1.username,self.UserShop1.password)
         getCompInfo=ws.getCompanyInfo(companyId=self.UserShop2.companyId)
+        self.assertEqual(getCompInfo.model['success'], '1')
 
     #获取不存在的企业信息
     def test_getCompanyInfo_notExist(self):
         ws=webservice()
         ws.login(self.UserShop1.username,self.UserShop1.password)
         getCompInfo=ws.getCompanyInfo(companyId='123456789')
+        self.assertEqual(getCompInfo.model['success'], '1')
 
     #token为空获取企业信息
     def test_getCompanyInfo_nullToken(self):

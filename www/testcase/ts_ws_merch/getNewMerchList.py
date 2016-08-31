@@ -228,7 +228,7 @@ class getNewMerchList(unittest.TestCase):
         self.assertEqual(flag, True, self.Merch1.fullName + ' is not found')
 
         # 筛选茶品牌
-        MerchList = ws.getNewMerchList(merchBrandId="0654aa950b4345f59d1d33435dc0196a",rows='999')
+        MerchList = ws.getNewMerchList(merchBrandId=self.Merch2.brandId,rows='999')
         flag = False
         for i in range(0,len(MerchList.model['newMerchListModel'])):
             if MerchList.model['newMerchListModel'][i]['merchName'].encode('utf-8') == self.Merch2.fullName:
@@ -364,12 +364,14 @@ class getNewMerchList(unittest.TestCase):
     def assertMerchList(self, rsp, merch, code = 200, success = '0',isPromotion='0',isRecommended='0'):
         self.assertEqual(rsp.code, code)
         self.assertEqual(rsp.model['success'], success)
-        if rsp.model['totalRecord'] == 0:
-            self.assertEqual(len(rsp.model['newMerchListModel']), 0)
+        if rsp.model['totalRecord'] == '0':
+            self.assertEqual(True, False, merch.fullName +"is not found")
         else:
             self.assertEqual(rsp.model['totalRecord'], str(len(rsp.model['newMerchListModel'])))
+        flag = False
         for i in range(0, len(rsp.model['newMerchListModel'])):
             if rsp.model['newMerchListModel'][i]['merchId'] == merch.goodsId:
+                flag = True
                 self.assertEqual(rsp.model['newMerchListModel'][i]['merchName'],  merch.fullName)
                 self.assertEqual(rsp.model['newMerchListModel'][i]['sellerId'],  merch.seller_store_id)
                 self.assertEqual(rsp.model['newMerchListModel'][i]['sellerName'],  merch.sellerName)
@@ -380,10 +382,21 @@ class getNewMerchList(unittest.TestCase):
                 self.assertEqual(rsp.model['newMerchListModel'][i]['isPromotion'],  merch.isPromotion)
                 self.assertEqual(rsp.model['newMerchListModel'][i]['isRecommended'],  merch.isRecommended)
                 self.assertEqual(rsp.model['newMerchListModel'][i]['minSaleNumber'],  merch.saleQuantityS1)
-                for j in range(0,len(rsp.model['newMerchListModel'][i]['promotionList'])):
-                    self.assertEqual(rsp.model['newMerchListModel'][i]['promotionList'][j],  merch['promotionList'+str(j+1)].decode('utf-8'))
+                # for j in range(0,len(rsp.model['newMerchListModel'][i]['promotionList'])):
+                #     self.assertEqual(rsp.model['newMerchListModel'][i]['promotionList'][j],  merch['promotionList'+str(j+1)].decode('utf-8'))
+
+                for j in range(0, len(rsp.model['newMerchListModel'][i]['promotionList'])):
+                    flag = False
+                    for k in range(1, len(rsp.model['newMerchListModel'][i]['promotionList'])+1):
+                        if rsp.model['newMerchListModel'][i]['promotionList'][j] == merch['promotionList'+str(k)].decode('utf-8'):
+                            flag = True
+                            break
+                        if k == 6:
+                            self.assertEqual(flag, True, rsp.model['newMerchListModel'][i]['promotionList'][j] + "is not found!")
+
                 self.assertEqual(rsp.model['newMerchListModel'][i]['merchSpec'],  merch.merchSpec)
                 self.assertEqual(rsp.model['newMerchListModel'][i]['picUrl'],  merch.picUrl)
+        self.assertEqual(flag, True, merch.fullName +"is not found")
 
 
 

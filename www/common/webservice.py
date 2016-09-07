@@ -406,6 +406,37 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 检查是否需要弹出后续的验证信息
+    def checkSwitch(self, token=None):
+        url = '/shoppingcart/checkSwitch.json'
+        data = {}
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 发送短信验证码
+    def sendMessage(self, tel=None, token=None):
+        url = '/shoppingcart/sendMessage.json'
+        data = {}
+        if tel is not None:
+            data['tel'] = tel
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 提交订单（新）
+    def createOrderByShoppingcartNew(self,payWay=None, verfyCode=None, couponList=None, deliverAddress=None, invoice=None, sellerList=None, token=None):
+        url = '/shoppingcart/createOrderByShoppingcart.json'
+        data = {}
+        if verfyCode is not None:
+            data['verfyCode'] = verfyCode
+        data['payWay'] = payWay
+        if couponList is not None:
+            data['couponList'] = couponList
+        data['deliverAddress'] = deliverAddress
+        if invoice is not None:
+            data['invoice'] = invoice
+        data['sellerList'] = sellerList
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
 
     # -----------------------------------经销商订单改价-----------------------------------------------------
     # 0185.获取订单改价页面展示信息

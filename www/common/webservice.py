@@ -253,6 +253,72 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0037.获取商品列表(New)
+    def getNewMerchList(self, merchName=None, merchCategoryCode=None, merchPropertyValueCodeList=None, merchBrandId=None, sellerId=None, lowPrice=None, highPrice=None, sortField=0, sortType=0, page=1, rows=15, token=None):
+        url = '/merch/getNewMerchList.json'
+        data = {}
+        if merchName is not None:
+            data['merchName'] = merchName
+        if merchCategoryCode is not None:
+            data['merchCategoryCode'] = merchCategoryCode
+        if merchPropertyValueCodeList is not None:
+            data['merchPropertyValueCodeList'] = merchPropertyValueCodeList
+        if merchBrandId is not None:
+            data['merchBrandId'] = merchBrandId
+        if sellerId is not None:
+            data['sellerId'] = sellerId
+        if lowPrice is not None:
+            data['lowPrice'] = lowPrice
+        if highPrice is not None:
+            data['highPrice'] = highPrice
+        if sortField is not None:
+            data['sortField'] = sortField
+        if sortType is not None:
+            data['sortType'] = sortType
+        if page is not None:
+            data['page'] = page
+        if rows is not None:
+            data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
+    # 0038.获取商品详情
+    def getNewMerchDetail(self, merchId, token=None):
+        url = '/merch/getNewMerchDetail.json'
+        data = {}
+        data['merchId'] = merchId
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0039.获取丹露促销商品列表
+    def getPromotionList(self, page=1, rows=4, token=None):
+        url = '/merch/getPromotionList.json'
+        data = {}
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0040.获取丹露推荐商品列表
+    def getRecommendList(self, page=1, rows=4, token=None):
+        url = '/merch/getRecommendList.json'
+        data = {}
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0041.获取我的常购商品列表
+    def getOftenBuyList(self, saleFlag=0, page=1, rows=4, token=None):
+        url = '/merch/getOftenBuyList.json'
+        data = {}
+        data['saleFlag'] = saleFlag
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
 
     # ——————————————————    购物车接口  ————————————————————
     # 0039.添加商品到购物车
@@ -340,6 +406,97 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 检查是否需要弹出后续的验证信息
+    def checkSwitch(self, token=None):
+        url = '/shoppingcart/checkSwitch.json'
+        data = {}
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 发送短信验证码
+    def sendMessage(self, tel=None, token=None):
+        url = '/shoppingcart/sendMessage.json'
+        data = {}
+        if tel is not None:
+            data['tel'] = tel
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 提交订单（新）
+    def createOrderByShoppingcartNew(self,payWay=None, verfyCode=None, couponList=None, deliverAddress=None, invoice=None, sellerList=None, token=None):
+        url = '/shoppingcart/createOrderByShoppingcart.json'
+        data = {}
+        if verfyCode is not None:
+            data['verfyCode'] = verfyCode
+        data['payWay'] = payWay
+        if couponList is not None:
+            data['couponList'] = couponList
+        data['deliverAddress'] = deliverAddress
+        if invoice is not None:
+            data['invoice'] = invoice
+        data['sellerList'] = sellerList
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # -----------------------------------订单接口-----------------------------------------------------
+    # 0181.订单发货
+    def deliver(self, orderNo=None, token=None):
+        url='/orders/oper/deliver.json'
+        data = {}
+        data['orderNo']=orderNo
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0182.订单收货
+    def cancel(self, paymentNo=None, orderNo=None, payType=None, token=None):
+        url='/orders/oper/receive.json'
+        data = {}
+        data['paymentNo']=paymentNo
+        data['orderNo']=orderNo
+        data['payType']=payType
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
+    # 0183.订单取消
+    def cancel(self, paymentNo=None, payType='2', cancelType='2',token=None):
+        url='/orders/oper/cancel.json'
+        data = {}
+        data['paymentNo']=paymentNo
+        data['payType']=payType
+        data['cancelType']=cancelType
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0184.订单取消审批
+    def auditCancel(self, paymentNo=None, orderNo=None, auditStatus='0', token=None):
+        url='/orders/oper/auditCancel.json'
+        data = {}
+        data['paymentNo']=paymentNo
+        data['orderNo']=orderNo
+        data['auditStatus']=auditStatus
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
+    # 0185.获取订单改价页面展示信息
+    def getChangeOrderPricePage(self,orderNo=None,token=None):
+         url='/orders/toChangeOrderPricePage.json'
+         data={}
+         data['orderNo']=orderNo
+         self.wrapHttpBase.post(url, data, token)
+         return self.wrapHttpBase.body
+
+    # 0186.订单改价操作
+    def changeOrderPrice(self,orderNo=None,orderDiscountAmount=None,orderChangeAmount=None,orderStatus=None,token=None):
+        url='/orders/oper/changeOrderPrice.json'
+        data = {}
+        data['orderNo']=orderNo
+        data['orderDiscountAmount']=orderDiscountAmount
+        data['orderChangeAmount']=orderChangeAmount
+        data['orderStatus']=orderStatus
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
 
 
     # ——————————————————    注册接口  ————————————————————
@@ -469,25 +626,128 @@ class webservice:
         self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
 
-    # -----------------------------------经销商订单改价-----------------------------------------------------
-    #获取订单改价页面展示信息
-    def getChangeOrderPricePage(self,orderNo=None,token=None):
-         url='/orders/toChangeOrderPricePage.json'
-         data={}
-         data['orderNo']=orderNo
-         self.wrapHttpBase.post(url, data, token)
-         return self.wrapHttpBase.body
-    #订单改价操作
-    def changeOrderPrice(self,orderNo=None,orderDiscountAmount=None,orderChangeAmount=None,orderStatus=None,token=None):
-        url='/orders/oper/changeOrderPrice.json'
-        data = {}
-        data['orderNo']=orderNo
-        data['orderDiscountAmount']=orderDiscountAmount
-        data['orderChangeAmount']=orderChangeAmount
-        data['orderStatus']=orderStatus
-        self.wrapHttpBase.post(url, data, token)
+
+    #----------------------------------账号接口----------------------------------------------------------
+    #获取企业信息
+    def getCompanyInfo(self,companyId=None,token=None):
+        url='/mydl/account/getCompanyInfo.json'
+        data={}
+        data['companyId']=companyId
+        self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
 
+    #获取账户信息
+    def getAcctInfo(self,userId=None,userAcct=None,token=None):
+        url='/mydl/account/getAcctInfo.json'
+        data={}
+        data['userId']=userId
+        data['userAcct']=userAcct
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取激活验证码
+    def getValCodeForActivate(self,tel=None,token=None):
+        url='/mydl/account/getValCodeForActivate.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #激活手机
+    def activatePhone(self,userAcct=None,userId=None,conditionInd=None,tel=None,token=None):
+        url='/mydl/account/activatePhone.json'
+        data={}
+        data['userAcct']=userAcct
+        data['userId']=userId
+        data['conditionInd']=conditionInd
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #--------------------------------找回密码及更改手机号------------------------------------------------------
+    # 0262.密码找回验证码短信发送
+    def getValCodeForPsw(self,tel=None):
+        url='/login/getValCodeForPsw.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 0263.重置密码（前台已校验过验证码)
+    def resetPsw(self,tel=None,password=None,passwordConfirm=None):
+        url='/login/resetPsw.json'
+        data={}
+        data['tel']=tel
+        data['password']=password
+        data['passwordConfirm']=passwordConfirm
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 0268.获取原手机号解绑短信验证码(4位验证码)
+    def getValCodeForUnbindPhone(self,tel=None,token=None):
+        url='/mydl/account/getValCodeForUnbindPhone.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0269.获取新手机号激活验证码(4位验证码)
+    def getValCodeForBindPhone(self,tel=None,token=None):
+        url='/mydl/account/getValCodeForBindPhone.json'
+        data={}
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0270.激活新的手机号码
+    def activateNewPhone(self,valCode=None,tel=None,token=None):
+        url='/mydl/account/activateNewPhone.json.json'
+        data={}
+        data['valCode']=valCode
+        data['tel']=tel
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0271.获取图形验证码(4位纯数字)
+    def getPicValCode(self,pictureWidth=None,pictureHeight=None,token=None):
+        url='/common/pic/getPicValCode.json'
+        data={}
+        data['pictureWidth']=pictureWidth
+        data['pictureHeight']=pictureHeight
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0272.校验图形验证码(需要token)
+    def validatePicValCode(self,picValCode=None,token=None):
+        url='/common/pic/validatePicValCode.json'
+        data={}
+        data['picValCode']=picValCode
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0273.校验图形验证码(不需要token)
+    def validatePicValCode2(self,picValCode=None):
+        url='/common/pic/validatePicValCode2.json'
+        data={}
+        data['picValCode']=picValCode
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 0274.校验短信验证码
+    def validateMsgValCode(self,valCode=None,token=None):
+        url='/common/pic/validatePicValCode2.json'
+        data={}
+        data['valCode']=valCode
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0275.校验短信验证码
+    def validateMsgValCode2(self,valCode=None):
+        url='/common/pic/validatePicValCode2.json'
+        data={}
+        data['valCode']=valCode
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
 
     # -----------------------------------红包项目-----------------------------------------------------
     #获取优惠券列表
@@ -523,3 +783,8 @@ class webservice:
         data['companyId']=companyId
         self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
+
+
+
+
+

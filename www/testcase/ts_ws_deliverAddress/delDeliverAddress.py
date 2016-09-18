@@ -83,7 +83,7 @@ class delDeliverAddress(unittest.TestCase):
         self.assertEqual(delDeliverAddress.code,500)
         self.assertEqual(delDeliverAddress.model,None)
 
-    # S4.删除其他用户的收货地址(通过接口可以删除其他账号的收货地址)已提bug#5493
+    # S4.删除其他用户的收货地址
     def test_delDeliverAddress_other(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)

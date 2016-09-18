@@ -49,7 +49,6 @@ class activatePhone(unittest.TestCase):
         telStatusSql=select_one('select user_phone_status from dluser.dl_user where user_id=?',self.UserShop2.userId)
         telStatus=ws.getAcctInfo(userId=self.UserShop2.userId,userAcct=self.UserShop2.username)
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
-        update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
 
     #正常激活手机号(有送红包活动)
     def test_activatePhone_coupon(self):
@@ -62,7 +61,6 @@ class activatePhone(unittest.TestCase):
         telStatusSql=select_one('select user_phone_status from dluser.dl_user where user_id=?',self.UserShop2.userId)
         telStatus=ws.getAcctInfo(userId=self.UserShop2.userId,userAcct=self.UserShop2.username)
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
-        update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
 
     #手机号格式不正确（长度）
     def test_activatePhone_telLong(self):
@@ -80,7 +78,7 @@ class activatePhone(unittest.TestCase):
     def test_activatePhone_telStyle(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
-        activatePhoneNum=ws.activatePhone(userAcct=self.UserShop2.username,userId=self.UserShop2.userId,conditionInd=0,tel='12345678912')
+        activatePhoneNum=ws.activatePhone(userAcct=self.UserShop2.username,userId=self.UserShop2.userId,conditionInd=0,tel='22345678912')
         self.assertEqual(activatePhoneNum.model['success'],'1')
         self.assertEqual(activatePhoneNum.model['couponInd'],None)
         self.assertEqual(activatePhoneNum.model['couponAmt'],None)
@@ -136,7 +134,7 @@ class activatePhone(unittest.TestCase):
         telStatusSql=select_one('select user_phone_status from dluser.dl_user where user_id=?',self.UserShop2.userId)
         telStatus=ws.getAcctInfo(userId=self.UserShop2.userId,userAcct=self.UserShop2.username)
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
-        update('update dlworkflow.dl_apply_terminal set flow_status=? where terminal_user_name=?','02','testsun456789')
+
 
     #手机号重复激活
     def test_activatePhone_repeat(self):
@@ -185,6 +183,10 @@ class activatePhone(unittest.TestCase):
 
 
 
+    def tearDown(self):
+        update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
+        update('update dlworkflow.dl_apply_terminal set flow_status=? where terminal_user_name=?','02','testsun456789')
+
 def suite():
     suite=unittest.TestSuite()
     suite.addTest(activatePhone("test_activatePhone_noCoupon"))
@@ -193,8 +195,8 @@ def suite():
     suite.addTest(activatePhone("test_activatePhone_telStyle"))
     suite.addTest(activatePhone("test_activatePhone_otherActivate"))
     suite.addTest(activatePhone("test_activatePhone_otherNoActivate"))
-    #suite.addTest(activatePhone("test_activatePhone_otherApprove"))
-    #suite.addTest(activatePhone("test_activatePhone_otherApproveRefused"))
+    suite.addTest(activatePhone("test_activatePhone_otherApprove"))
+    suite.addTest(activatePhone("test_activatePhone_otherApproveRefused"))
     suite.addTest(activatePhone("test_activatePhone_repeat"))
     suite.addTest(activatePhone("test_activatePhone_inconsistent"))
     suite.addTest(activatePhone("test_activatePhone_tokenError"))

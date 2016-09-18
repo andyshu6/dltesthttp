@@ -291,6 +291,35 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0039.获取丹露促销商品列表
+    def getPromotionList(self, page=1, rows=4, token=None):
+        url = '/merch/getPromotionList.json'
+        data = {}
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0040.获取丹露推荐商品列表
+    def getRecommendList(self, page=1, rows=4, token=None):
+        url = '/merch/getRecommendList.json'
+        data = {}
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0041.获取我的常购商品列表
+    def getOftenBuyList(self, saleFlag=0, page=1, rows=4, token=None):
+        url = '/merch/getOftenBuyList.json'
+        data = {}
+        data['saleFlag'] = saleFlag
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
     # ——————————————————    购物车接口  ————————————————————
     # 0039.添加商品到购物车
     def addShoppingcar(self, merchId, merchCount, sellerId, sellerName, token=None):
@@ -377,6 +406,97 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 检查是否需要弹出后续的验证信息
+    def checkSwitch(self, token=None):
+        url = '/shoppingcart/checkSwitch.json'
+        data = {}
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 发送短信验证码
+    def sendMessage(self, tel=None, token=None):
+        url = '/shoppingcart/sendMessage.json'
+        data = {}
+        if tel is not None:
+            data['tel'] = tel
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 提交订单（新）
+    def createOrderByShoppingcartNew(self,payWay=None, verfyCode=None, couponList=None, deliverAddress=None, invoice=None, sellerList=None, token=None):
+        url = '/shoppingcart/createOrderByShoppingcart.json'
+        data = {}
+        if verfyCode is not None:
+            data['verfyCode'] = verfyCode
+        data['payWay'] = payWay
+        if couponList is not None:
+            data['couponList'] = couponList
+        data['deliverAddress'] = deliverAddress
+        if invoice is not None:
+            data['invoice'] = invoice
+        data['sellerList'] = sellerList
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # -----------------------------------订单接口-----------------------------------------------------
+    # 0181.订单发货
+    def deliver(self, orderNo=None, token=None):
+        url='/orders/oper/deliver.json'
+        data = {}
+        data['orderNo']=orderNo
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0182.订单收货
+    def cancel(self, paymentNo=None, orderNo=None, payType=None, token=None):
+        url='/orders/oper/receive.json'
+        data = {}
+        data['paymentNo']=paymentNo
+        data['orderNo']=orderNo
+        data['payType']=payType
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
+    # 0183.订单取消
+    def cancel(self, paymentNo=None, payType='2', cancelType='2',token=None):
+        url='/orders/oper/cancel.json'
+        data = {}
+        data['paymentNo']=paymentNo
+        data['payType']=payType
+        data['cancelType']=cancelType
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0184.订单取消审批
+    def auditCancel(self, paymentNo=None, orderNo=None, auditStatus='0', token=None):
+        url='/orders/oper/auditCancel.json'
+        data = {}
+        data['paymentNo']=paymentNo
+        data['orderNo']=orderNo
+        data['auditStatus']=auditStatus
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
+    # 0185.获取订单改价页面展示信息
+    def getChangeOrderPricePage(self,orderNo=None,token=None):
+         url='/orders/toChangeOrderPricePage.json'
+         data={}
+         data['orderNo']=orderNo
+         self.wrapHttpBase.post(url, data, token)
+         return self.wrapHttpBase.body
+
+    # 0186.订单改价操作
+    def changeOrderPrice(self,orderNo=None,orderDiscountAmount=None,orderChangeAmount=None,orderStatus=None,token=None):
+        url='/orders/oper/changeOrderPrice.json'
+        data = {}
+        data['orderNo']=orderNo
+        data['orderDiscountAmount']=orderDiscountAmount
+        data['orderChangeAmount']=orderChangeAmount
+        data['orderStatus']=orderStatus
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
 
 
     # ——————————————————    注册接口  ————————————————————
@@ -706,6 +826,41 @@ class webservice:
         data['taskId']=taskId
         data['auditStatus']=auditStatus
         data['approvalReason']=approvalReason
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # -----------------------------------红包项目-----------------------------------------------------
+    #获取优惠券列表
+    def getCouponList(self,companyId=None,merchList=None,token=None):
+        url = '/coupon/getCouponList.json'
+        data = {}
+        data['companyId']=companyId
+        data['merchList']=merchList
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取平台参数
+    def getCouponParam(self,token=None):
+        url = 'param/getCouponParam.json'
+        self.wrapHttpBase.post(url,token)
+        return self.wrapHttpBase.body
+
+    #获取优惠劵列表（个人中心：未使用，已过期，已使用）
+    def getMyCouponList(self,companyId=None,couponStatus=None,page=None,rows=None,token=None):
+        url = '/coupon/getMyCouponList.json'
+        data ={}
+        data['companyId']=companyId
+        data['couponStatus']=couponStatus
+        data['page']=page
+        data['rows']=rows
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    #获取优惠劵列表张数
+    def getMyCouponCnt(self,companyId=None,token=None):
+        url = '/coupon/getMyCouponCnt.json'
+        data={}
+        data['companyId']=companyId
         self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
 

@@ -439,6 +439,21 @@ class webservice:
         return self.wrapHttpBase.body
 
     # -----------------------------------订单接口-----------------------------------------------------
+    # 0040.获取买家订单的数量
+    def getBuyerOrderCount(self, token=None):
+        url='/orders/getBuyerOrderCount.json'
+        data = {}
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0050.获取卖家订单的数量
+    def getSellerOrderCount(self, token=None):
+        url='/orders/getSellerOrderCount.json'
+        data = {}
+        self.wrapHttpBase.post(url, data, token)
+        return self.wrapHttpBase.body
+
+
     # 0181.订单发货
     def deliver(self, orderNo=None, token=None):
         url='/orders/oper/deliver.json'
@@ -448,7 +463,7 @@ class webservice:
         return self.wrapHttpBase.body
 
     # 0182.订单收货
-    def cancel(self, paymentNo=None, orderNo=None, payType=None, token=None):
+    def receive(self, paymentNo=None, orderNo=None, payType=None, token=None):
         url='/orders/oper/receive.json'
         data = {}
         data['paymentNo']=paymentNo
@@ -837,12 +852,6 @@ class webservice:
         data['companyId']=companyId
         data['merchList']=merchList
         self.wrapHttpBase.post(url,data,token)
-        return self.wrapHttpBase.body
-
-    #获取平台参数
-    def getCouponParam(self,token=None):
-        url = 'param/getCouponParam.json'
-        self.wrapHttpBase.post(url,token)
         return self.wrapHttpBase.body
 
     #获取优惠劵列表（个人中心：未使用，已过期，已使用）

@@ -525,6 +525,48 @@ class webservice:
         self.wrapHttpBase.post(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0246.终端店注册提交-含邀请码、验证码（已经上线）
+    def terminalRegistApprove(self,terminalLoginName=None,password=None,registerTel=None,terminalFullName=None,verificationCode=None,invitationCode=None,businessLicenseCode=None,storeTypeCode=None,
+                              terminalAreaProvinceCode=None,terminalAreaCityCode=None,terminalAreaDistrictCode=None,terminalAddress=None):
+        url='/regist/terminalRegistApprove.json'
+        data={}
+        data['terminalLoginName']=terminalLoginName
+        data['password']=password
+        data['registerTel']=registerTel
+        data['terminalFullName']=terminalFullName
+        data['verificationCode']=verificationCode
+        data['invitationCode']=invitationCode
+        data['businessLicenseCode']=businessLicenseCode
+        data['storeTypeCode']=storeTypeCode
+        data['terminalAreaProvinceCode']=terminalAreaProvinceCode
+        data['terminalAreaCityCode']=terminalAreaCityCode
+        data['terminalAreaDistrictCode']=terminalAreaDistrictCode
+        data['terminalAddress']=terminalAddress
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 1.终端店注册查看审批进度
+    def terminalRegistProgress(self,username=None,password=None):
+        url='/regist/terminalRegistProgress.json'
+        data={}
+        data['username']=username
+        data['password']=password
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
+    # 2.终端店注册资料修改再注册
+    def terminalInformationModify(self,applyId=None,terminalName=None,businessLicenseCode=None,terminalTypeCode=None,terminalAreaCode=None,terminalDetailAddress=None):
+        url='/regist/terminalInformationModify.json'
+        data={}
+        data['applyId']=applyId
+        data['terminalName']=terminalName
+        data['businessLicenseCode']=businessLicenseCode
+        data['terminalTypeCode']=terminalTypeCode
+        data['terminalAreaCode']=terminalAreaCode
+        data['terminalDetailAddress']=terminalDetailAddress
+        self.wrapHttpBase.post(url,data)
+        return self.wrapHttpBase.body
+
 
     # ----------------------------------  收货地址接口  ----------------------------------------------
     #添加收货地址
@@ -749,6 +791,44 @@ class webservice:
         self.wrapHttpBase.post(url,data)
         return self.wrapHttpBase.body
 
+    #--------------------------------------经销商审批接口---------------------------------------------------------
+    # 0032.经销商管理员获取我的丹露终端店审批数量
+    def getApprovalCount(self,token=None):
+        url='/mydl/approval/getApprovalCount.json'
+        data={}
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0033.经销商管理员获取我的丹露终端店审批列表
+    def getApprovalList(self,approvalStatus=None,page=None,rows=None,token=None):
+        url='/mydl/approval/getApprovalList.json'
+        data={}
+        data['approvalStatus']=approvalStatus
+        data['page']=page
+        data['rows']=rows
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0034.经销商管理员获取我的丹露终端店审批详情
+    def getApprovalDetail(self,approvalId=None,taskId=None,token=None):
+        url='/mydl/approval/getApprovalDetail.json'
+        data={}
+        data['approvalId']=approvalId
+        data['taskId']=taskId
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
+    # 0035.经销商管理员我的丹露审批
+    def auditApproval(self,approvalId=None,taskId=None,auditStatus=None,approvalReason=None,token=None):
+        url='/mydl/approval/auditApproval.json'
+        data={}
+        data['approvalId']=approvalId
+        data['taskId']=taskId
+        data['auditStatus']=auditStatus
+        data['approvalReason']=approvalReason
+        self.wrapHttpBase.post(url,data,token)
+        return self.wrapHttpBase.body
+
     # -----------------------------------红包项目-----------------------------------------------------
     #获取优惠券列表
     def getCouponList(self,companyId=None,merchList=None,token=None):
@@ -783,6 +863,7 @@ class webservice:
         data['companyId']=companyId
         self.wrapHttpBase.post(url,data,token)
         return self.wrapHttpBase.body
+
 
 
 

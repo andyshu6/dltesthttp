@@ -22,7 +22,7 @@ class webservice:
         data = {}
         data['username'] = username
         data['password'] = password
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     def login(self, username, password, token = 'null'):
@@ -31,7 +31,7 @@ class webservice:
         data = {}
         data['username'] = username
         data['password'] = password
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -45,14 +45,14 @@ class webservice:
         data['osCode'] = osCode
         data['equipmentCode'] = equipmentCode
         data['appType'] = appType
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0230.获取所有区域列表
     def getAllAreaList(self,token=None):
         url = '/common/area/getAllAreaList.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0231.选择获取区域列表
@@ -63,7 +63,7 @@ class webservice:
             data['provinceCode'] = provinceCode
         if cityCode is not None:
             data['cityCode'] = cityCode
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 获取指定区域列表
@@ -74,35 +74,35 @@ class webservice:
             data['provinceCode'] = provinceCode
         if cityCode is not None:
             data['cityCode'] = cityCode
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0254.获取用户协议URL
     def userAgreementUrl(self, token='null'):
         url = '/common/url/userAgreementUrl.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0281.获取平台参数
     def getCouponParam(self,token=None):
         url = '/common/param/getCouponParam.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0286.获取Banner图片地址
     def getBannerList(self,token=None):
         url = '/common/pic/getBannerList.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0287.获取主题列表（品类及其他）
     def getTopicList(self, token=None):
         url = '/common/pic/getTopicList.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -111,7 +111,7 @@ class webservice:
         url = '/merch/getCategoryList.json'
         data = {}
         data['merchCategoryCode'] = merchCategoryCode
-        return self.wrapHttpBase.post(url, data)
+        return self.wrapHttpBase.wspost(url, data)
 
 
 
@@ -128,7 +128,7 @@ class webservice:
             data['oldPassword'] = oldPassword
         if newPassword is not None:
             data['newPassword'] = newPassword
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -154,7 +154,7 @@ class webservice:
             data['invoice']['receiveManTel'] = receiveManTel
             data['invoice']['receiveManProvince'] = receiveManProvince
             data['invoice']['receiveManAddress'] = receiveManAddress
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0201.删除发票
@@ -162,7 +162,7 @@ class webservice:
         url = '/mydl/invoice/delInvoice.json'
         data = {}
         data['invoiceId'] = invoiceId
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0202.修改发票
@@ -187,7 +187,7 @@ class webservice:
             data['invoice']['receiveManTel'] = receiveManTel
             data['invoice']['receiveManProvince'] = receiveManProvince
             data['invoice']['receiveManAddress'] = receiveManAddress
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0203.设置默认发票
@@ -195,14 +195,14 @@ class webservice:
         url = '/mydl/invoice/setDefaultInvoice.json'
         data = {}
         data['invoiceId'] = invoiceId
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0204.发票列表
     def getInvoiceList(self, token = None):
         url = '/mydl/invoice/getInvoiceList.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -213,7 +213,7 @@ class webservice:
         data = {}
         if(merchCategoryCode is not None):
             data['merchCategoryCode'] = merchCategoryCode
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0037.获取商品列表
@@ -242,7 +242,7 @@ class webservice:
             data['page'] = page
         if rows is not None:
             data['rows'] = rows
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0038.获取商品详情
@@ -250,7 +250,7 @@ class webservice:
         url = '/merch/getMerchDetail.json'
         data = {}
         data['merchId'] = merchId
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0037.获取商品列表(New)
@@ -279,7 +279,7 @@ class webservice:
             data['page'] = page
         if rows is not None:
             data['rows'] = rows
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -288,7 +288,7 @@ class webservice:
         url = '/merch/getNewMerchDetail.json'
         data = {}
         data['merchId'] = merchId
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0039.获取丹露促销商品列表
@@ -297,7 +297,7 @@ class webservice:
         data = {}
         data['page'] = page
         data['rows'] = rows
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0040.获取丹露推荐商品列表
@@ -306,7 +306,7 @@ class webservice:
         data = {}
         data['page'] = page
         data['rows'] = rows
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0041.获取我的常购商品列表
@@ -316,7 +316,7 @@ class webservice:
         data['saleFlag'] = saleFlag
         data['page'] = page
         data['rows'] = rows
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -333,7 +333,7 @@ class webservice:
             data['sellerId'] = sellerId
         if sellerName is not None:
             data['sellerName'] = sellerName
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0040.修改指定商品在购物车中的数量
@@ -358,7 +358,7 @@ class webservice:
             data['reductionType'] = reductionType
         if ruleId is not None:
             data['ruleId'] = ruleId
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -366,7 +366,7 @@ class webservice:
     def toShoppingcart(self, token=None):
         url = '/shoppingcart/toShoppingcart.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0042.删除购物车中的商品信息
@@ -374,14 +374,14 @@ class webservice:
         url = '/shoppingcart/delShoppingcartByProductIds.json'
         data = {}
         data['delList'] = delList
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0045.获取购物车商品数量
     def getShoppingcartSize(self, token=None):
         url = '/shoppingcart/getShoppingcartSize.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0130.获取确认订单信息
@@ -389,7 +389,7 @@ class webservice:
         url = '/shoppingcart/getPreViewOrderByShoppingcart.json'
         data = {}
         data['toSettlementModel'] = []
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0131.从购物车生成新订单
@@ -403,14 +403,14 @@ class webservice:
         if invoice is not None:
             data['invoice'] = invoice
         data['sellerList'] = sellerList
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 检查是否需要弹出后续的验证信息
     def checkSwitch(self, token=None):
         url = '/shoppingcart/checkSwitch.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 发送短信验证码
@@ -419,7 +419,7 @@ class webservice:
         data = {}
         if tel is not None:
             data['tel'] = tel
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 提交订单（新）
@@ -435,7 +435,7 @@ class webservice:
         if invoice is not None:
             data['invoice'] = invoice
         data['sellerList'] = sellerList
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # -----------------------------------订单接口-----------------------------------------------------
@@ -443,14 +443,55 @@ class webservice:
     def getBuyerOrderCount(self, token=None):
         url='/orders/getBuyerOrderCount.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0050.获取卖家订单的数量
     def getSellerOrderCount(self, token=None):
         url='/orders/getSellerOrderCount.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0041.获取买家订单列表
+    def getBuyerOrderList(self, orderStatus=0, startTime=None, endTime=None, page='1', rows='15', token=None):
+        url='/orders/getBuyerOrderList.json'
+        data = {}
+        data['orderStatus'] = orderStatus
+        if startTime is not None:
+            data['startTime'] = startTime
+        if endTime is not None:
+            data['endTime'] = endTime
+        if page is not None:
+            data['page'] = page
+        if rows is not None:
+            data['rows'] = rows
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0051.获取卖家订单列表
+    def getSellerOrderList(self, orderStatus=0, startTime=None, endTime=None, page='1', rows='15', token=None):
+        url='/orders/getSellerOrderList.json'
+        data = {}
+        data['orderStatus'] = orderStatus
+        if startTime is not None:
+            data['startTime'] = startTime
+        if endTime is not None:
+            data['endTime'] = endTime
+        if page is not None:
+            data['page'] = page
+        if rows is not None:
+            data['rows'] = rows
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0070.获取订单商品快照
+    def getOrderMerchSnapshot(self, orderNo=None, merchId=None, token=None):
+        url='/orders/getOrderMerchSnapshot.json'
+        data = {}
+        data['orderNo'] = orderNo
+        data['merchId'] = merchId
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -459,7 +500,7 @@ class webservice:
         url='/orders/oper/deliver.json'
         data = {}
         data['orderNo']=orderNo
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0182.订单收货
@@ -469,7 +510,7 @@ class webservice:
         data['paymentNo']=paymentNo
         data['orderNo']=orderNo
         data['payType']=payType
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -480,7 +521,7 @@ class webservice:
         data['paymentNo']=paymentNo
         data['payType']=payType
         data['cancelType']=cancelType
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0184.订单取消审批
@@ -490,7 +531,7 @@ class webservice:
         data['paymentNo']=paymentNo
         data['orderNo']=orderNo
         data['auditStatus']=auditStatus
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -499,7 +540,7 @@ class webservice:
          url='/orders/toChangeOrderPricePage.json'
          data={}
          data['orderNo']=orderNo
-         self.wrapHttpBase.post(url, data, token)
+         self.wrapHttpBase.wspost(url, data, token)
          return self.wrapHttpBase.body
 
     # 0186.订单改价操作
@@ -510,7 +551,7 @@ class webservice:
         data['orderDiscountAmount']=orderDiscountAmount
         data['orderChangeAmount']=orderChangeAmount
         data['orderStatus']=orderStatus
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -519,7 +560,7 @@ class webservice:
     def getTerminalShopTypeList(self, token='null'):
         url = '/regist/getTerminalShopTypeList.json'
         data = {}
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0243.获取终端店地区列表
@@ -528,7 +569,7 @@ class webservice:
         data = {}
         if search is not None:
             data['search'] = search
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0245.获取短信验证码
@@ -537,7 +578,7 @@ class webservice:
         data = {}
         if tel is not None:
             data['tel'] = tel
-        self.wrapHttpBase.post(url, data, token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0246.终端店注册提交-含邀请码、验证码（已经上线）
@@ -557,7 +598,7 @@ class webservice:
         data['terminalAreaCityCode']=terminalAreaCityCode
         data['terminalAreaDistrictCode']=terminalAreaDistrictCode
         data['terminalAddress']=terminalAddress
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
     # 1.终端店注册查看审批进度
@@ -566,7 +607,7 @@ class webservice:
         data={}
         data['username']=username
         data['password']=password
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
     # 2.终端店注册资料修改再注册
@@ -579,7 +620,7 @@ class webservice:
         data['terminalTypeCode']=terminalTypeCode
         data['terminalAreaCode']=terminalAreaCode
         data['terminalDetailAddress']=terminalDetailAddress
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
 
@@ -598,14 +639,14 @@ class webservice:
         data['deliverAddress']['deliverMobile'] = deliverMobile
         data['deliverAddress']['deliverTel'] = deliverTel
         data['deliverAddress']['isDefault'] = isDefault
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取收货地址列表
     def getDeliverAddressList(self,token=None):
         url='/mydl/deliverAddress/getDeliverAddressList.json'
         data={}
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #删除收货地址
@@ -613,7 +654,7 @@ class webservice:
         url='/mydl/deliverAddress/delDeliverAddress.json'
         data={}
         data['deliverAddressId']=deliverAddressId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #修改收货地址
@@ -630,7 +671,7 @@ class webservice:
         data['deliverAddress']['deliverPerson']=deliverPerson
         data['deliverAddress']['deliverMobile']=deliverMobile
         data['deliverAddress']['deliverTel']=deliverTel
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #设置默认收货地址
@@ -638,7 +679,7 @@ class webservice:
         url='/mydl/deliverAddress/setDefaultDeliverAddress.json'
         data={}
         data['deliverAddressId']=deliverAddressId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取终端店地址
@@ -646,7 +687,7 @@ class webservice:
         url='/mydl/deliverAddress/getTerminalAddress.json'
         data={}
         data['terminalCustomerId']=terminalCustomerId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -656,7 +697,7 @@ class webservice:
         url='/mydl/favorites/addFavorite.json'
         data={}
         data['merchId']=merchId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #删除收藏（支持批量删除）
@@ -664,7 +705,7 @@ class webservice:
         url='/mydl/favorites/delFavorite.json'
         data={}
         data['merchId']=merchId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取收藏列表
@@ -673,14 +714,14 @@ class webservice:
         data={}
         data['page']=page
         data['rows']=rows
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取收藏列表数量
     def getFavoriteListSize(self,token=None):
         url='/mydl/favorites/getFavoriteListSize.json'
         data={}
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
 
@@ -690,7 +731,7 @@ class webservice:
         url='/mydl/account/getCompanyInfo.json'
         data={}
         data['companyId']=companyId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取账户信息
@@ -699,7 +740,7 @@ class webservice:
         data={}
         data['userId']=userId
         data['userAcct']=userAcct
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取激活验证码
@@ -707,7 +748,7 @@ class webservice:
         url='/mydl/account/getValCodeForActivate.json'
         data={}
         data['tel']=tel
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #激活手机
@@ -718,7 +759,7 @@ class webservice:
         data['userId']=userId
         data['conditionInd']=conditionInd
         data['tel']=tel
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #--------------------------------找回密码及更改手机号------------------------------------------------------
@@ -727,7 +768,7 @@ class webservice:
         url='/login/getValCodeForPsw.json'
         data={}
         data['tel']=tel
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
     # 0263.重置密码（前台已校验过验证码)
@@ -737,7 +778,7 @@ class webservice:
         data['tel']=tel
         data['password']=password
         data['passwordConfirm']=passwordConfirm
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
     # 0268.获取原手机号解绑短信验证码(4位验证码)
@@ -745,7 +786,7 @@ class webservice:
         url='/mydl/account/getValCodeForUnbindPhone.json'
         data={}
         data['tel']=tel
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0269.获取新手机号激活验证码(4位验证码)
@@ -753,7 +794,7 @@ class webservice:
         url='/mydl/account/getValCodeForBindPhone.json'
         data={}
         data['tel']=tel
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0270.激活新的手机号码
@@ -762,7 +803,7 @@ class webservice:
         data={}
         data['valCode']=valCode
         data['tel']=tel
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0271.获取图形验证码(4位纯数字)
@@ -771,7 +812,7 @@ class webservice:
         data={}
         data['pictureWidth']=pictureWidth
         data['pictureHeight']=pictureHeight
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0272.校验图形验证码(需要token)
@@ -779,7 +820,7 @@ class webservice:
         url='/common/pic/validatePicValCode.json'
         data={}
         data['picValCode']=picValCode
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0273.校验图形验证码(不需要token)
@@ -787,7 +828,7 @@ class webservice:
         url='/common/pic/validatePicValCode2.json'
         data={}
         data['picValCode']=picValCode
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
     # 0274.校验短信验证码
@@ -795,7 +836,7 @@ class webservice:
         url='/common/pic/validatePicValCode2.json'
         data={}
         data['valCode']=valCode
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0275.校验短信验证码
@@ -803,7 +844,7 @@ class webservice:
         url='/common/pic/validatePicValCode2.json'
         data={}
         data['valCode']=valCode
-        self.wrapHttpBase.post(url,data)
+        self.wrapHttpBase.wspost(url, data)
         return self.wrapHttpBase.body
 
     #--------------------------------------经销商审批接口---------------------------------------------------------
@@ -811,7 +852,7 @@ class webservice:
     def getApprovalCount(self,token=None):
         url='/mydl/approval/getApprovalCount.json'
         data={}
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0033.经销商管理员获取我的丹露终端店审批列表
@@ -821,7 +862,7 @@ class webservice:
         data['approvalStatus']=approvalStatus
         data['page']=page
         data['rows']=rows
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0034.经销商管理员获取我的丹露终端店审批详情
@@ -830,7 +871,7 @@ class webservice:
         data={}
         data['approvalId']=approvalId
         data['taskId']=taskId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # 0035.经销商管理员我的丹露审批
@@ -841,7 +882,7 @@ class webservice:
         data['taskId']=taskId
         data['auditStatus']=auditStatus
         data['approvalReason']=approvalReason
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     # -----------------------------------红包项目-----------------------------------------------------
@@ -851,7 +892,7 @@ class webservice:
         data = {}
         data['companyId']=companyId
         data['merchList']=merchList
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取优惠劵列表（个人中心：未使用，已过期，已使用）
@@ -862,7 +903,7 @@ class webservice:
         data['couponStatus']=couponStatus
         data['page']=page
         data['rows']=rows
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
     #获取优惠劵列表张数
@@ -870,9 +911,19 @@ class webservice:
         url = '/coupon/getMyCouponCnt.json'
         data={}
         data['companyId']=companyId
-        self.wrapHttpBase.post(url,data,token)
+        self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
+    # -----------------------------------消息系统-----------------------------------------------------、
+    # 0256.消息数量
+    def messageCount(self, channelId='CH01', receiverUserId=None, receiverCompanyId=None):
+        url = '/message/count'
+        data={}
+        data['channelId']=channelId
+        data['receiverUserId']=receiverUserId
+        data['receiverCompanyId']=receiverCompanyId
+        self.wrapHttpBase.smspost(url,data)
+        return self.wrapHttpBase.body
 
 
 

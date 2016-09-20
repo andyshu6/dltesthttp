@@ -27,6 +27,8 @@ class httpbase:
         config.read(ini_file)
         self.host = config['HTTP']['host']
         self.port = config['HTTP']['port']
+        self.smshost = config['HTTP']['smshost']
+        self.smsport = config['HTTP']['smsport']
         self.headers = {'Content-Type': 'application/json;charset=UTF-8'}
         self.body = Dict()
         self.statusCode = -1
@@ -98,8 +100,8 @@ class httpbase:
             print('%s' % e)
             return {}
 
-    # 封装HTTP POST请求方法
-    def post(self, url, data, token = None):
+    # 封装webservice POST请求方法
+    def wspost(self, url, data, token = None):
         import sys
         reload(sys)
         sys.setdefaultencoding('utf-8')
@@ -135,8 +137,25 @@ class httpbase:
             print('%s' % e)
             return {}
 
+    # 封装消息请求方法
+    def smspost(self, url, data):
+        data = json.dumps(data, encoding="UTF-8", ensure_ascii=False).encode('utf-8')
+        url = 'http://' + self.smshost + ':' + str(self.smsport) + url
+        try:
+            request = urllib2.Request(url, headers=self.headers)
+            response = urllib2.urlopen(request, data)
+            html = StringIO.StringIO(response.read())
+            json_response = json.loads(html.buf)
+            self.statusCode = response.getcode()
+            for key, value in json_response.iteritems():
+                self.body[key] = value
+            return json_response
+        except Exception as e:
+            print('%s' % e)
+            return {}
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     data1 = {"username": "testlxmps113", "password": "508df4cb2f4d8f80519256258cfb975f"}
-    httpbase().post('/login/doLogin.json', data1)
+    httpbase().wspost('/login/doLogin.json', data1)

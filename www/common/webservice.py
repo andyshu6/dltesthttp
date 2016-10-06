@@ -931,6 +931,49 @@ class webservice:
         data['receiverCompanyId']=receiverCompanyId
         self.wrapHttpBase.smspost(url,data)
         return self.wrapHttpBase.body
+#0257.消息列表
+    def list(self,id=None,channelId=None,receiverUserId=None,receiverCompanyId=None,type=None,defaultPaginationStrategy=None,page=None,rows=None,token=None):
+        url = '/message/list'
+        data = {}
+        data['id'] = id
+        data['channelId'] = channelId
+        data['receiverUserId'] = receiverUserId
+        data['receiverCompanyId'] = receiverCompanyId
+        data['type'] = type
+        data['defaultPaginationStrategy'] = defaultPaginationStrategy
+        data['page'] = page
+        data['rows'] = rows
+        self.wrapHttpBase.smspost(url, data)
+        return self.wrapHttpBase.body
+
+    #0258.标记消息为已读
+    def markAsRead(self,msgIds=None,token=None):
+        url = '/message/markAsRead'
+        data = {}
+        data['msgIds'] = msgIds
+        self.wrapHttpBase.smspost(url, data)
+        return self.wrapHttpBase.body
+
+    #0259.按类型标记消息为已读
+    def markAsReadByType(self,receiverUserId=None,receiverCompanyId=None,type=None,token=None):
+        url = '/message/markAsReadByType'
+        data = {}
+        data['receiverUserId'] = receiverUserId
+        data['receiverCompanyId'] = receiverCompanyId
+        data['type'] = type
+        self.wrapHttpBase.smspost(url, data)
+        return self.wrapHttpBase.body
+
+    #0260.获取各种类型的最新一种消息
+    def retrieveNewestOneMessage(self,channelId=None,receiverUserId=None,receiverCompanyId=None,type=None,token=None):
+        url = '/message/retrieveNewestOneMessage'
+        data = {}
+        data['channelId'] = channelId
+        data['receiverUserId'] = receiverUserId
+        data['receiverCompanyId'] = receiverCompanyId
+        data['type'] = type
+        self.wrapHttpBase.smspost(url, data)
+        return self.wrapHttpBase.body
 
 
 

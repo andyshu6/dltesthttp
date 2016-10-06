@@ -52,19 +52,59 @@
 import unittest
 from www.common.webservice import *
 from www.common.excel import eData
-
+from www.common.database import *
 class count(unittest.TestCase):
-
     UserShop = eData('TmlShop')
+    DealMager = eData('DealMager')
+    Merch1 = eData('Merch1')
 
-
-    # S1.获取终端店消息数量
-    def test_count_shop(self):
+    # S1.获取终端店消息数量(包括全部数量和未读数量)
+    def test_count_NumberTmlShop(self):
         ws = webservice()
-        msgCount = ws.messageCount(receiverUserId = self.UserShop.userId, receiverCompanyId=self.UserShop.companyId)
-        self.assertEqual(msgCount.model['success'], '0')
+        msgRstAllCount = select('select * from dlsms.dl_message  where receiver_id = ?  and channel_id = ?',self.UserShop.companyId,'CH01')
+        msgRstUnreadCount = select('select * from dlsms.dl_message  where receiver_id = ? and read_status = ? and channel_id = ?' , self.UserShop.companyId,'01','CH01')
 
+        msgCount = ws.messageCount(receiverUserId = self.UserShop.userId, receiverCompanyId=self.UserShop.companyId)
+        allcount = msgCount.model['msgCount']['allCount']
+        unreadCount = msgCount.model['msgCount']['unreadCount']
+        allcountnum = 0
+        unreadnum = 0
+        for key,value in allcount.items():
+            if (len(key) == 3 or ',' in key):
+                allcountnum = allcountnum+value
+
+        for key,value in unreadCount.items():
+            if (len(key) == 3 or ',' in key):
+                unreadnum = unreadnum+value
+        self.assertEquals(msgCount.code, 200)
+        self.assertEqual(msgCount.model['success'], '0')
+        self.assertEqual(allcountnum, len(msgRstAllCount))
+        self.assertEqual(unreadnum , len(msgRstUnreadCount))
+    # 获取经销商消息数量(包括全部数量和未读数量)
+    def test_count_NumberDealShop(self):
+        ws = webservice()
+        PartCount = select('select * from dlsms.dl_message  where receiver_id = ?  and channel_id = ?',self.DealMager.companyId, 'CH01')
+        ApprovalCount = select('select * from dlsms.dl_message  where receiver_id = ?  and channel_id = ?',self.DealMager.userId, 'CH01')
+        msgRstUnreadCount = select( 'select * from dlsms.dl_message  where receiver_id = ? and read_status = ? and channel_id = ?',self.DealMager.companyId, '01', 'CH01')
+        ApprovalUnread = select( 'select * from dlsms.dl_message  where receiver_id = ? and read_status = ? and channel_id = ?',self.DealMager.userId, '01', 'CH01')
+        msgCount = ws.messageCount(receiverUserId=self.DealMager.userId, receiverCompanyId=self.DealMager.companyId)
+        allcount = msgCount.model['msgCount']['allCount']
+        unreadCount = msgCount.model['msgCount']['unreadCount']
+        allcountnum = 0
+        unreadnum = 0
+        for key, value in allcount.items():
+            if (len(key) == 3 or ',' in key):
+                allcountnum = allcountnum + value
+
+        for key, value in unreadCount.items():
+            if (len(key) == 3 or ',' in key):
+                unreadnum = unreadnum + value
+        self.assertEquals(msgCount.code, 200)
+        self.assertEqual(msgCount.model['success'], '0')
+        self.assertEqual(allcountnum, len(PartCount )+len(ApprovalCount))
+        self.assertEqual(unreadnum, len(msgRstUnreadCount)+len(ApprovalUnread))
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(count("test_count_shop"))
+    suite.addTest(count("test_count_NumberTmlShop"))
+    suite.addTest(count("test_count_NumberDealShop"))
     return suite

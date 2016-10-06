@@ -159,7 +159,9 @@ class terminalInformationModify(unittest.TestCase):
         getList=ws.getApprovalList(approvalStatus='0',page='1',rows='1')
         approvid=getList.model['approvalList'][0]['approvalId']
         ws.login(self.UserShop3.username,self.UserShop3.password)
-        ws.terminalRegistProgress(self.UserShop3.username,self.UserShop3.password)
+        registProgress=ws.terminalRegistProgress(self.UserShop3.username,self.UserShop3.password)
+        self.assertEqual(registProgress.model['success'],'0')
+        self.assertEqual(registProgress.model['status'],'2')
         registRepeat=ws.terminalInformationModify(applyId=approvid,terminalName=self.UserShop3.fullName,businessLicenseCode=self.UserShop3.busLicenseNum,terminalTypeCode=self.UserShop3.storeTypeCode,terminalAreaCode=self.UserShop3.areaCode,
                                                   terminalDetailAddress=self.UserShop3.localStreet)
         self.assertEqual(registRepeat.model['success'],'1')
@@ -567,4 +569,5 @@ def suite():
     suite.addTest(terminalInformationModify("test_terminalInformationModify_detailAddressLong"))
     suite.addTest(terminalInformationModify("test_terminalInformationModify_detailAddressNull"))
     suite.addTest(terminalInformationModify("test_terminalInformationModify_detailAddressSpecial"))
+
     return suite

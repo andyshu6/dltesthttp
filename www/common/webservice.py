@@ -494,6 +494,13 @@ class webservice:
         self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0255.获取订单跟踪消息
+    def getOrderLog(self, orderNo, token=None):
+        url='/orders/getOrderLog.json'
+        data = {}
+        data['orderNo'] = orderNo
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
 
     # 0181.订单发货
     def deliver(self, orderNo=None, token=None):

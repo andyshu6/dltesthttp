@@ -141,11 +141,13 @@ class httpbase:
     def smspost(self, url, data):
         data = json.dumps(data, encoding="UTF-8", ensure_ascii=False).encode('utf-8')
         url = 'http://' + self.smshost + ':' + str(self.smsport) + url
+        logging.info("request:\nPOST " + url + " HTTP/1.1\n" + data)
         try:
             request = urllib2.Request(url, headers=self.headers)
             response = urllib2.urlopen(request, data)
             html = StringIO.StringIO(response.read())
             json_response = json.loads(html.buf)
+            logging.info("response:\n%d\n%s%s" % (response.code, response.info(), json_response))
             self.statusCode = response.getcode()
             for key, value in json_response.iteritems():
                 self.body[key] = value

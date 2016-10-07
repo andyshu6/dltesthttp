@@ -22,8 +22,8 @@ class webservice:
         data = {}
         data['username'] = username
         data['password'] = password
-        self.wrapHttpBase.wspost(url, data, token)
-        return self.wrapHttpBase.body
+        #self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.wspost(url, data, token)
 
     def login(self, username, password, token = 'null'):
         password = hashlib.md5(password).hexdigest()
@@ -482,6 +482,25 @@ class webservice:
             data['page'] = page
         if rows is not None:
             data['rows'] = rows
+        # self.wrapHttpBase.wspost(url, data, token)
+        # return self.wrapHttpBase.body
+        return self.wrapHttpBase.wspost(url, data, token)
+
+    # 0042.获取符合条件的买家订单详情
+    def getBuyerOrderDetail(self, orderPk, orderNo, token=None):
+        url='/orders/getBuyerOrderDetail.json'
+        data = {}
+        data['orderPk'] = orderPk
+        data['orderNo'] = orderNo
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0052.获取符合条件的卖家订单详情
+    def getSellerOrderDetail(self, orderPk, orderNo, token=None):
+        url='/orders/getBuyerOrderDetail.json'
+        data = {}
+        data['orderPk'] = orderPk
+        data['orderNo'] = orderNo
         self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 

@@ -30,7 +30,7 @@ class httpbase:
         self.smshost = config['HTTP']['smshost']
         self.smsport = config['HTTP']['smsport']
         self.headers = {'Content-Type': 'application/json;charset=UTF-8'}
-        self.body = Dict()
+        self.body = {}
         self.statusCode = -1
 
         # install cookie
@@ -116,8 +116,6 @@ class httpbase:
         logging.info("request:\nPOST " + url + " HTTP/1.1\n" + data)
         try:
             request = urllib2.Request(url, headers=self.headers)
-            # if (self.sessionId is not None):
-            #     request.headers["JSESSIONID"] =  self.sessionId
             response = urllib2.urlopen(request, data)
             if ((not self.headers.has_key('Cookie')) and response.headers.has_key('Set-Cookie')):
                 self.headers['Cookie'] = response.headers['Set-Cookie'].split(';')[0]
@@ -129,10 +127,10 @@ class httpbase:
             self.statusCode = response.getcode()
             for key, value in json_response.iteritems():
                 self.body[key] = value
+            self.body = Dict(self.body.keys(), self.body.values())
             if(self.gltoken is None):
                 self.gltoken = self.get_sec_value('token')
-            #self.sessionId = self.get_sec_value('sessionId')
-            return json_response
+            return self.body
         except Exception as e:
             print('%s' % e)
             return {}
@@ -151,6 +149,7 @@ class httpbase:
             self.statusCode = response.getcode()
             for key, value in json_response.iteritems():
                 self.body[key] = value
+            self.body = Dict(self.body.keys(), self.body.values())
             return json_response
         except Exception as e:
             print('%s' % e)

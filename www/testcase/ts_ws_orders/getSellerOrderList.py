@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-0041.获取买家订单列表
-http://127.0.0.1:8280/mallws/orders/getBuyerOrderList.json
+0051.获取卖家订单列表
+http://127.0.0.1:8280/mallws/orders/getSellerOrderList.json
 {
     "token":"123",                          // 必须
     "orderStatus":"???",                    // 必须 订单状态 0-全部 C011-待付款 C020-待发货 C017-待收货 C019-已完成 C012-已取消
@@ -104,129 +104,153 @@ result说明:
     各个子订单的状态根据子订单的orderStatus来判断 是否是正在取消中订单通过cancelStatus来判断 是否是异常订单通过errorStatus来判断
 """
 
-
 import unittest
 from www.common.webservice import *
 from www.common.excel import eData
 from www.operation.order import createOrder
 from www.common.database import select_int,select_one
 
-class getBuyerOrderList(unittest.TestCase):
+class getSellerOrderList(unittest.TestCase):
     UserShop = eData('TmlShop')
     UserShopMin = eData('TmlShopMin')
     DealMgr = eData('DealMager')
+    DealMgr2 = eData('DealMager2')
     Merch1 = eData('Merch1')
+    DealSaler = eData('DealSaler')
+    DealBuyer = eData('DealBuyer')
 
-    order = createOrder(UserShop, Merch1)
-    onlineOrder = createOrder(UserShop, Merch1, payWay='1')
+    codOrder = createOrder(UserShop, Merch1)
 
-
-    # S1.获取终端店买家全部订单
-    def test_getBuyerOrderList_all(self):
+    # S1.经销商管理员获取经销商卖家全部订单
+    def test_getSellerOrderList_all(self):
         ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='0', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderdetail where buyer_id = ?', self.UserShop.companyId)
-        self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, self.order, self.Merch1)
+        ws.login(self.DealMgr.username, self.DealMgr.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='0', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?)', self.DealMgr.companyId)
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
+        self.assertOrderList(sellerOrderList, self.codOrder, self.Merch1)
 
     # S2.订单数量为空时获取订单列表
-    def test_getBuyerOrderList_null(self):
+    def test_getSellerOrderList_null(self):
         ws = webservice()
-        ws.login(self.UserShopMin.username, self.UserShopMin.password)
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='0', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        self.assertEqual(buyerOrderList.model['paymentOrderList'], [])
+        ws.login(self.DealMgr2.username, self.DealMgr2.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='C011', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        self.assertEqual(sellerOrderList.model['paymentOrderList'], [])
 
     # S3.获取待付款订单列表(C011)
-    def test_getBuyerOrderList_waitPay(self):
+    def test_getSellerOrderList_waitPay(self):
+        onlineOrder = createOrder(self.UserShop, self.Merch1, payWay='1')
         ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='C011', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C011')
-        self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, self.onlineOrder, self.Merch1, payType='1', paymentOrderButtomList='00010', paymentPayStatus='')
+        ws.login(self.DealMgr.username, self.DealMgr.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='C011', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?) and order_status = ?', self.DealMgr.companyId, 'C011')
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
+        self.assertOrderList(sellerOrderList, onlineOrder, self.Merch1, payType='1', paymentOrderButtomList='00010', buttomList='0000001')
 
     # S4.获取待发货订单列表（C020）
-    def test_getBuyerOrderList_waitDeliver(self):
+    def test_getSellerOrderList_waitDeliver(self):
         ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='C020', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C020')
-        self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, self.order, self.Merch1)
+        ws.login(self.DealMgr.username, self.DealMgr.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='C020', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?) and order_status = ?', self.DealMgr.companyId, 'C020')
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
+        self.assertOrderList(sellerOrderList, self.codOrder, self.Merch1)
 
     # S5.获取待收货订单列表（C017）
-    def test_getBuyerOrderList_waitReceive(self):
+    def test_getSellerOrderList_waitReceive(self):
         orderWaitReceive = createOrder(self.UserShop, self.Merch1)
         ws = webservice()
         ws.login(self.DealMgr.username, self.DealMgr.password)
         ws.deliver(orderNo=orderWaitReceive.orderNo)
-        ws.login(self.UserShop.username, self.UserShop.password)
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='C017', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C017')
-        self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, orderWaitReceive, self.Merch1, paymentOrderButtomList='00030')
+        sellerOrderList = ws.getSellerOrderList(orderStatus='C017', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?) and order_status = ?', self.DealMgr.companyId, 'C017')
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
+        self.assertOrderList(sellerOrderList, orderWaitReceive, self.Merch1, paymentOrderButtomList='00030', buttomList='0000001')
 
     # S6.获取交易完成订单列表（C019）
-    def test_getBuyerOrderList_complete(self):
+    def test_getSellerOrderList_complete(self):
         ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='C019', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C019')
-        self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
+        ws.login(self.DealMgr.username, self.DealMgr.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='C019', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?) and order_status = ?', self.DealMgr.companyId, 'C019')
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
         # 暂时无法构造交易完成
         #self.assertOrderList(buyerOrderList, self.order, self.Merch1)
 
     # S7.获取交易取消订单列表（C012）
-    def test_getBuyerOrderList_cancel(self):
+    def test_getSellerOrderList_cancel(self):
         orderCancel = createOrder(self.UserShop, self.Merch1)
         orderCancel.ws.cancel(paymentNo=orderCancel.paymentNo)
-        orderCancel.ws.login(self.UserShop.username, self.UserShop.password)
-        buyerOrderList = orderCancel.ws.getBuyerOrderList(orderStatus='C012', page=1, rows=999999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C012')
-        self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, orderCancel, self.Merch1, paymentOrderButtomList='00000')
+        orderCancel.ws.login(self.DealMgr.username, self.DealMgr.password)
+        sellerOrderList = orderCancel.ws.getSellerOrderList(orderStatus='C012', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?) and order_status = ?', self.DealMgr.companyId, 'C012')
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
+        self.assertOrderList(sellerOrderList, orderCancel, self.Merch1, paymentOrderButtomList='00000', buttomList='0000000')
 
     # S8.根据时间查询订单列表
-    def test_getBuyerOrderList_time(self):
+    def test_getSellerOrderList_time(self):
         ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
+        ws.login(self.DealMgr.username, self.DealMgr.password)
         import datetime
         nowtime = datetime.datetime.now().strftime("%Y-%m-%d")
-        buyerOrderList = ws.getBuyerOrderList(orderStatus='0', startTime=nowtime, endTime=nowtime, rows=9999)
-        self.assertEqual(buyerOrderList.model['success'], '0')
-        for i in range(0, len(buyerOrderList.model['paymentOrderList'])):
-            self.assertIn(nowtime, buyerOrderList.model['paymentOrderList'][i]['placeOrderTime'])
+        sellerOrderList = ws.getSellerOrderList(orderStatus='0', startTime=nowtime, endTime=nowtime, rows=9999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        for i in range(0, len(sellerOrderList.model['paymentOrderList'])):
+            self.assertIn(nowtime, sellerOrderList.model['paymentOrderList'][i]['placeOrderTime'])
 
 
     # S9.分页查询订单列表
-    def test_getBuyerOrderList_page(self):
+    def test_getSellerOrderList_page(self):
         ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        orderCount = select_int('select count(*) from dlorder.dl_order_orderdetail where buyer_id = ?', self.UserShop.companyId)
+        ws.login(self.DealMgr.username, self.DealMgr.password)
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?)', self.DealMgr.companyId)
         page = orderCount/15
         flag = 0
         for i in range(1, page+2):
-            buyerOrderList = ws.getBuyerOrderList(orderStatus='0', page=i, rows=15)
-            for j in range(0, len(buyerOrderList.model['paymentOrderList'])):
-                if buyerOrderList.model['paymentOrderList'][j]['paymentNo'] == self.order.paymentNo:
+            sellerOrderList = ws.getSellerOrderList(orderStatus='0', page=i, rows=15)
+            for j in range(0, len(sellerOrderList.model['paymentOrderList'])):
+                if sellerOrderList.model['paymentOrderList'][j]['paymentNo'] == self.codOrder.paymentNo:
                     flag += 1
             if i == page+1:
-                self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount%15, "The last page is wrong")
+                self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount%15, "The last page is wrong")
             else:
-                self.assertEqual(len(buyerOrderList.model['paymentOrderList']),15,"Every page is wrong")
+                self.assertEqual(len(sellerOrderList.model['paymentOrderList']),15,"Every page is wrong")
 
-        self.assertEqual(flag, 1, self.order.paymentNo + ' is not once ')
+        self.assertEqual(flag, 1, self.codOrder.paymentNo + ' is not once ')
+
+    # S10.终端店获取卖家全部订单
+    def test_getSellerOrderList_shop(self):
+        ws = webservice()
+        ws.login(self.UserShop.username, self.UserShop.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='0', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.code, 300)
+
+    # S11.经销商销售员获取卖家全部订单
+    def test_getSellerOrderList_saler(self):
+        ws = webservice()
+        ws.login(self.DealSaler.username, self.DealSaler.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='0', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.model['success'], '0')
+        orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_seller_detail where seller_id = ?)', self.DealMgr.companyId)
+        self.assertEqual(len(sellerOrderList.model['paymentOrderList']), orderCount)
+        self.assertOrderList(sellerOrderList, self.codOrder, self.Merch1, buttomList='0100000')
+
+    # S12.经销商采购员获取卖家全部订单
+    def test_getSellerOrderList_buyer(self):
+        ws = webservice()
+        ws.login(self.DealBuyer.username, self.DealBuyer.password)
+        sellerOrderList = ws.getSellerOrderList(orderStatus='0', page=1, rows=999999)
+        self.assertEqual(sellerOrderList.code, 300)
 
 
-    def assertOrderList(self, rsq, order, merch, payType='2', paymentOrderButtomList='00020', paymentPayStatus='normal', buttomList='000000'):
+    def assertOrderList(self, rsq, order, merch, payType='2', paymentOrderButtomList='00020', buttomList='0100001'):
         #paymentOrder = select('select * from dlpay.dl_payment_order where pay_no = ?', order.paymentNo)
         #orderDetail = select('select * from dlorder.dl_order_orderdetail where order_no =', order.orderNo)
         orderInfo = select_one('select * from dlorder.dl_order_orderinfo where order_no = ?', order.orderNo)
@@ -238,9 +262,9 @@ class getBuyerOrderList(unittest.TestCase):
                 self.assertEqual(rsq.model['paymentOrderList'][i]['payType'], payType)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['paymentOrderMerchCount'], str(orderItem.num))
                 self.assertEqual(rsq.model['paymentOrderList'][i]['paymentOrderTotalPrice'], str(orderItem.amount))
-                self.assertEqual(rsq.model['paymentOrderList'][i]['paymentOrderButtomList'], paymentOrderButtomList)
-                self.assertEqual(rsq.model['paymentOrderList'][i]['paymentPayStatus'], paymentPayStatus)
-                self.assertEqual(rsq.model['paymentOrderList'][i]['payStatus2Middle'], '')
+                self.assertIsNone(rsq.model['paymentOrderList'][i]['paymentOrderButtomList'])
+                self.assertEqual(rsq.model['paymentOrderList'][i]['paymentPayStatus'], orderInfo.pay_status)
+                self.assertIsNone(rsq.model['paymentOrderList'][i]['payStatus2Middle'])
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderId'], orderInfo.id)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderNo'], order.orderNo)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['paymentNo'], order.paymentNo)
@@ -252,9 +276,9 @@ class getBuyerOrderList(unittest.TestCase):
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['buttomList'], buttomList)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderStatus'], orderInfo.order_status)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['totalPrice'], str(orderInfo.order_retail_amount))
-                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderRetailAmount'], None)
+                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderRetailAmount'], str(orderInfo.order_retail_amount))
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['isUseCoupon'], '1')
-                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['couponFeeCount'], '0')
+                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['couponFeeCount'], '000')
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderMerchCount'], str(orderItem.num))
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['sellerId'], merch.sellerId)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['sellerName'], merch.sellerName)
@@ -272,15 +296,19 @@ class getBuyerOrderList(unittest.TestCase):
                 flag += 1
         self.assertEqual(flag, 1, 'order is not found or is found twice')
 
+
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_all"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_null"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_waitPay"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_waitDeliver"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_waitReceive"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_complete"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_cancel"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_time"))
-    suite.addTest(getBuyerOrderList("test_getBuyerOrderList_page"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_all"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_null"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_waitPay"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_waitDeliver"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_waitReceive"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_complete"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_cancel"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_time"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_page"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_shop"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_saler"))
+    suite.addTest(getSellerOrderList("test_getSellerOrderList_buyer"))
     return suite

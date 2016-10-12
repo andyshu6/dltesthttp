@@ -39,6 +39,7 @@ import unittest
 from www.common.webservice import *
 from www.common.excel import eData
 from www.operation.order import createOrder
+import datetime
 
 class getOrderLog(unittest.TestCase):
     UserShop = eData('TmlShop')
@@ -49,15 +50,20 @@ class getOrderLog(unittest.TestCase):
     DealBuyer = eData('DealBuyer')
     Merch1 = eData('Merch1')
 
-
-    #order = createOrder(UserShop, Merch1)
+    wsUserShop = webservice()
+    wsUserShop.login(UserShop.username, UserShop.password)
+    wsDealMgr = webservice()
+    wsDealMgr.login(DealMgr.username, DealMgr.password)
+    wsDealMgr2 = webservice()
+    wsDealMgr2.login(DealMgr2.username, DealMgr2.password)
+    wsDealSaler = webservice()
+    wsDealSaler.login(DealSaler.username, DealSaler.password)
+    wsDealBuyer = webservice()
+    wsDealBuyer.login(DealBuyer.username, DealBuyer.password)
 
     # S1.货到付款提交订单获取订单跟踪消息
     def test_getOrderLog_createOrder(self):
-        order = createOrder(self.UserShop, self.Merch1)
-        ws = webservice()
-        ws.login(self.UserShop.username, self.UserShop.password)
-        orderLog = ws.getOrderLog(order.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodWaitDeliver.orderNo)
         self.assertEqual(orderLog['model']['success'], '0')
         self.assertEqual(orderLog['model']['orderLogList'][0]['beforeStatus'], '')
         self.assertIsNotNone(orderLog['model']['orderLogList'][0]['dealDate'])
@@ -66,9 +72,7 @@ class getOrderLog(unittest.TestCase):
 
     # S2.货到付款取消订单获取订单跟踪消息
     def test_getOrderLog_cancelOrder(self):
-        order = createOrder(self.UserShop, self.Merch1)
-        order.ws.cancel(paymentNo=order.paymentNo)
-        orderLog = order.ws.getOrderLog(order.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodeCancel.orderNo)
         self.assertEqual(orderLog['model']['success'], '0')
         flag = 0
         for i in range(0,len(orderLog['model']['orderLogList'])):
@@ -82,11 +86,7 @@ class getOrderLog(unittest.TestCase):
 
     # S3.货到付款订单发货获取订单跟踪消息
     def test_getOrderLog_deliverOrder(self):
-        order = createOrder(self.UserShop, self.Merch1)
-        ws = webservice()
-        ws.login(self.DealMgr.username, self.DealMgr.password)
-        ws.deliver(orderNo=order.orderNo)
-        orderLog = order.ws.getOrderLog(order.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodWaitReceive.orderNo)
         self.assertEqual(orderLog['model']['success'], '0')
         flag = 0
         for i in range(0,len(orderLog['model']['orderLogList'])):
@@ -157,8 +157,7 @@ class getOrderLog(unittest.TestCase):
 
     # S7.在线支付提交订单获取订单跟踪
     def test_getOrderLog_createOrderOnline(self):
-        order = createOrder(self.UserShop, self.Merch1, payWay='1')
-        orderLog = order.ws.getOrderLog(order.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderOnlineWaitPay.orderNo)
         self.assertEqual(orderLog['model']['success'], '0')
         self.assertEqual(orderLog['model']['orderLogList'][0]['beforeStatus'], '')
         self.assertIsNotNone(orderLog['model']['orderLogList'][0]['dealDate'])
@@ -167,17 +166,16 @@ class getOrderLog(unittest.TestCase):
 
     # S8.在线支付取消订单订单获取订单跟踪
     def test_getOrderLog_cancelOrderOnline(self):
-        order = createOrder(self.UserShop, self.Merch1, payWay='1')
-        order.ws.cancel(paymentNo=order.paymentNo, payType='1', cancelType='1')
-        orderLog = order.ws.getOrderLog(order.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderOnlienCancel.orderNo)
         flag = 0
         for i in range(0,len(orderLog['model']['orderLogList'])):
             if orderLog['model']['orderLogList'][i]['beforeStatus'] == 'C011':
                 self.assertIsNotNone(orderLog['model']['orderLogList'][i]['dealDate'])
+                #self.assertLess(orderLog['model']['orderLogList'][i]['dealDate'], datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'))
                 self.assertEqual(orderLog['model']['orderLogList'][i]['dealDescrip'], u'交易已取消')
                 self.assertEqual(orderLog['model']['orderLogList'][i]['nowStatus'], 'C012')
                 flag += 1
-        self.assertEqual(flag, 1, order.orderNo + 'cancel order log is not found or is found twice')
+        self.assertEqual(flag, 1, self.UserShop.orderOnlienCancel.orderNo + 'cancel order log is not found or is found twice')
 
     # S9.在线支付付款获取订单跟踪
 
@@ -185,6 +183,69 @@ class getOrderLog(unittest.TestCase):
 
     # S11.在线支付确认收货获取订单跟踪
 
+    # S12.经销商管理员获取订单跟踪
+    def test_getOrderLog_dealMager(self):
+        orderLog = self.wsDealMgr.getOrderLog(self.UserShop.orderCodWaitReceive.orderNo)
+        self.assertEqual(orderLog['model']['success'], '0')
+        flag = 0
+        for i in range(0,len(orderLog['model']['orderLogList'])):
+            if orderLog['model']['orderLogList'][i]['beforeStatus'] == 'C020':
+                self.assertIsNotNone(orderLog['model']['orderLogList'][i]['dealDate'])
+                self.assertEqual(orderLog['model']['orderLogList'][i]['dealDescrip'], u'卖家发货')
+                self.assertEqual(orderLog['model']['orderLogList'][i]['nowStatus'], 'C017')
+                flag += 1
+        self.assertEqual(flag, 1, 'cancel order log is not found or is found twice')
+
+    # S13.经销商销售员获取订单跟踪
+    def test_getOrderLog_dealSaler(self):
+        orderLog = self.wsDealSaler.getOrderLog(self.UserShop.orderCodWaitReceive.orderNo)
+        self.assertEqual(orderLog['model']['success'], '0')
+        flag = 0
+        for i in range(0,len(orderLog['model']['orderLogList'])):
+            if orderLog['model']['orderLogList'][i]['beforeStatus'] == 'C020':
+                self.assertIsNotNone(orderLog['model']['orderLogList'][i]['dealDate'])
+                self.assertEqual(orderLog['model']['orderLogList'][i]['dealDescrip'], u'卖家发货')
+                self.assertEqual(orderLog['model']['orderLogList'][i]['nowStatus'], 'C017')
+                flag += 1
+        self.assertEqual(flag, 1, 'cancel order log is not found or is found twice')
+
+    # S14.经销商采购员员获取订单跟踪——未校验权限
+    def test_getOrderLog_dealBuyer(self):
+        orderLog = self.wsDealBuyer.getOrderLog(self.UserShop.orderCodWaitReceive.orderNo)
+        self.assertEqual(orderLog['model']['success'], '0')
+        flag = 0
+        for i in range(0,len(orderLog['model']['orderLogList'])):
+            if orderLog['model']['orderLogList'][i]['beforeStatus'] == 'C020':
+                self.assertIsNotNone(orderLog['model']['orderLogList'][i]['dealDate'])
+                self.assertEqual(orderLog['model']['orderLogList'][i]['dealDescrip'], u'卖家发货')
+                self.assertEqual(orderLog['model']['orderLogList'][i]['nowStatus'], 'C017')
+                flag += 1
+        self.assertEqual(flag, 1, 'cancel order log is not found or is found twice')
+
+    # S15.获取其他用户订单日志——未校验，当前暂不修改~
+    def test_getOrderLog_dealOther(self):
+        orderLog = self.wsDealMgr2.getOrderLog(self.UserShop.orderCodWaitReceive.orderNo)
+        self.assertEqual(orderLog['model']['success'], '0')
+        flag = 0
+        for i in range(0,len(orderLog['model']['orderLogList'])):
+            if orderLog['model']['orderLogList'][i]['beforeStatus'] == 'C020':
+                self.assertIsNotNone(orderLog['model']['orderLogList'][i]['dealDate'])
+                self.assertEqual(orderLog['model']['orderLogList'][i]['dealDescrip'], u'卖家发货')
+                self.assertEqual(orderLog['model']['orderLogList'][i]['nowStatus'], 'C017')
+                flag += 1
+        self.assertEqual(flag, 1, 'cancel order log is not found or is found twice')
+
+    # S16.订单号为空获取订单日志
+    def test_getOrderLog_orderNoNull(self):
+        orderLog = self.wsUserShop.getOrderLog('')
+        self.assertIsNone(orderLog['model']['success'])
+        self.assertIsNone(orderLog['model']['orderLogList'])
+
+    # S17.token为空获取订单日志
+    def test_getOrderLog_tokenNull(self):
+        ws = webservice()
+        orderLog = ws.getOrderLog(self.UserShop.orderCodWaitReceive.orderNo)
+        self.assertEqual(orderLog['code'], 600)
 
 def suite():
     suite = unittest.TestSuite()
@@ -195,4 +256,10 @@ def suite():
     suite.addTest(getOrderLog("test_getOrderLog_cancelAudit"))
     suite.addTest(getOrderLog("test_getOrderLog_createOrderOnline"))
     suite.addTest(getOrderLog("test_getOrderLog_cancelOrderOnline"))
+    suite.addTest(getOrderLog("test_getOrderLog_dealMager"))
+    suite.addTest(getOrderLog("test_getOrderLog_dealSaler"))
+    suite.addTest(getOrderLog("test_getOrderLog_dealBuyer"))
+    #suite.addTest(getOrderLog("test_getOrderLog_dealOther"))
+    suite.addTest(getOrderLog("test_getOrderLog_orderNoNull"))
+    suite.addTest(getOrderLog("test_getOrderLog_tokenNull"))
     return suite

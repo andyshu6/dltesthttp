@@ -31,8 +31,8 @@ class webservice:
         data = {}
         data['username'] = username
         data['password'] = password
-        self.wrapHttpBase.wspost(url, data, token)
-        return self.wrapHttpBase.body
+        # self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.wspost(url, data, token)
 
 
 
@@ -580,6 +580,29 @@ class webservice:
         self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
+
+    # GJ03.拆分订单（新增）separateOrderAmount 为数组[]
+    def separateOrder(self, orderNo, separateOrderAmount, token=None):
+        url='/orders/separateOrder.json'
+        data = {}
+        data['orderNo'] = orderNo
+        data['separateOrderAmount'] = separateOrderAmount
+        return self.wrapHttpBase.wspost(url, data, token)
+
+    # GJ04.查看已拆分订单（新增）
+    def getSeparateOrderList(self, orderNo, token=None):
+        url='/orders/getSeparateOrderList.json'
+        data = {}
+        data['orderNo'] = orderNo
+        return self.wrapHttpBase.wspost(url, data, token)
+
+
+    # GJ05.请求拆分订单（新增）
+    def preSeparateOrder(self, orderNo, token=None):
+        url='/orders/preSeparateOrder.json'
+        data = {}
+        data['orderNo'] = orderNo
+        return self.wrapHttpBase.wspost(url, data, token)
 
     # ——————————————————    注册接口  ————————————————————
     # 0242.获取店铺类型列表

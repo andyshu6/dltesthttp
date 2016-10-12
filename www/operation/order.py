@@ -22,7 +22,6 @@ def createOrder(buyer, merch, merchCount='1',payWay='2'):
                            "supportVatInvoice":merch.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
                                [{"id":shopcart.id,"merchId":merch.goodsId,"merchBarCode":merch.productBarCode}]})
         order = ws.createOrderByShoppingcartNew(payWay=payWay,invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
-        #returnOrder.ws = ws
         if order.model['createOrderInfoModel']['onlinePaymentModelList'] is not None:
                 names = ['paymentNo', 'payType', 'totalPrice', 'orderNo', 'ws']
                 values = [order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['paymentNo'], order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['payType'],

@@ -22,17 +22,23 @@ def createOrder(buyer, merch, merchCount='1',payWay='2'):
                            "supportVatInvoice":merch.supportVatInvoice,"comment":"createOrderByShoppingcart comment.","merchList":
                                [{"id":shopcart.id,"merchId":merch.goodsId,"merchBarCode":merch.productBarCode}]})
         order = ws.createOrderByShoppingcartNew(payWay=payWay,invoice=invoice, deliverAddress=deliverAddress, sellerList=sellerList)
-        returnOrder = Dict
-        returnOrder.ws = ws
         if order.model['createOrderInfoModel']['onlinePaymentModelList'] is not None:
-                returnOrder.paymentNo = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['paymentNo']
-                returnOrder.payType = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['payType']
-                returnOrder.totalPrice = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['totalPrice']
-                returnOrder.orderNo = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['orderNo']
+                names = ['paymentNo', 'payType', 'totalPrice', 'orderNo', 'ws']
+                values = [order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['paymentNo'], order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['payType'],
+                          order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['totalPrice'], order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['orderNo'], ws]
+                # returnOrder.paymentNo = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['paymentNo']
+                # returnOrder.payType = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['payType']
+                # returnOrder.totalPrice = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['totalPrice']
+                # returnOrder.orderNo = order.model['createOrderInfoModel']['onlinePaymentModelList'][0]['orderNo']
+                #returnOrder = Dict(names, values)
         elif order.model['createOrderInfoModel']['cashOnDeliveryModelList'] is not None:
-                returnOrder.paymentNo = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo']
-                returnOrder.orderNo = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo']
-                returnOrder.price = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']
-        return returnOrder
+                names = ['paymentNo', 'orderNo', 'price', 'ws']
+                values = [order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo'], order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo'],
+                          order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price'], ws]
+                #
+                # returnOrder.paymentNo = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['paymentNo']
+                # returnOrder.orderNo = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['orderNo']
+                # returnOrder.price = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']
+        return Dict(names, values)
 
 # 取消订单

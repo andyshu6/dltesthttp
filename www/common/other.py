@@ -14,6 +14,9 @@ class Dict(dict):
         for k, v in zip(names, values):
             self[k] = v
 
+    # def __new__(cls, *args, **kwargs):
+    #     return dict.__new__(cls, *args, **kwargs)
+
     def __getattr__(self, key):
         try:
             return self[key]

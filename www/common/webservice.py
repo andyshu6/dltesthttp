@@ -22,8 +22,8 @@ class webservice:
         data = {}
         data['username'] = username
         data['password'] = password
-        self.wrapHttpBase.wspost(url, data, token)
-        return self.wrapHttpBase.body
+        #self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.wspost(url, data, token)
 
     def login(self, username, password, token = 'null'):
         password = hashlib.md5(password).hexdigest()
@@ -31,8 +31,8 @@ class webservice:
         data = {}
         data['username'] = username
         data['password'] = password
-        self.wrapHttpBase.wspost(url, data, token)
-        return self.wrapHttpBase.body
+        # self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.wspost(url, data, token)
 
 
 
@@ -482,6 +482,25 @@ class webservice:
             data['page'] = page
         if rows is not None:
             data['rows'] = rows
+        # self.wrapHttpBase.wspost(url, data, token)
+        # return self.wrapHttpBase.body
+        return self.wrapHttpBase.wspost(url, data, token)
+
+    # 0042.获取符合条件的买家订单详情
+    def getBuyerOrderDetail(self, orderPk, orderNo, token=None):
+        url='/orders/getBuyerOrderDetail.json'
+        data = {}
+        data['orderPk'] = orderPk
+        data['orderNo'] = orderNo
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
+
+    # 0052.获取符合条件的卖家订单详情
+    def getSellerOrderDetail(self, orderPk, orderNo, token=None):
+        url='/orders/getBuyerOrderDetail.json'
+        data = {}
+        data['orderPk'] = orderPk
+        data['orderNo'] = orderNo
         self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
@@ -494,6 +513,13 @@ class webservice:
         self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
+    # 0255.获取订单跟踪消息
+    def getOrderLog(self, orderNo, token=None):
+        url='/orders/getOrderLog.json'
+        data = {}
+        data['orderNo'] = orderNo
+        self.wrapHttpBase.wspost(url, data, token)
+        return self.wrapHttpBase.body
 
     # 0181.订单发货
     def deliver(self, orderNo=None, token=None):
@@ -554,6 +580,29 @@ class webservice:
         self.wrapHttpBase.wspost(url, data, token)
         return self.wrapHttpBase.body
 
+
+    # GJ03.拆分订单（新增）separateOrderAmount 为数组[]
+    def separateOrder(self, orderNo, separateOrderAmount, token=None):
+        url='/orders/separateOrder.json'
+        data = {}
+        data['orderNo'] = orderNo
+        data['separateOrderAmount'] = separateOrderAmount
+        return self.wrapHttpBase.wspost(url, data, token)
+
+    # GJ04.查看已拆分订单（新增）
+    def getSeparateOrderList(self, orderNo, token=None):
+        url='/orders/getSeparateOrderList.json'
+        data = {}
+        data['orderNo'] = orderNo
+        return self.wrapHttpBase.wspost(url, data, token)
+
+
+    # GJ05.请求拆分订单（新增）
+    def preSeparateOrder(self, orderNo, token=None):
+        url='/orders/preSeparateOrder.json'
+        data = {}
+        data['orderNo'] = orderNo
+        return self.wrapHttpBase.wspost(url, data, token)
 
     # ——————————————————    注册接口  ————————————————————
     # 0242.获取店铺类型列表

@@ -91,9 +91,9 @@ class getRecommendList(unittest.TestCase):
                 if MerchListPage.model['recommendListModel'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
                     time+=1
             if p == page+1:
-                self.assertEqual(len(allMerchList.model['recommendListModel']),numMerch%4,"The last page is wrong")
+                self.assertEqual(len(MerchListPage.model['recommendListModel']),numMerch%4,"The last page is wrong")
             else:
-                self.assertEqual(len(allMerchList.model['recommendListModel']),4,"Every page is wrong")
+                self.assertEqual(len(MerchListPage.model['recommendListModel']),4,"Every page is wrong")
 
         self.assertEqual(time,1,self.Merch1.fullName+" is not once.")
 

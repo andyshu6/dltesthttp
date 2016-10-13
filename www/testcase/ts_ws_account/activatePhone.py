@@ -149,8 +149,8 @@ class activatePhone(unittest.TestCase):
         self.assertEqual(str(telStatusSql.user_phone_status),telStatus.model['telStatus'])
         activatePhoneNumRepeat=ws.activatePhone(userAcct=self.UserShop2.username,userId=self.UserShop2.userId,conditionInd=0,tel=self.UserShop2.mobileNumber)
         self.assertEqual(activatePhoneNumRepeat.model['success'],'2')
-        self.assertEqual(activatePhoneNum.model['couponInd'],None)
-        self.assertEqual(activatePhoneNum.model['couponAmt'],None)
+        self.assertEqual(activatePhoneNumRepeat.model['couponInd'],None)
+        self.assertEqual(activatePhoneNumRepeat.model['couponAmt'],None)
         update('update dluser.dl_user set user_phone_status =? where user_id=?','1',self.UserShop2.userId)
 
     #userAccount与userID不一致
@@ -189,6 +189,7 @@ class activatePhone(unittest.TestCase):
 
 def suite():
     suite=unittest.TestSuite()
+
     suite.addTest(activatePhone("test_activatePhone_noCoupon"))
     suite.addTest(activatePhone("test_activatePhone_coupon"))
     suite.addTest(activatePhone("test_activatePhone_telLong"))
@@ -201,4 +202,5 @@ def suite():
     suite.addTest(activatePhone("test_activatePhone_inconsistent"))
     suite.addTest(activatePhone("test_activatePhone_tokenError"))
     suite.addTest(activatePhone("test_activatePhone_tokenNull"))
+
     return suite

@@ -98,6 +98,17 @@ class getOrderLog(unittest.TestCase):
         self.assertEqual(flag, 1, 'cancel order log is not found or is found twice')
 
     # S4.货到付款订单交易完成订单跟踪消息
+    def test_getOrderLog_codComplete(self):
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodeComplete.orderNo)
+        self.assertEqual(orderLog['model']['success'], '0')
+        flag = 0
+        for i in range(0,len(orderLog['model']['orderLogList'])):
+            if orderLog['model']['orderLogList'][i]['beforeStatus'] == 'C017':
+                self.assertIsNotNone(orderLog['model']['orderLogList'][i]['dealDate'])
+                self.assertEqual(orderLog['model']['orderLogList'][i]['dealDescrip'], u'交易完成')
+                self.assertEqual(orderLog['model']['orderLogList'][i]['nowStatus'], 'C019')
+                flag += 1
+        self.assertEqual(flag, 1, 'cancel order log is not found or is found twice')
 
     # S5.订单改价获取订单跟踪消息——暂时不会记录订单跟踪
     def test_getOrderLog_changPrice(self):
@@ -252,6 +263,7 @@ def suite():
     suite.addTest(getOrderLog("test_getOrderLog_createOrder"))
     suite.addTest(getOrderLog("test_getOrderLog_cancelOrder"))
     suite.addTest(getOrderLog("test_getOrderLog_deliverOrder"))
+    suite.addTest(getOrderLog("test_getOrderLog_codComplete"))
     #suite.addTest(getOrderLog("test_getOrderLog_changPrice"))
     suite.addTest(getOrderLog("test_getOrderLog_cancelAudit"))
     suite.addTest(getOrderLog("test_getOrderLog_createOrderOnline"))

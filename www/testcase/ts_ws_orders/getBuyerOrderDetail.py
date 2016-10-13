@@ -139,6 +139,10 @@ class getBuyerOrderDetail(unittest.TestCase):
         self.assertOrderDetail(orderDetail, self.UserShop.orderCodeCancel, self.UserShop, self.Merch1)
 
     # S4.获取终端店货到付款交易完成买家订单详情
+    def test_getBuyerOrderDetail_codComplete(self):
+        orderDetail = self.wsUserShop.getBuyerOrderDetail(orderPk=self.UserShop.orderCodeCancel.paymentNo, orderNo=self.UserShop.orderCodeComplete['orderNo'])
+        self.assertEqual(orderDetail.model['success'], '0')
+        self.assertOrderDetail(orderDetail, self.UserShop.orderCodeComplete, self.UserShop, self.Merch1)
 
     # S5.获取终端店在线支付待付款买家订单详情
     def test_getBuyerOrderDetail_onlineWaitPay(self):

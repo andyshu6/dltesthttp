@@ -166,8 +166,7 @@ class getBuyerOrderList(unittest.TestCase):
         self.assertEqual(buyerOrderList.model['success'], '0')
         orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C019')
         self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        # 暂时无法构造交易完成
-        #self.assertOrderList(buyerOrderList, self.order, self.Merch1)
+        self.assertOrderList(buyerOrderList, self.UserShop.orderCodeComplete, self.Merch1, paymentOrderButtomList='00000', payWay='01', receiveStatus='1')
 
     # S7.获取交易取消订单列表（C012）
     def test_getBuyerOrderList_cancel(self):
@@ -207,7 +206,7 @@ class getBuyerOrderList(unittest.TestCase):
     # S10.获取经销商管理员买家订单列表
 
 
-    def assertOrderList(self, rsq, order, merch, payType='2', paymentOrderButtomList='00020', paymentPayStatus='normal', buttomList='000000'):
+    def assertOrderList(self, rsq, order, merch, payType='2', payWay=None, paymentOrderButtomList='00020', paymentPayStatus='normal', buttomList='000000', receiveStatus='0'):
         #paymentOrder = select('select * from dlpay.dl_payment_order where pay_no = ?', order.paymentNo)
         #orderDetail = select('select * from dlorder.dl_order_orderdetail where order_no =', order.orderNo)
         orderInfo = select_one('select * from dlorder.dl_order_orderinfo where order_no = ?', order.orderNo)
@@ -226,10 +225,10 @@ class getBuyerOrderList(unittest.TestCase):
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderNo'], order.orderNo)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['paymentNo'], order.paymentNo)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['payType'], orderInfo.pay_type)
-                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['payWay'], None)
+                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['payWay'], payWay)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['errorStatus'], '1')
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['cancelStatus'], '0')
-                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['receiveStatus'], '0')
+                self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['receiveStatus'],receiveStatus)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['buttomList'], buttomList)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['orderStatus'], orderInfo.order_status)
                 self.assertEqual(rsq.model['paymentOrderList'][i]['orderList'][0]['totalPrice'], str(orderInfo.order_retail_amount))

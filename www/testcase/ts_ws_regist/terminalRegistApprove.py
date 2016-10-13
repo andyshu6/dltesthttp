@@ -439,7 +439,7 @@ class terminalRegistApprove(unittest.TestCase):
                                            terminalAreaCityCode=self.UserShop3.areaCityCode,terminalAreaDistrictCode=self.UserShop3.areaDistrictCode,terminalAddress=self.UserShop3.localStreet)
         self.assertEqual(tmlRegist.model['success'],'1')
         self.assertEqual(tmlRegist.model['checkResult']['firstValue'],'terminalFullName')
-        self.assertEqual(tmlRegist.model['checkResult']['secondValue'],'您输入的终端店名称含有特殊字符')
+        self.assertEqual(tmlRegist.model['checkResult']['secondValue'],'终端店名称只允许中文、英文、数字和下划线_')
         selectSql=select_int('select count(*) from dlworkflow.dl_apply_terminal where terminal_tel=?',self.UserShop3.registerTel)
         self.assertEqual(selectSql,0)
 
@@ -582,6 +582,7 @@ class terminalRegistApprove(unittest.TestCase):
 
 def suite():
     suite=unittest.TestSuite()
+
 
     suite.addTest(terminalRegistApprove("test_terminalRegistApprove_usrInvataion"))
     suite.addTest(terminalRegistApprove("test_terminalRegistApprove_noUsrInvataion"))

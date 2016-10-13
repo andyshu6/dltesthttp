@@ -106,9 +106,9 @@ class getOftenBuyList(unittest.TestCase):
                 if MerchListPage.model['oftenBuyListModel'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
                     time+=1
             if p == page+1:
-                self.assertEqual(len(allMerchList.model['oftenBuyListModel']),numMerch%4,"The last page is wrong")
+                self.assertEqual(len(MerchListPage.model['oftenBuyListModel']),numMerch%4,"The last page is wrong")
             else:
-                self.assertEqual(len(allMerchList.model['oftenBuyListModel']),4,"Every page is wrong")
+                self.assertEqual(len(MerchListPage.model['oftenBuyListModel']),4,"Every page is wrong")
 
         self.assertEqual(time,1,self.Merch1.fullName+" is not once.")
 

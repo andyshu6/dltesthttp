@@ -42,7 +42,7 @@ class activatePhone(unittest.TestCase):
     def test_activatePhone_noCoupon(self):
         ws=webservice()
         ws.login(self.UserShop2.username,self.UserShop2.password)
-        activatePhoneNum=ws.activatePhone(userAcct=self.UserShop2.username,userId=self.UserShop2.userId,conditionInd=0,tel=self.UserShop2.mobileNumber)
+        activatePhoneNum=ws.activatePhone(userAcct=self.UserShop2.username,userId=self.UserShop2.userId,conditionInd='0',tel=self.UserShop2.mobileNumber)
         self.assertEqual(activatePhoneNum.model['success'],'0')
         self.assertEqual(activatePhoneNum.model['couponInd'],'0')
         self.assertEqual(activatePhoneNum.model['couponAmt'],'')

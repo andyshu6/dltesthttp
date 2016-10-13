@@ -317,7 +317,7 @@ class terminalInformationModify(unittest.TestCase):
         registRepeat=ws.terminalInformationModify(applyId=approvid,terminalName='!@#$%^&*()',businessLicenseCode=self.UserShop3.busLicenseNum,terminalTypeCode=self.UserShop3.storeTypeCode,terminalAreaCode=self.UserShop3.areaCode,
                                                   terminalDetailAddress=self.UserShop3.localStreet)
         self.assertEqual(registRepeat.model['success'],'1')
-        self.assertEqual(registRepeat.model['checkResult'],'您输入的终端店名称含有特殊字符')
+        self.assertEqual(registRepeat.model['checkResult'],'终端店名称只允许中文、英文、数字和下划线_')
 
     #输入营业执照号等于30
     def test_terminalInformationModify_licencsMax(self):
@@ -569,5 +569,6 @@ def suite():
     suite.addTest(terminalInformationModify("test_terminalInformationModify_detailAddressLong"))
     suite.addTest(terminalInformationModify("test_terminalInformationModify_detailAddressNull"))
     suite.addTest(terminalInformationModify("test_terminalInformationModify_detailAddressSpecial"))
+
 
     return suite

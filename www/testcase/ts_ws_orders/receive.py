@@ -38,3 +38,8 @@ from www.operation.order import createOrder
 class receive(unittest.TestCase):
 
     pass
+
+
+def suite():
+    suite = unittest.TestSuite()
+    return suite

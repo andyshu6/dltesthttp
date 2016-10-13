@@ -347,9 +347,9 @@ class getNewMerchList(unittest.TestCase):
                 if MerchListPage.model['newMerchListModel'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
                     time+=1
             if r == numMerch/15+1:
-                self.assertEqual(len(allMerchList.model['newMerchListModel']),numMerch%15,"The last page is wrong")
+                self.assertEqual(len(MerchListPage.model['newMerchListModel']),numMerch%15,"The last page is wrong")
             else:
-                self.assertEqual(len(allMerchList.model['newMerchListModel']),15,"Every page is wrong")
+                self.assertEqual(len(MerchListPage.model['newMerchListModel']),15,"Every page is wrong")
 
         self.assertEqual(time,1,self.Merch1.fullName+" is not once.")
 

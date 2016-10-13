@@ -10,7 +10,7 @@ import unittest
 from www.common.database import create_engine
 
 from www.testcase.ts_ws_login import login
-from www.testcase.ts_ws_version import compareAppVersion
+# from www.testcase.ts_ws_version import compareAppVersion
 from www.testcase.ts_ws_password import modifyPassword
 
 from www.testcase.ts_ws_common import getAllAreaList
@@ -41,51 +41,61 @@ from www.testcase.ts_ws_shoppingcart import getPreViewOrderByShoppingcart
 from www.testcase.ts_ws_shoppingcart import getShoppingcartSize
 from www.testcase.ts_ws_shoppingcart import modifyShoppingcartCount
 from www.testcase.ts_ws_shoppingcart import toShoppingcart
-
-
+from www.testcase.ts_ws_message import count
+from www.testcase.ts_ws_message import list
+from www.testcase.ts_ws_message import markAsRead
+from www.testcase.ts_ws_message import markAsReadByType
+from www.testcase.ts_ws_message import retrieveNewestOneMessage
 if __name__ == '__main__':
 
     create_engine()
     runner = unittest.TextTestRunner()
 
-    # 登录、升级、修改密码
-    runner.run(login.suite())
-    runner.run(compareAppVersion.suite())
-    runner.run(modifyPassword.suite())
+    # # 登录、升级、修改密码
+    # runner.run(login.suite())
+    # runner.run(compareAppVersion.suite())
+    # runner.run(modifyPassword.suite())
+    #
+    # # 公共
+    # runner.run(getAllAreaList.suite())
+    # runner.run(getAreaListByCondition.suite())
+    # runner.run(getAreaListStandAlone.suite())
+    # runner.run(getBannerList.suite())
+    # runner.run(getCouponParam.suite())
+    # runner.run(getTopicList.suite())
+    # runner.run(userAgreementUrl.suite())
+    #
+    # # 发票
+    # runner.run(addInvoice.suite())
+    # runner.run(delInvoice.suite())
+    # runner.run(getInvoiceList.suite())
+    # runner.run(modifyInvoice.suite())
+    # runner.run(setDefaultInvoice.suite())
+    #
+    # # 商品
+    # runner.run(getCategoryList.suite())
+    # runner.run(getMerchDetail.suite())
+    # runner.run(getMerchList.suite())
+    #
+    # # 注册
+    # runner.run(getArea.suite())
+    # runner.run(getTerminalShopTypeList.suite())
+    #
+    # # 购物车
+    # runner.run(addShoppingcart.suite())
+    # runner.run(createOrderByShoppingcart.suite())
+    # runner.run(delShoppingcartByProductIds.suite())
+    # runner.run(getPreViewOrderByShoppingcart.suite())
+    # runner.run(getShoppingcartSize.suite())
+    # runner.run(modifyShoppingcartCount.suite())
+    # runner.run(toShoppingcart.suite())
+    #消息系统
+    runner.run(count.suite())
+    runner.run(list.suite())
+    runner.run(markAsRead.suite())
+    runner.run(markAsReadByType.suite())
+    runner.run(retrieveNewestOneMessage.suite())
 
-    # 公共
-    runner.run(getAllAreaList.suite())
-    runner.run(getAreaListByCondition.suite())
-    runner.run(getAreaListStandAlone.suite())
-    runner.run(getBannerList.suite())
-    runner.run(getCouponParam.suite())
-    runner.run(getTopicList.suite())
-    runner.run(userAgreementUrl.suite())
-
-    # 发票
-    runner.run(addInvoice.suite())
-    runner.run(delInvoice.suite())
-    runner.run(getInvoiceList.suite())
-    runner.run(modifyInvoice.suite())
-    runner.run(setDefaultInvoice.suite())
-
-    # 商品
-    runner.run(getCategoryList.suite())
-    runner.run(getMerchDetail.suite())
-    runner.run(getMerchList.suite())
-
-    # 注册
-    runner.run(getArea.suite())
-    runner.run(getTerminalShopTypeList.suite())
-
-    # 购物车
-    runner.run(addShoppingcart.suite())
-    runner.run(createOrderByShoppingcart.suite())
-    runner.run(delShoppingcartByProductIds.suite())
-    runner.run(getPreViewOrderByShoppingcart.suite())
-    runner.run(getShoppingcartSize.suite())
-    runner.run(modifyShoppingcartCount.suite())
-    runner.run(toShoppingcart.suite())
 
 
 

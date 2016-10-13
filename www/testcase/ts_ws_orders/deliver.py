@@ -61,7 +61,7 @@ class deliver(unittest.TestCase):
         deliverOrder = ws.deliver(orderNo=order.orderNo)
         self.assertEqual(deliverOrder.model['success'], '0')
         deliverOrderAgain = ws.deliver(orderNo=order.orderNo)
-        self.assertEqual(deliverOrder.model['success'], '1')
+        self.assertEqual(deliverOrderAgain.model['success'], '1')
 
     # S4.发不存在的订单
     def test_deliver_notExist(self):
@@ -72,10 +72,9 @@ class deliver(unittest.TestCase):
 
     # S5.发其他用户的订单
     def test_deliver_other(self):
-        order = createOrder(self.UserShop, self.Merch1)
         ws = webservice()
         ws.login(self.DealMgr2.username, self.DealMgr2.password)
-        deliverOrder = ws.deliver(orderNo=order.orderNo)
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodWaitDeliver.orderNo)
         self.assertEqual(deliverOrder.model['success'], '1')
 
     # S6.token错误或不存在发货
@@ -113,14 +112,14 @@ class deliver(unittest.TestCase):
     # S9.不在待发货状态订单发货
     def test_deliver_errorStatus(self):
         #对待付款订单发货
-        order = createOrder(self.UserShop, self.Merch1, payWay=1)
         ws = webservice()
         ws.login(self.DealMgr.username, self.DealMgr.password)
-        deliverOrder = ws.deliver(orderNo=order.orderNo)
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderOnlineWaitPay.orderNo)
         self.assertEqual(deliverOrder.model['success'], '1')
 
         #对交易完成订单发货
-
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodeComplete.orderNo)
+        self.assertEqual(deliverOrder.model['success'], '1')
 
 def suite():
     suite = unittest.TestSuite()

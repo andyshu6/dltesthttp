@@ -41,4 +41,23 @@ def createOrder(buyer, merch, merchCount='1',payWay='2'):
                 # returnOrder.price = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']
         return Dict(names, values)
 
+# 银联货到付款支付
+def codPay(orderNo, ini_file='../../config/http_config.ini'):
+    import requests
+    config = configparser.ConfigParser()
+    config.read(ini_file)
+    umpayVShost = config['HTTP']['umpayVShost']
+    umpayVSport = config['HTTP']['umpayVSport']
+    # url1 = 'http://' + umpayVShost + ':' + umpayVSport + '/searchPayOrder'
+    # data1 = {'orderNo':orderNo, 'url':'http://182.92.9.59:8090'}
+    s = requests.Session()
+    # s.post(url=url1, data=data)
+    url2 = 'http://' + umpayVShost + ':' + umpayVSport + '/payResult'
+    data2 = {'orderNo':orderNo, 'url':'http://182.92.9.59:8090'}
+    s.post(url=url2, data=data2)
+
+
+if __name__ == '__main__':
+    codPay(orderNo='20650424650455')
+
 # 取消订单

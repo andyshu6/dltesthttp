@@ -56,6 +56,12 @@ def codPay(orderNo, ini_file='../../config/http_config.ini'):
     data2 = {'orderNo':orderNo, 'url':'http://182.92.9.59:8090'}
     s.post(url=url2, data=data2)
 
+"""
+清空订单，传入buyer即清空用户所有订单，传入orderNo即清空单个订单
+"""
+def cleanOrders(buyer=None, orderNo=None):
+    pass
+
 
 if __name__ == '__main__':
     codPay(orderNo='20650424650455')

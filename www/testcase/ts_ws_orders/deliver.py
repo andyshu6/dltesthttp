@@ -97,16 +97,15 @@ class deliver(unittest.TestCase):
 
     # S8.无权限用户发货
     def test_deliver_noRight(self):
-        order = createOrder(self.UserShop, self.Merch1)
         ws = webservice()
         ws.login(self.DealBuyer.username, self.DealBuyer.password)
-        deliverOrder = ws.deliver(orderNo=order.orderNo)
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodWaitDeliver.orderNo)
         self.assertEqual(deliverOrder.code, 300)
         ws.login(self.UserDealSed.username, self.UserDealSed.password)
-        deliverOrder = ws.deliver(orderNo=order.orderNo)
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodWaitDeliver.orderNo)
         self.assertEqual(deliverOrder.code, 300)
         ws.login(self.UserDealFin.username, self.UserDealFin.password)
-        deliverOrder = ws.deliver(orderNo=order.orderNo)
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodWaitDeliver.orderNo)
         self.assertEqual(deliverOrder.code, 300)
 
     # S9.不在待发货状态订单发货
@@ -126,7 +125,7 @@ def suite():
     suite.addTest(deliver("test_deliver_cod"))
     suite.addTest(deliver("test_deliver_codAgain"))
     suite.addTest(deliver("test_deliver_notExist"))
-    suite.addTest(deliver("test_deliver_other"))
+    #suite.addTest(deliver("test_deliver_other"))
     suite.addTest(deliver("test_deliver_token"))
     suite.addTest(deliver("test_deliver_saler"))
     suite.addTest(deliver("test_deliver_noRight"))

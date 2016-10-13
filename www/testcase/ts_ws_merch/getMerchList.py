@@ -330,7 +330,6 @@ class getMerchList(unittest.TestCase):
         ws.login(self.UserShop.username, self.UserShop.password)
         allMerchList = ws.getMerchList(rows='999')
         numMerch = len(allMerchList.model['merchList'])
-        rows = numMerch/15
 
         time = 0
         for r in range(1,numMerch/15+2):
@@ -340,9 +339,9 @@ class getMerchList(unittest.TestCase):
                 if MerchListPage.model['merchList'][i]['merchName'].encode('utf-8') == self.Merch1.fullName:
                     time+=1
             if r == numMerch/15+1:
-                self.assertEqual(len(allMerchList.model['merchList']),numMerch%15,"The last page is wrong")
+                self.assertEqual(len(MerchListPage.model['merchList']),numMerch%15,"The last page is wrong")
             else:
-                self.assertEqual(len(allMerchList.model['merchList']),15,"Every page is wrong")
+                self.assertEqual(len(MerchListPage.model['merchList']),15,"Every page is wrong")
 
         self.assertEqual(time,1,self.Merch1.fullName+" is not once.")
 

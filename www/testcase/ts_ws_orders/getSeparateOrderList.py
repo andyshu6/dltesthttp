@@ -29,3 +29,17 @@ http://127.0.0.1:8080/mallws/orders/getSeparateOrderList.json
     }
 }
 """
+
+import unittest
+
+from www.common.database import *
+from www.common.excel import *
+from www.common.webservice import *
+
+class getSeparateOrderList(unittest.TestCase):
+    pass
+
+
+def suite():
+    suite=unittest.TestSuite()
+    return suite

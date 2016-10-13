@@ -144,6 +144,10 @@ class getSellerOrderDetail(unittest.TestCase):
         self.assertOrderDetail(orderDetail, self.UserShop.orderCodeCancel, self.UserShop, self.Merch1)
 
     # S4.获取终端店货到付款交易完成买家订单详情
+    def test_getSellerOrderDetail_codComplete(self):
+        orderDetail = self.wsDealMager.getBuyerOrderDetail(orderPk=self.UserShop.orderCodeCancel.paymentNo, orderNo=self.UserShop.orderCodeCancel['orderNo'])
+        self.assertEqual(orderDetail.model['success'], '0')
+        self.assertOrderDetail(orderDetail, self.UserShop.orderCodeCancel, self.UserShop, self.Merch1)
 
     # S5.获取终端店在线支付待付款买家订单详情
     def test_getSellerOrderDetail_onlineWaitPay(self):
@@ -279,6 +283,7 @@ def suite():
     suite.addTest(getSellerOrderDetail("test_getSellerOrderDetail_codWaitDeliver"))
     suite.addTest(getSellerOrderDetail("test_getSellerOrderDetail_codWaitReceive"))
     suite.addTest(getSellerOrderDetail("test_getSellerOrderDetail_codCancel"))
+    suite.addTest(getSellerOrderDetail("test_getSellerOrderDetail_codComplete"))
     suite.addTest(getSellerOrderDetail("test_getSellerOrderDetail_onlineWaitPay"))
     suite.addTest(getSellerOrderDetail("test_getSellerOrderDetail_onlineCancel"))
     return suite

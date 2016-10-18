@@ -39,6 +39,14 @@ from www.common.webservice import *
 class getSeparateOrderList(unittest.TestCase):
     pass
 
+    # S1.查看拆分订单
+
+
+    # S2.查看其他人的拆分订单
+
+
+    # S3.查看未拆分订单
+
 
 def suite():
     suite=unittest.TestSuite()

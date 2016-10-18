@@ -41,7 +41,12 @@ def createOrder(buyer, merch, merchCount='1',payWay='2'):
                 # returnOrder.price = order.model['createOrderInfoModel']['cashOnDeliveryModelList'][0]['price']
         return Dict(names, values)
 
-# 银联货到付款支付
+# 获取货到付款待发货订单
+def createOrderWaitReceive(buyer, merch, merchCount='1',payWay='2'):
+    pass
+
+
+# 联动货到付款支付
 def codPay(orderNo, ini_file='../../config/http_config.ini'):
     import requests
     config = configparser.ConfigParser()
@@ -59,11 +64,58 @@ def codPay(orderNo, ini_file='../../config/http_config.ini'):
 """
 清空订单，传入buyer即清空用户所有订单，传入orderNo即清空单个订单
 """
-def cleanOrders(buyer=None, orderNo=None):
-    pass
+def cleanOrders(buyerCompanyId=None, orderNo=None):
+    from www.common.database import *
+    create_engine()
+    if orderNo is not None:
+        paymentNo = select_one('select * from dlorder.dl_order_orderinfo where order_no = ?', orderNo).pay_no
+        update('delete from dlpay.dl_payment_audit_record where pay_no = ?', paymentNo)
+        update('delete from dlpay.dl_payment_clean_record where pay_no = ?', paymentNo)
+        update('delete from dlpay.dl_payment_clean_result_record where pay_no = ?', paymentNo)
+        update('delete from dlpay.dl_payment_exception where pay_no = ?', paymentNo)
+        update('delete from dlpay.dl_payment_order where pay_no = ?', paymentNo)
+        update('delete from dlpay.dl_payment_record where pay_no = ?', paymentNo)
+        update('delete from dlorder.dl_order_orderdetail where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_changeamount_log where  order_no  = ?', orderNo)
+        update('delete from dlorder.dl_order_ordercoupon where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_orderinfo where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_orderinvoice where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_orderitem where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_orderlog where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_orderprint_log where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_ordersnapshot where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_promotion_detail where order_no = ?', orderNo)
+        update('delete from dlorder.dl_order_seller_detail where order_no = ?', orderNo)
+
+    elif buyerCompanyId is not None:
+        #pay_no = select('(select pay_no from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?))', buyerCompanyId)
+        #order_no = select('SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?', buyerCompanyId)
+        update('delete from dlpay.dl_payment_audit_record where pay_no in (select pay_no from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?))', buyerCompanyId)
+        update('delete from dlpay.dl_payment_clean_record where pay_no in (select pay_no from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?))', buyerCompanyId)
+        update('delete from dlpay.dl_payment_clean_result_record where pay_no in (select pay_no from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?))', buyerCompanyId)
+        update('delete from dlpay.dl_payment_exception where pay_no in (select pay_no from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?))', buyerCompanyId)
+        update('delete from dlpay.dl_payment_order where payer_id = ?', buyerCompanyId)
+        update('delete from dlpay.dl_payment_record where pay_no in (select pay_no from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?))', buyerCompanyId)
+        update('delete from dlorder.dl_order_orderdetail where buyer_id = ?', buyerCompanyId)
+        update('delete from dlorder.dl_order_changeamount_log where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_ordercoupon where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_orderinfo where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_orderinvoice where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_orderitem where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_orderlog where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_orderprint_log where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_ordersnapshot where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_promotion_detail where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+        update('delete from dlorder.dl_order_seller_detail where order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?)', buyerCompanyId)
+
+    else:
+        raise 'You need to fill in at least orderNo.'
+
+
+
 
 
 if __name__ == '__main__':
-    codPay(orderNo='20650424650455')
+    cleanOrders(buyerCompanyId='6fb850120da449ef98a2c7e641100e02')
 
 # 取消订单

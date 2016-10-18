@@ -46,17 +46,17 @@ def initOrder():
     ws.deliver(orderNo=orderCodWaitReceive.orderNo)
 
     #货到付款已完成订单(C019)
-    orderCodeComplete = createOrder(UserShop, Merch)
-    orderCodeComplete.pop('ws')
-    write_excel(sheetname='TmlShop', rowkey='orderCodeComplete', rowvalue=str(orderCodeComplete))
-    ws.deliver(orderNo=orderCodeComplete.orderNo)
-    codPay(orderNo=orderCodeComplete.orderNo)
+    orderCodComplete = createOrder(UserShop, Merch)
+    orderCodComplete.pop('ws')
+    write_excel(sheetname='TmlShop', rowkey='orderCodComplete', rowvalue=str(orderCodComplete))
+    ws.deliver(orderNo=orderCodComplete.orderNo)
+    codPay(orderNo=orderCodComplete.orderNo)
 
     #货到付款已取消订单（C012）
-    orderCodeCancel = createOrder(UserShop, Merch)
-    orderCodeCancelWS = orderCodeCancel.pop('ws')
-    write_excel(sheetname='TmlShop', rowkey='orderCodeCancel', rowvalue=str(orderCodeCancel))
-    orderCodeCancelWS.cancel(paymentNo=orderCodeCancel.paymentNo)
+    orderCodCancel = createOrder(UserShop, Merch)
+    orderCodCancelWS = orderCodCancel.pop('ws')
+    write_excel(sheetname='TmlShop', rowkey='orderCodCancel', rowvalue=str(orderCodCancel))
+    orderCodCancelWS.cancel(paymentNo=orderCodCancel.paymentNo)
 
     #经销商管理员下货到付款订单待发货
     # orderDealCodWaitDeliver = createOrder(DealMgr, Merch4, payWay='1')

@@ -166,7 +166,7 @@ class getBuyerOrderList(unittest.TestCase):
         self.assertEqual(buyerOrderList.model['success'], '0')
         orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C019')
         self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, self.UserShop.orderCodeComplete, self.Merch1, paymentOrderButtomList='00000', payWay='01', receiveStatus='1')
+        self.assertOrderList(buyerOrderList, self.UserShop.orderCodComplete, self.Merch1, paymentOrderButtomList='00000', payWay='01', receiveStatus='1')
 
     # S7.获取交易取消订单列表（C012）
     def test_getBuyerOrderList_cancel(self):
@@ -174,7 +174,7 @@ class getBuyerOrderList(unittest.TestCase):
         self.assertEqual(buyerOrderList.model['success'], '0')
         orderCount = select_int('select count(*) from dlorder.dl_order_orderinfo where  order_no in (SELECT order_no FROM dlorder.dl_order_orderdetail where buyer_id = ?) and order_status = ?', self.UserShop.companyId, 'C012')
         self.assertEqual(len(buyerOrderList.model['paymentOrderList']), orderCount)
-        self.assertOrderList(buyerOrderList, self.UserShop.orderCodeCancel, self.Merch1, paymentOrderButtomList='00000')
+        self.assertOrderList(buyerOrderList, self.UserShop.orderCodCancel, self.Merch1, paymentOrderButtomList='00000')
 
     # S8.根据时间查询订单列表
     def test_getBuyerOrderList_time(self):

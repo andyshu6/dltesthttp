@@ -39,11 +39,60 @@ import unittest
 from www.common.database import *
 from www.common.excel import *
 from www.common.webservice import *
+from www.operation.order import createOrder
 
 class separateOrder(unittest.TestCase):
-    pass
+    UserShop = eData('TmlShop')
+    DealMager = eData('DealMager')
+    DealMager2 = eData('DealMager2')
+    Merch = eData('Merch1')
+
+
+    wsUserShop = webservice()
+    wsUserShop.login(UserShop.username, UserShop.password)
+    wsDealMager = webservice()
+    wsDealMager.login(DealMager.username, DealMager.password)
+    wsDealMager2 = webservice()
+    wsDealMager2.login(DealMager2.username, DealMager2.password)
+
+    # S1.货到付款待发货订单拆分订单(2单)
+    def test_separateOrder_separat(self):
+        order = createOrder(self.UserShop, self.Merch)
+        sepOrder = self.wsDealMager.separateOrder(orderNo=order.orderNo, separateOrderAmount=[str(int(order.price)-100),'100'])
+        self.assertSepOrder(sepOrder, order)
+
+    # S2.货到付款待收货订单拆分订单(10单)
+    def test_separateOrder_separat(self):
+        order = createOrder(self.UserShop, self.Merch)
+        sepOrder = self.wsDealMager.separateOrder(orderNo=order.orderNo, separateOrderAmount=[str(int(order.price)-100),'100'])
+        self.assertSepOrder(sepOrder, order)
+
+    # S3.只拆分一个订单
+
+    # S4.还有未拆分的金额
+
+    # S5.订单已取消
+
+    # S6.订单已拆分
+
+    # S7.订单已收货
+
+    # S8.拆分开关关闭
+
+    # S9.拆分金额小于门槛
+
+    # S10.拆单次数超过最大次数
+
+    # S11.不支持货到付款
+
+    def assertSepOrder(self, rsp, order, sepTime=2):
+        self.assertEqual(rsp.model['success'], '0')
+        self.assertEqual(rsp.model['orderNo'], order.orderNo)
+        self.assertEqual(len(rsp.model['paymentList']), sepTime)
+
 
 
 def suite():
     suite=unittest.TestSuite()
+    suite.addTest(separateOrder('test_separateOrder_separat'))
     return suite

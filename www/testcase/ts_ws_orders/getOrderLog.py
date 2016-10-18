@@ -72,7 +72,7 @@ class getOrderLog(unittest.TestCase):
 
     # S2.货到付款取消订单获取订单跟踪消息
     def test_getOrderLog_cancelOrder(self):
-        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodeCancel.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodCancel.orderNo)
         self.assertEqual(orderLog['model']['success'], '0')
         flag = 0
         for i in range(0,len(orderLog['model']['orderLogList'])):
@@ -99,7 +99,7 @@ class getOrderLog(unittest.TestCase):
 
     # S4.货到付款订单交易完成订单跟踪消息
     def test_getOrderLog_codComplete(self):
-        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodeComplete.orderNo)
+        orderLog = self.wsUserShop.getOrderLog(self.UserShop.orderCodComplete.orderNo)
         self.assertEqual(orderLog['model']['success'], '0')
         flag = 0
         for i in range(0,len(orderLog['model']['orderLogList'])):

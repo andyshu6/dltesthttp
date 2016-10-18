@@ -139,15 +139,15 @@ class getSellerOrderDetail(unittest.TestCase):
 
     # S3.获取终端店货到付款待收货买家订单详情
     def test_getSellerOrderDetail_codCancel(self):
-        orderDetail = self.wsDealMager.getBuyerOrderDetail(orderPk=self.UserShop.orderCodeCancel.paymentNo, orderNo=self.UserShop.orderCodeCancel['orderNo'])
+        orderDetail = self.wsDealMager.getBuyerOrderDetail(orderPk=self.UserShop.orderCodCancel.paymentNo, orderNo=self.UserShop.orderCodCancel['orderNo'])
         self.assertEqual(orderDetail.model['success'], '0')
-        self.assertOrderDetail(orderDetail, self.UserShop.orderCodeCancel, self.UserShop, self.Merch1)
+        self.assertOrderDetail(orderDetail, self.UserShop.orderCodCancel, self.UserShop, self.Merch1)
 
     # S4.获取终端店货到付款交易完成买家订单详情
     def test_getSellerOrderDetail_codComplete(self):
-        orderDetail = self.wsDealMager.getBuyerOrderDetail(orderPk=self.UserShop.orderCodeCancel.paymentNo, orderNo=self.UserShop.orderCodeCancel['orderNo'])
+        orderDetail = self.wsDealMager.getBuyerOrderDetail(orderPk=self.UserShop.orderCodCancel.paymentNo, orderNo=self.UserShop.orderCodCancel['orderNo'])
         self.assertEqual(orderDetail.model['success'], '0')
-        self.assertOrderDetail(orderDetail, self.UserShop.orderCodeCancel, self.UserShop, self.Merch1)
+        self.assertOrderDetail(orderDetail, self.UserShop.orderCodCancel, self.UserShop, self.Merch1)
 
     # S5.获取终端店在线支付待付款买家订单详情
     def test_getSellerOrderDetail_onlineWaitPay(self):
@@ -167,7 +167,7 @@ class getSellerOrderDetail(unittest.TestCase):
         self.assertEqual(orderDetail.model['success'], '0')
         self.assertOrderDetail(orderDetail, self.UserShop.orderOnlienCancel, self.UserShop, self.Merch1)
 
-    def assertOrderDetail(self, rsq, order, buyer, merch, buttomList='000001'):
+    def assertOrderDetail(self, rsq, order, buyer, merch, buttomList='00000100'):
         paymentOrder = select_one('select * from dlpay.dl_payment_order where pay_no = ?', order.paymentNo)
         orderDetail = select_one('select * from dlorder.dl_order_orderdetail where order_no = ?', order.orderNo)
         orderInfo = select_one('select * from dlorder.dl_order_orderinfo where order_no = ?', order.orderNo)

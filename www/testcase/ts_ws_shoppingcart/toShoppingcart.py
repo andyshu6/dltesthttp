@@ -86,6 +86,7 @@ class toShoppingcart(unittest.TestCase):
 
     def setUp(self):
         update('delete from danlu_cd_database.dl_shoppingcart where user_id = ?', self.UserShop.userId)
+        update('update dlmerchandise.dl_goods set on_hand_inventory = ? where goods_id = ?', self.Merch1.onHandInventory, self.Merch1.goodsId)
 
     # S1.获取购物车商品信息
     def test_toShoppingcart_one(self):

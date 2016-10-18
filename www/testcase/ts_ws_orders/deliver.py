@@ -117,7 +117,7 @@ class deliver(unittest.TestCase):
         self.assertEqual(deliverOrder.model['success'], '1')
 
         #对交易完成订单发货
-        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodeComplete.orderNo)
+        deliverOrder = ws.deliver(orderNo=self.UserShop.orderCodComplete.orderNo)
         self.assertEqual(deliverOrder.model['success'], '1')
 
 def suite():

@@ -7,7 +7,7 @@
 
 from www.operation.order import createOrder, codPay
 from www.common.excel import eData, write_excel
-from www.common.database import create_engine
+from www.common.database import create_engine, update
 from www.common.webservice import *
 
 def initOrder():
@@ -23,6 +23,8 @@ def initOrder():
     orderOnlineWaitPay = createOrder(UserShop, Merch, payWay='1')
     orderOnlineWaitPay.pop('ws')
     write_excel(sheetname='TmlShop', rowkey='orderOnlineWaitPay', rowvalue=str(orderOnlineWaitPay))
+    import datetime
+    update('update dlorder.dl_order_orderinfo SET gmt_created = ? WHERE order_no = ?', datetime.datetime.strptime('2099-01-01 00:00:00', "%Y-%m-%d %H:%M:%S"), orderOnlineWaitPay.orderNo)
 
     #在线支付待发货订单
     #在线支付待收货订单
